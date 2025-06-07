@@ -10,11 +10,14 @@ class RB {
         class isCivilianIllegal {};
         class debugIllegalReason {};
         class tryTurnHostile {};
+        class processCivilian {};
     };
     class Vehicles {
         file = "functions\vehicle";
         class searchVehicle {};
         class addVehicleActions {};
+        class addVehicleSalvageActions {};
+        class orderOccupantsOut {};
     };
     class System {
         file = "functions\system";
@@ -28,7 +31,11 @@ class RB {
         class setWeatherPreset {};
         class addAdminActions {};
         class addManagementActions {};
+        class addPersistenceActions {};
         class deductRespawnCost {};
+        class extractLoadoutItems {};
+        class updateBannedTownsDiary {};
+        class toggleRoadBlock {};
     };
     class Logistics {
         file = "functions\logistics";
@@ -43,5 +50,12 @@ class RB {
         file = "functions\utility";
         class addGeneratorActions {};
         class updateLamps {};
+        class getStarterLoadout {};
+        class moveVehicleSmooth {};
+    };
+    class Persistence {
+        file = "functions\persistence";
+        class loadProgress {};
+        class saveProgress {};
     };
 };

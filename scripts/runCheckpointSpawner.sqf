@@ -16,6 +16,9 @@ while { true } do {
 
     sleep _delay;
 
+    //Check if any players are online, making it MP Persistence safe
+    if (({isPlayer _x} count allPlayers) == 0) then { continue; };
+    
     // if closed, just loop again without spawning
     if (missionNamespace getVariable ["RB_RoadblockClosed", false]) then {
         continue;
@@ -24,7 +27,7 @@ while { true } do {
     if (!isNil { missionNamespace getVariable "RB_CurrentEntity" }) then { continue };
     if (missionNamespace getVariable ["RB_SpawnerRunning", false]) then { continue };
 
-    missionNamespace setVariable ["RB_SpawnerRunning", true];
+    missionNamespace setVariable ["RB_SpawnerRunning", true, true];
 
     private _civilianChance = missionNamespace getVariable ["RB_CivilianChance", 0.0];
     private _timeoutSeconds = 90;
@@ -56,7 +59,7 @@ while { true } do {
         _civ setSpeedMode "LIMITED";
         _civ doMove _holdPos;
 
-        missionNamespace setVariable ["RB_CurrentEntity", _civ];
+        missionNamespace setVariable ["RB_CurrentEntity", _civ, true];
 
         [_civ, _holdPos, _timeoutSeconds] spawn {
             params ["_entity", "_dest", "_timeout"];
@@ -93,7 +96,7 @@ while { true } do {
             deleteVehicle _veh;
 
             missionNamespace setVariable ["RB_CurrentEntity", nil, true];
-            missionNamespace setVariable ["RB_SpawnerRunning", false];
+            missionNamespace setVariable ["RB_SpawnerRunning", false, true];
             diag_log "[RB] Vehicle spawned without a driver — cleaned up.";
             continue;
         };
@@ -102,7 +105,7 @@ while { true } do {
         _driver setSpeedMode "LIMITED";
         _driver doMove _holdPos;
 
-        missionNamespace setVariable ["RB_CurrentEntity", _veh];
+        missionNamespace setVariable ["RB_CurrentEntity", _veh, true];
 
         [_veh, _holdPos, _timeoutSeconds] spawn {
             params ["_entity", "_dest", "_timeout"];
@@ -124,10 +127,10 @@ while { true } do {
             } else {
                 _entity setVariable ["readyForProcessing", true, true];
 
-                // Honk after 60s if not processed
+                // Honk after 90 if not processed
                 [_entity] spawn {
                     params ["_veh"];
-                    sleep 60;
+                    sleep 90;
                     if (!isNull _veh && {!(_veh getVariable ["rb_isProcessed", false])}) then {
                         private _driver = driver _veh;
                         if (!isNull _driver) then {
@@ -138,10 +141,10 @@ while { true } do {
                         };
                     };
                 };
-                 // Honk after 90 if not processed
+                 // Honk after 120 if not processed
                 [_entity] spawn {
                     params ["_veh"];
-                    sleep 90;
+                    sleep 120;
                     if (!isNull _veh && {!(_veh getVariable ["rb_isProcessed", false])}) then {
                         private _driver = driver _veh;
                         if (!isNull _driver) then {
@@ -155,10 +158,10 @@ while { true } do {
                     };
                 };
 
-                // Cleanup after 120s idle
+                // Cleanup after 180 idle
                 [_entity] spawn {
                     params ["_veh"];
-                    sleep 120;
+                    sleep 180;
                     if (!isNull _veh && {!(_veh getVariable ["rb_isProcessed", false])}) then {
                         { if (alive _x) then { deleteVehicle _x }; } forEach crew _veh;
                         deleteVehicle _veh;
@@ -171,5 +174,5 @@ while { true } do {
         };
     };
 
-    missionNamespace setVariable ["RB_SpawnerRunning", false];
+    missionNamespace setVariable ["RB_SpawnerRunning", false, true];
 };

@@ -4,7 +4,8 @@
 */
 
 private _obj = _this select 0;
-
+// Wait until client has interface (JIP safety)
+if (!hasInterface) exitWith {};
 // Helper function
 private _addAction = {
     params ["_obj", "_path", "_action"];
@@ -199,3 +200,18 @@ private _reset = [
 ] call ace_interact_menu_fnc_createAction;
 
 [_obj, ["ACE_MainActions", "RB_Terminal_Admin"], _reset] call _addAction;
+
+// === Give +50 Points Action
+private _givePointsAction = [
+    "RB_GivePoints",
+    "Give +50 Points",
+    "a3\ui_f\data\IGUI\Cfg\Actions\reammo_ca.paa",
+    {   
+        private _terminal = missionNamespace getVariable ["RB_Terminal", objNull];
+        if (isNull _terminal) exitWith { hint "Terminal not found." };
+
+        private _score = _terminal getVariable ["rb_score", 0];
+        _terminal setVariable ["rb_score", _score + 50, true];
+    },
+    { true }
+] call ace_interact_menu_fnc_createAction;

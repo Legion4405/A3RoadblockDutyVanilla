@@ -41,20 +41,36 @@ RB_CivilianPool_Vanilla = [
     "C_man_sport_6_F", "C_man_utilityworker_01_F", "C_man_paramedic_01_F"
 ];
 
-RB_CivilianPool_CUP = [
-    "CUP_C_C_Bus_Driver_Chernarus",
-    "CUP_C_C_Worker_02"
+RB_CivilianPool_3CB_Africa = [
+    "UK3CB_ADC_C_CIV_CHR_01", "UK3CB_ADC_C_CIV_CHR_02", "UK3CB_ADC_C_CIV_ISL_01", "UK3CB_ADC_C_HUNTER_CHR", "UK3CB_ADC_C_CIT",
+    "UK3CB_ADC_C_COACH", "UK3CB_ADC_C_PROF", "UK3CB_ADC_C_VILL", "UK3CB_ADC_C_WOOD", "UK3CB_ADC_C_DOC_CHR",
+    "UK3CB_ADC_C_DOC_ISL", "UK3CB_ADC_C_FUNC", "UK3CB_ADC_C_LABOURER_CHR", "UK3CB_ADC_C_LABOURER_ISL", "UK3CB_ADC_C_CIV_CHR",
+    "UK3CB_ADC_C_CIV_ISL", "UK3CB_ADC_C_SPOT_CHR", "UK3CB_ADC_C_SPOT_ISL", "UK3CB_ADC_C_WORKER"
 ];
 
-RB_CivilianPool_3CB = [
-    "UK3CB_CHC_C_MAN",
-    "UK3CB_TKC_C_CIV"
+
+RB_CivilianPool_3CB_Chernarus = [
+    "UK3CB_CHC_C_ACT", "UK3CB_CHC_C_BODYG", "UK3CB_CHC_C_CIT", "UK3CB_CHC_C_COACH", "UK3CB_CHC_C_DOC",
+    "UK3CB_CHC_C_FUNC", "UK3CB_CHC_C_HIKER", "UK3CB_CHC_C_LABOUR", "UK3CB_CHC_C_POLITIC", "UK3CB_CHC_C_PRIEST",
+    "UK3CB_CHC_C_PROF", "UK3CB_CHC_C_CIV", "UK3CB_CHC_C_SPY", "UK3CB_CHC_C_VILL", "UK3CB_CHC_C_CAN",
+    "UK3CB_CHC_C_WOOD", "UK3CB_CHC_C_WORKER"
 ];
 
-RB_CivilianPool_SOG = [
-    "vn_c_men_01",
-    "vn_c_men_09"
+
+RB_CivilianPool_3CB_ME = [
+    "UK3CB_MEC_C_CIV_01", "UK3CB_MEC_C_CIV_02", "UK3CB_MEC_C_HUNTER", "UK3CB_MEC_C_CIT", "UK3CB_MEC_C_COACH",
+    "UK3CB_MEC_C_PROF", "UK3CB_MEC_C_FUNC", "UK3CB_MEC_C_LABOURER", "UK3CB_MEC_C_CIV", "UK3CB_MEC_C_WORKER"
 ];
+
+
+RB_CivilianPool_3CB_ME = [
+    "UK3CB_MEC_C_CIV_01", "UK3CB_MEC_C_CIV_02", "UK3CB_MEC_C_HUNTER", "UK3CB_MEC_C_CIT", "UK3CB_MEC_C_COACH",
+    "UK3CB_MEC_C_PROF", "UK3CB_MEC_C_FUNC", "UK3CB_MEC_C_LABOURER", "UK3CB_MEC_C_CIV", "UK3CB_MEC_C_WORKER", "UK3CB_TKC_C_CIV", 
+    "UK3CB_TKC_C_WORKER"
+];
+
+
+
 
 // === Civilian Vehicle Pools ===
 RB_CivilianVehiclePool_Vanilla = [
@@ -88,37 +104,46 @@ RB_CivilianVehiclePool_RDS_West = [
 
 
 // === Enemy Infantry Pools ===
-RB_EnemyInfantryPool_Vanilla = [
-    "O_G_Soldier_F",
-    "O_G_Soldier_AR_F",
-    "O_G_Soldier_LAT_F",
-    "O_G_medic_F",
-    "O_G_engineer_F",
-    "O_G_Soldier_SL_F",
-    "O_G_Soldier_TL_F",
-    "O_G_Sharpshooter_F",
-    "O_G_Soldier_GL_F",
-    "O_G_Soldier_lite_F",
+RB_EnemyInfantryPool_Vanilla_FIA = [
+    "O_G_Soldier_F", "O_G_Soldier_AR_F", "O_G_Soldier_LAT_F", "O_G_medic_F", "O_G_engineer_F",
+    "O_G_Soldier_SL_F", "O_G_Soldier_TL_F", "O_G_Sharpshooter_F", "O_G_Soldier_GL_F", "O_G_Soldier_lite_F",
     "O_G_Soldier_exp_F"
 ];
 
-
-RB_EnemyInfantryPool_CUP = [
-    "CUP_O_INS_Soldier",
-    "CUP_O_INS_Soldier_AR",
-    "CUP_O_INS_Soldier_AT"
+RB_EnemyInfantryPool_Vanilla_Looters = [
+    "I_L_Criminal_SG_F", "I_L_Criminal_SMG_F", "I_L_Hunter_F", "I_L_Looter_Rifle_F", "I_L_Looter_Pistol_F",
+    "I_L_Looter_SG_F", "I_L_Looter_SMG_F"
 ];
 
-RB_EnemyInfantryPool_3CB = [
-    "UK3CB_TKM_O_RIF_1",
-    "UK3CB_TKM_O_AR",
-    "UK3CB_TKM_O_AT"
+
+RB_EnemyInfantryPool_Vanilla_SyndikatBandits = [
+    "I_C_Soldier_Bandit_7_F", "I_C_Soldier_Bandit_3_F", "I_C_Soldier_Bandit_2_F", "I_C_Soldier_Bandit_5_F", "I_C_Soldier_Bandit_6_F",
+    "I_C_Soldier_Bandit_1_F", "I_C_Soldier_Bandit_8_F", "I_C_Soldier_Bandit_4_F"
 ];
 
-RB_EnemyInfantryPool_SOG = [
-    "vn_o_men_vc_01",
-    "vn_o_men_vc_04",
-    "vn_o_men_vc_08"
+
+RB_EnemyInfantryPool_Vanilla_SyndikatParaMilitary = [
+    "I_C_Soldier_Para_7_F", "I_C_Soldier_Para_2_F", "I_C_Soldier_Para_3_F", "I_C_Soldier_Para_4_F", "I_C_Soldier_Para_6_F",
+    "I_C_Soldier_base_unarmed_F", "I_C_Soldier_Para_8_F", "I_C_Soldier_Para_1_F", "I_C_Soldier_Para_5_F"
+];
+
+
+RB_EnemyInfantryPool_Vanilla_CSAT = [
+    "O_Soldier_A_F", "O_Soldier_AAR_F", "O_support_AMG_F", "O_support_AMort_F", "O_Soldier_AHAT_F",
+    "O_engineer_F", "O_Soldier_AAA_F", "O_Soldier_AAT_F", "O_Soldier_AR_F", "O_medic_F",
+    "O_support_MG_F", "O_support_Mort_F", "O_HeavyGunner_F", "O_soldier_M_F", "O_Soldier_AA_F",
+    "O_Soldier_AT_F", "O_officer_F", "O_soldier_PG_F", "O_soldier_repair_F", "O_Soldier_F",
+    "O_Sharpshooter_F", "O_Soldier_SL_F", "O_soldier_exp_F", "O_Soldier_GL_F", "O_soldier_UAV_06_F",
+    "O_support_GMG_F", "O_soldier_mine_F", "O_Soldier_HAT_F", "O_Soldier_TL_F", "O_soldier_UAV_F",
+    "O_Soldier_LAT_F"
+];
+
+
+RB_EnemyInfantryPool_Vanilla_Spetsnaz = [
+    "O_R_Soldier_AR_F", "O_R_medic_F", "O_R_soldier_exp_F", "O_R_Soldier_GL_F", "O_R_Soldier_LAT_F",
+    "O_R_Patrol_Soldier_AR2_F", "O_R_Patrol_Soldier_AR_F", "O_R_Patrol_Soldier_M2_F", "O_R_Patrol_Soldier_LAT_F", "O_R_Patrol_Soldier_M_F",
+    "O_R_Patrol_Soldier_TL_F", "O_R_JTAC_F", "O_R_Patrol_Soldier_Medic", "O_R_Patrol_Soldier_Engineer_F", "O_R_soldier_M_F",
+    "O_R_Patrol_Soldier_A_F"
 ];
 
 // === Enemy Vehicle Pools ===
@@ -146,58 +171,58 @@ RB_EnemyVehiclePool_SOG = [
 // === Logistics Vehicle + Options ===
 RB_LogisticsVehicleClass = "B_Truck_01_box_F";
 
+
 RB_LogisticsOptions = [
-    // === Existing Categories ===
     [
         "Ammo",
         [
-            ["Basic Ammo Crate", "Box_NATO_Ammo_F", [["30Rnd_556x45_Stanag", 20], ["HandGrenade", 10]], 10],
-            ["Heavy Weapons Crate", "Box_NATO_Wps_F", [["launch_NLAW_F", 2], ["Titan_AA", 1]], 30]
+            ["Basic Ammo Kit", ["30Rnd_556x45_Stanag","HandGrenade"], 10],
+            ["Heavy Weapons Kit", ["launch_NLAW_F","Titan_AA"], 30]
         ]
     ],
     [
         "Weapons",
         [
-            ["MX Rifle Kit", "Box_NATO_Wps_F", [["arifle_MX_F", 1, [["optic_Aco", 1],["ACE_DBAL_A3_Green", 1]]],["30Rnd_65x39_caseless_mag", 3],["30Rnd_65x39_caseless_black_mag_Tracer", 2]], 20],
-            ["MX 3GL Kit", "Box_NATO_Wps_F", [["arifle_MX_F", 1, [["optic_Aco", 1],["ACE_DBAL_A3_Green", 1]]],["30Rnd_65x39_caseless_mag", 3],["30Rnd_65x39_caseless_black_mag_Tracer", 2],["3Rnd_HE_Grenade_shell", 10]], 30],
-            ["MXM Kit", "Box_NATO_Wps_F", [["arifle_MXM_F", 1, [["optic_AMS_snd", 1],["ACE_DBAL_A3_Green", 1]]],["30Rnd_65x39_caseless_mag", 2],["30Rnd_65x39_caseless_black_mag_Tracer", 3]], 40],
-            ["MX LSW Kit", "Box_NATO_Wps_F", [["arifle_MX_SW_F", 1, [["optic_Aco", 1],["ACE_DBAL_A3_Green", 1]]],["100Rnd_65x39_caseless_mag", 3],["100Rnd_65x39_caseless_mag_Tracer", 2]], 45],
-            ["Stoner 99 Kit", "Box_NATO_Wps_F", [["LMG_Mk200_F", 1, [["optic_Aco", 1],["ACE_DBAL_A3_Green", 1]]],["200Rnd_65x39_cased_Box", 2],["200Rnd_65x39_cased_Box_Tracer_Red", 2]], 55],
-            ["FN Minimi Kit", "Box_NATO_Wps_F", [["LMG_03_F", 1, [["optic_Aco", 1],["ACE_DBAL_A3_Green", 1]]],["200Rnd_556x45_Box_Tracer_Red_F", 4]], 55]
+            ["MX Rifle Kit", ["arifle_MX_F","optic_Aco","ACE_DBAL_A3_Green","30Rnd_65x39_caseless_mag","30Rnd_65x39_caseless_black_mag_Tracer"], 20],
+            ["MX 3GL Kit", ["arifle_MX_F","optic_Aco","ACE_DBAL_A3_Green","30Rnd_65x39_caseless_mag","30Rnd_65x39_caseless_black_mag_Tracer","3Rnd_HE_Grenade_shell"], 30],
+            ["MXM Kit", ["arifle_MXM_F","optic_AMS_snd","ACE_DBAL_A3_Green","30Rnd_65x39_caseless_mag","30Rnd_65x39_caseless_black_mag_Tracer"], 40],
+            ["MX LSW Kit", ["arifle_MX_SW_F","optic_Aco","ACE_DBAL_A3_Green","100Rnd_65x39_caseless_mag","100Rnd_65x39_caseless_mag_Tracer"], 45],
+            ["Stoner 99 Kit", ["LMG_Mk200_F","optic_Aco","ACE_DBAL_A3_Green","200Rnd_65x39_cased_Box","200Rnd_65x39_cased_Box_Tracer_Red"], 55],
+            ["FN Minimi Kit", ["LMG_03_F","optic_Aco","ACE_DBAL_A3_Green","200Rnd_556x45_Box_Tracer_Red_F"], 55]
         ]
     ],
     [
         "Gear",
         [
-            ["Gear Upgrade #1", "Box_NATO_Support_F", [["V_PlateCarrier1_rgr", 10], ["H_HelmetB_light_black", 10], ["H_HelmetB_light_desert", 10], ["H_HelmetB_light_grass", 10], ["H_HelmetB_light_sand", 10], ["U_B_CombatUniform_mcam_tshirt", 10], ["B_AssaultPack_cbr", 10], ["B_AssaultPack_rgr", 10], ["B_AssaultPack_khk", 10], ["ACE_NVG_Gen4_WP", 10], ["ACE_Vector", 10]], 75],
-            ["Gear Upgrade #2", "Box_NATO_Support_F", [["V_PlateCarrier2_rgr", 10], ["H_HelmetB", 10], ["H_HelmetB_snakeskin", 10], ["H_HelmetB_camo", 10], ["H_HelmetB_desert", 10], ["H_HelmetB_sand", 10], ["B_TacticalPack_mcamo", 10], ["B_TacticalPack_blk", 10], ["B_TacticalPack_oli", 10], ["ACE_NVG_Wide_WP", 10], ["ACE_MX2A", 10]], 125]
+            ["Gear Upgrade #1", ["V_PlateCarrier1_rgr","H_HelmetB_light_black","H_HelmetB_light_desert","H_HelmetB_light_grass","H_HelmetB_light_sand","U_B_CombatUniform_mcam_tshirt","B_AssaultPack_cbr","B_AssaultPack_rgr","B_AssaultPack_khk","ACE_NVG_Gen4_WP","ACE_Vector"], 75],
+            ["Gear Upgrade #2", ["V_PlateCarrier2_rgr","H_HelmetB","H_HelmetB_snakeskin","H_HelmetB_camo","H_HelmetB_desert","H_HelmetB_sand","B_TacticalPack_mcamo","B_TacticalPack_blk","B_TacticalPack_oli","ACE_NVG_Wide_WP","ACE_MX2A"], 125]
         ]
     ],
-
     [
         "Supplies",
         [
-            ["Storage Crate", "Box_NATO_Equip_F", [["30Rnd_65x39_caseless_mag", 5]],0],
-            ["Medical Supplies", "Box_NATO_AmmoOrd_F", [["ACE_fieldDressing", 40], ["ACE_elasticBandage", 40], ["ACE_packingBandage", 40], ["ACE_quikclot", 40], ["ACE_bodyBag", 20], ["ACE_epinephrine", 20], ["ACE_morphine", 20], ["Medikit", 1], ["ACE_painkillers", 20], ["ACE_personalAidKit", 5], ["ACE_salineIV", 20], ["ACE_salineIV_250", 20], ["ACE_salineIV_500", 20], ["ACE_splint", 20], ["ACE_surgicalKit", 20], ["ACE_suture", 20], ["ACE_tourniquet", 20]], 15]
+            ["Storage Kit", ["30Rnd_65x39_caseless_mag"], 0],
+            ["Medical Supplies", ["ACE_fieldDressing","ACE_elasticBandage","ACE_packingBandage","ACE_quikclot","ACE_bodyBag","ACE_epinephrine","ACE_morphine","Medikit","ACE_painkillers","ACE_personalAidKit","ACE_salineIV","ACE_salineIV_250","ACE_salineIV_500","ACE_splint","ACE_surgicalKit","ACE_suture","ACE_tourniquet"], 15]
         ]
     ],
-    // === NEW: Support Vehicles ===
     [
         "Vehicles",
         [
-            ["Hunter MRAP", "Box_NATO_AmmoVeh_F", ["VEHICLE", "B_MRAP_01_F"], 20],
-            ["Quadbike",     "Box_NATO_AmmoVeh_F", ["VEHICLE", "B_Quadbike_01_F"], 5],
-            ["HEMTT Transport", "Box_NATO_AmmoVeh_F", ["VEHICLE", "B_Truck_01_transport_F"], 35]
+            ["Hunter MRAP", ["VEHICLE","B_MRAP_01_F"], 20],
+            ["Quadbike", ["VEHICLE","B_Quadbike_01_F"], 5],
+            ["HEMTT Transport", ["VEHICLE","B_Truck_01_transport_F"], 35]
         ]
     ],
-
-    // === NEW: Static Weapons ===
     [
         "Turrets",
         [
-            ["HMG Turret", "Box_NATO_AmmoVeh_F", ["TURRET", "B_HMG_01_F"], 15],
-            ["GMG Turret", "Box_NATO_AmmoVeh_F", ["TURRET", "B_GMG_01_F"], 18],
-            ["AT Turret",  "Box_NATO_AmmoVeh_F", ["TURRET", "B_static_AT_F"], 25]
+            ["HMG Turret", ["TURRET","B_HMG_01_F"], 15],
+            ["GMG Turret", ["TURRET","B_GMG_01_F"], 18],
+            ["AT Turret",  ["TURRET","B_static_AT_F"], 25]
         ]
     ]
 ];
+
+
+
+

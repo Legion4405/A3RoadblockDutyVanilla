@@ -1,6 +1,7 @@
 /*
     File: ambientMortars.sqf
-    Description: Periodically spawns a temporary AI-manned mortar that fires 2–5 scattered shells at a random point near the checkpoint.
+    Description: Periodically spawns a temporary AI-manned mortar that fires 2–5 scattered HE shells at a random point near the checkpoint.
+                 At night, there is a 50% chance the mortar instead fires flares, with reduced spread (0–125m).
 */
 
 if (!isServer) exitWith {};
@@ -15,19 +16,30 @@ private _mortarSite = getMarkerPos "RB_MortarSite";
 
 while { true } do {
     // === Delay between mortar events (5–20 min)
-    private _delay = 300 + random 900;
+    private _delay = 180 + random 900;
     sleep _delay;
 
-    if (missionNamespace getVariable ["RB_RoadblockClosed", false]) then {
-        continue;
+    if (({isPlayer _x} count allPlayers) == 0) then { continue; };
+    if (missionNamespace getVariable ["RB_RoadblockClosed", false]) then { continue; };
+
+    private _isNight = (sunOrMoon < 0.2); // 0 = night, 1 = day
+    private _fireFlares = false;
+    private _ammoType = "8Rnd_82mm_Mo_shells";
+    private _radiusMin = 50;
+    private _radiusMax = 225;
+    private _roundCount = 2 + floor random 4; // 2–5 rounds
+
+    // === Nighttime flare logic ===
+    if (_isNight && {random 1 < 0.5}) then { // 50% chance at night
+        _fireFlares = true;
+        _ammoType = "8Rnd_82mm_Mo_Flare_white"; // Use "ACE_82mm_Flare" for ACE flares if desired
+        _radiusMin = 0;
+        _radiusMax = 125;
+        _roundCount = 3 + floor random 5; // 2–4 flares
+        diag_log "[RB] Mortar fires flares at night!";
     };
 
-    private _roundCount = 2 + floor random 4; // 2 to 5 rounds
-    private _ammoType = "8Rnd_82mm_Mo_shells";
-
-    // === Determine target center
-    private _radiusMin = 100;
-    private _radiusMax = 300;
+    // === Determine target center (still random, but not used for flares, kept for legacy logic)
     private _angle = random 360;
     private _distance = _radiusMin + random (_radiusMax - _radiusMin);
     private _strikeOffset = [_distance * cos _angle, _distance * sin _angle, 0];
@@ -44,30 +56,32 @@ while { true } do {
     _gunner moveInGunner _mortar;
     _gunner setBehaviour "COMBAT";
     _gunner setCombatMode "RED";
-    _gunner doWatch _strikeCenter;
+    _gunner doWatch _checkpoint;
 
-    // === Chance to trigger enemy attack
-    private _attackChance = ["RB_EnemyAttackChance", 50] call BIS_fnc_getParamValue;
-    private _roll = random 100;
+    // === Chance to trigger enemy attack (only for HE strikes)
+    if (!_fireFlares) then {
+        private _attackChance = ["RB_EnemyAttackChance", 50] call BIS_fnc_getParamValue;
+        private _roll = random 100;
 
-    if (_roll < _attackChance) then {
-        diag_log "[RB] Mortar strike triggered enemy attack!";
-        [] spawn RB_fnc_spawnEnemyAttack;
-
-        if (random 1 < 0.5) then {
-            diag_log "[RB] A second enemy wave is joining the assault!";
+        if (_roll < _attackChance) then {
+            diag_log "[RB] Mortar strike triggered enemy attack!";
             [] spawn RB_fnc_spawnEnemyAttack;
+
+            if (random 1 < 0.5) then {
+                diag_log "[RB] A second enemy wave is joining the assault!";
+                [] spawn RB_fnc_spawnEnemyAttack;
+            };
+        } else {
+            diag_log "[RB] No enemy attack triggered.";
         };
-    } else {
-        diag_log "[RB] No enemy attack triggered.";
     };
 
-    // === Fire rounds
+    // === Fire rounds (HE or flares)
     for "_i" from 1 to _roundCount do {
-        private _spread = 15 + random 25;
-        private _offset = [random [-_spread, 0, _spread], random [-_spread, 0, _spread], 0];
-        private _target = _strikeCenter vectorAdd _offset;
-
+        private _angle = random 360;
+        private _distance = _radiusMin + random (_radiusMax - _radiusMin);
+        private _offset = [_distance * cos _angle, _distance * sin _angle, 0];
+        private _target = _checkpoint vectorAdd _offset;
         _mortar doArtilleryFire [_target, _ammoType, 1];
         sleep (2 + random 1.5);
     };
@@ -76,7 +90,6 @@ while { true } do {
     [_mortar, _gunner] spawn {
         params ["_mortar", "_gunner"];
         sleep 10;
-
         if (!isNull _mortar) then { deleteVehicle _mortar };
         if (!isNull _gunner) then { deleteVehicle _gunner };
         diag_log "[RB] Mortar and crew deleted.";

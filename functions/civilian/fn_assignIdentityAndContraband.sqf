@@ -1,12 +1,8 @@
 params ["_civ"];
 
-if (isNil "RB_ActiveIdentityPool" || {RB_ActiveIdentityPool isEqualTo []}) exitWith {
-    diag_log "[RB] ERROR: Identity pool not set. Aborting identity assignment.";
-};
-
 // === Identity
-private _chosenID = selectRandom RB_ActiveIdentityPool;
-_civ setIdentity _chosenID;
+//private _chosenID = selectRandom RB_ActiveIdentityPool;
+//_civ setIdentity _chosenID;
 
 sleep 0.1;
 private _name = name _civ;
@@ -15,17 +11,14 @@ private _origin = selectRandom nearestLocations [getPos _civ, ["NameCityCapital"
 private _originName = if (!isNull _origin) then { text _origin } else { "Unknown" };
 
 private _dob = selectRandom [
-    "1986-01-22", "1992-07-14", "1990-04-05", "1988-11-30",
-    "1995-06-17", "1983-03-02", "1991-12-10", "1996-08-25"
+    "1986-01-22", "1992-07-14", "1990-04-05", "1988-11-30", "1995-06-17", "1983-03-02", "1991-12-10", "1996-08-25", "1978-10-12", "1980-02-28",
+    "1993-09-07", "1984-12-15", "1987-05-23", "1994-04-19", "1990-01-09", "1975-11-03", "1997-06-30", "1979-08-18", "1981-03-21", "1985-07-11",
+    "1992-12-27", "1989-09-13", "1977-10-05", "1998-02-06", "1999-04-14", "1974-06-09", "1993-11-20", "1982-08-03", "1990-05-30", "1986-10-01",
+    "1995-03-25", "1991-07-17", "1972-12-08", "1976-09-22", "1988-06-16", "1994-05-07", "1973-04-27", "1985-02-13", "1996-01-19", "1997-08-12",
+    "1998-10-29", "1980-03-10", "1979-05-04", "1993-01-26", "1982-07-31", "1999-12-03", "1971-11-14", "1990-09-08", "1987-06-06", "1984-03-15"
 ];
 
 private _prefix = "ID";
-if (!isNil "RB_ActiveIdentityPool" && {count RB_ActiveIdentityPool > 0}) then {
-    private _firstID = RB_ActiveIdentityPool select 0;
-    if (_firstID find "RB_Civ_GR_" == 0) then { _prefix = "GR" };
-    if (_firstID find "RB_Civ_AF_" == 0) then { _prefix = "AF" };
-    if (_firstID find "RB_Civ_EU_" == 0) then { _prefix = "EU" };
-};
 
 private _idCode = _prefix + "-";
 for "_i" from 1 to 7 do {

@@ -1,3 +1,15 @@
+briefingName = "Roadblock Duty Malden";
+missionName = "Roadblock Duty Malden";
+onLoadName = "Roadblock Duty";
+missionAuthor = "Legion4405";
+missionOverview = "Operate a roadblock, by yourself or with friends.";
+loadScreen = "images\loadscreen.paa";
+onLoadIntro = "Defend the roadblock";
+
+overviewPicture = "images\loadscreen.paa";
+previewImage = "images\loadscreen.paa";
+previewFootage = 1;
+
 respawn = "BASE";                      // Respawn at custom position
 respawnDelay = 1;
 respawnOnStart = -1;
@@ -5,89 +17,22 @@ respawnTemplates[] = { "MenuPosition", "Tickets" };
 respawnUnlimited = 0;    
 showScoretable = 0;
 
+class Header {
+    gameType = "Coop";
+    minPlayers = 1;
+    maxPlayers = 10;
+};
+
+
 
 class CfgFunctions {
-    #include "cfgFunctions.hpp"
+    #include "cfg\cfgFunctions.hpp"
 };
-
-class CfgIdentities {
-    #include "identities\RB_CivIdentities_Greek.hpp"
-    #include "identities\RB_CivIdentities_African.hpp"
-    #include "identities\RB_CivIdentities_European.hpp"
-};
-
 class Params {
-    class RB_IdentityPool {
-        title = "Civilian Identity Set";
-        values[] = {0, 1, 2};
-        texts[] = {"Greek (Malden)", "African", "Eastern European"};
-        default = 0;
-    };
-
-    class RB_CivilianPool {
-        title = "Civilian Class Pool";
-        values[] = {0, 1, 2, 3};
-        texts[] = {"Vanilla", "CUP Civilians", "3CB Civilians", "SOG PF"};
-        default = 0;
-    };
-
-    class RB_CivilianVehiclePool {
-        title = "Civilian Vehicle Pool";
-        values[] = {0, 1, 2, 3, 4};
-        texts[] = {"Vanilla", "CUP Vehicles", "3CB Civ Vehicles", "SOG PF Vehicles", "RDS Western"};
-        default = 4;
-    };
-
-    class RB_EnemyFaction {
-        title = "Enemy Infantry Pool";
-        values[] = {0, 1, 2, 3};
-        texts[] = {"FIA Insurgents", "CUP Insurgents", "3CB Takistan", "SOG VC"};
-        default = 0;
-    };
-
-    class RB_EnemyVehiclePool {
-        title = "Enemy Vehicle Pool";
-        values[] = {0, 1, 2, 3};
-        texts[] = {"Vanilla", "CUP Technicals", "3CB UAZ/Hilux", "SOG Armed Trucks"};
-        default = 0;
-    };
-        class RB_RespawnCost {
-        title = "Respawn Point Cost";
-        values[] = {0,10,15,20,25,50,75,100};
-        texts[]  = {"Free", "10", "15", "20", "25", "50", "75", "100"};
-        default = 25;
-    };
-    class RB_EnableMortars {
-        title = "Enable Ambient Mortar Strikes";
-        values[] = {0, 1};
-        texts[] = {"Disabled", "Enabled"};
-        default = 1;
-    };
-        class RB_EnemyAttackChance {
-        title = "Enemy Attack Chance After Mortar Strike";
-        values[] = {0, 25, 50, 75, 100};
-        texts[] = {"0% (Disabled)", "25%", "50%", "75%", "100%"};
-        default = 50;
-    };
-    class RB_Intensity {
-        title = "Roadblock Intensity";
-        values[] = {0, 1, 2, 3};
-        texts[] = {"Low", "Medium", "High", "Very High"};
-        default = 3;
-    };
-    class RB_EnemyAttackIntensity {
-        title = "Enemy Attack Frequency";
-        values[] = {0, 1, 2, 3};
-        texts[] = {"Low", "Medium", "High", "Very High"};
-        default = 1;
-    };
-    class RB_EnemyVehicleFrequency {
-        title = "Enemy Vehicle Frequency";
-        values[] = {0, 1, 2, 3};
-        texts[] = {"Low", "Medium", "High", "Very High"};
-        default = 1;
-    };
+    #include "cfg\cfgParams.hpp"
 };
+
+
 
 class CfgDebriefing {
     class END1 {

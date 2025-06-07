@@ -22,7 +22,7 @@ if (_wasCivilian) then {
         private _isHostile = _unit getVariable ["rb_isHostile", false];
         private _scoreDelta = if (_isHostile) then { 5 } else { -10 };
 
-        private _score = _killer getVariable ["rb_score", 0];
+        private _score = RB_Terminal getVariable ["rb_score", 0];
         private _newScore = _score + _scoreDelta;
         RB_Terminal setVariable ["rb_score", _newScore, true];
 

@@ -49,33 +49,16 @@ private _actionSearch = [
 private _actionRelease = [
     "RB_Civ_Release",
     "Mark as Processed",
-    "ui\icons\icon_civprocessed.paa",  // Placeholder icon
+    "ui\icons\icon_civprocessed.paa",
     {
         params ["_target", "_player"];
-        _target setVariable ["rb_isProcessed", true, true];
-
-        // Allow AI to move again
-        unassignVehicle _target;
-        [_target] allowGetIn false;
-        _target enableAI "MOVE";
-        _target stop false;
-        doStop _target;
-
-        private _dest = getMarkerPos "RB_ProcessPoint";
-        if (_dest isEqualTo [0,0,0]) exitWith {
-            diag_log "[RB] ERROR: Marker 'RB_ProcessPoint' does not exist.";
-        };
-
-        _target setSpeedMode "LIMITED";
-        _target setBehaviour "CARELESS";
-        _target doMove _dest;
-
-        systemChat format ["Civilian %1 marked as processed.", name _target];
+        [_target] remoteExec ["RB_fnc_processCivilian", 2];
     },
     {
         alive _target && { isNull objectParent _target }
     }
 ] call ace_interact_menu_fnc_createAction;
+
 
 // === Add all to submenu
 [_civ, 0, ["ACE_MainActions", "RB_Civ_Interactions"], _actionCheckID] call ace_interact_menu_fnc_addActionToObject;

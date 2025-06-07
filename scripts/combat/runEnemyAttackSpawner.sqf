@@ -18,6 +18,7 @@ private _delayRange = switch (_intensity) do {
 while { true } do {
     private _delay = (_delayRange#0) + random (_delayRange#1 - _delayRange#0);
     sleep _delay;
+    if (({isPlayer _x} count allPlayers) == 0) then { continue; };
      if (missionNamespace getVariable ["RB_RoadblockClosed", false]) then {
         continue;
     };   

@@ -3,12 +3,15 @@
     Description: Selects 3–5 random banned towns, updates map markers and player briefings.
 */
 
-if (!isServer) exitWith {};
-
 // === Step 1: 30-second warning
-"Restricted zones will update in 10 seconds." call CBA_fnc_notify;
+if (hasInterface) then {
+    ["Restricted zones will update in 10 seconds."] remoteExec ["hintSilent", 0];
+    sleep 5;
+    [""] remoteExec ["hintSilent", 0];
 
+};
 sleep 10;
+if (!isServer) exitWith {};
 
 // === Step 2: Gather all towns
 private _allTowns = nearestLocations [
@@ -53,24 +56,3 @@ diag_log format ["[RB] Updated Banned Towns: %1", _bannedTowns];
         _marker setMarkerText format ["⚠ Restricted Area: %1", _name];
     };
 } forEach _allTowns;
-
-// === Step 6: Update diary under a fresh subject "Lockdown Locations"
-["RB_BannedTowns_UpdateDiary", {
-    private _subjectID = "RB_Lockdown";
-    private _subjectName = "Lockdown Locations";
-    private _recordTitle = "Restricted Towns";
-
-    // Clear and recreate the subject to remove any old entries
-    player removeDiarySubject _subjectID;
-    player createDiarySubject [_subjectID, _subjectName];
-
-    // Build the diary text
-    private _bannedList = (missionNamespace getVariable ["RB_BannedTowns", []]) joinString "<br/>• ";
-    private _text = format [
-        "<t size='1.2' font='PuristaBold'>The following towns are currently restricted:</t><br/><br/>• %1",
-        _bannedList
-    ];
-
-    // Add the single updated record
-    player createDiaryRecord [_subjectID, [_recordTitle, _text]];
-}] remoteExec ["call", 0];

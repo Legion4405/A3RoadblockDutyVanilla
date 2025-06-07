@@ -133,20 +133,11 @@ private _actionOrderOut = [
     "ui\icons\icon_orderout.paa",
     {
         params ["_target"];
-        {
-            if (alive _x && vehicle _x == _target) then {
-                _x action ["GetOut", _target];
-                _x disableAI "MOVE";
-                _x stop true;
-                doStop _x;
-                _x doFollow objNull;
-                _x setVariable ["rb_preventReentry", true, true];
-                _x setVariable ["rb_vehicle", nil, true];
-            };
-        } forEach crew _target;
+        [_target] remoteExec ["RB_fnc_orderOccupantsOut", 2]; // Server only
     },
     { alive _target && { crew _target isNotEqualTo [] } }
 ] call ace_interact_menu_fnc_createAction;
+
 
 // === Action: Mark as Processed
 private _actionProcess = [

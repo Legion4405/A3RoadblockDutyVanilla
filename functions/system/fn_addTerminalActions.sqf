@@ -3,17 +3,23 @@
     Description: Adds ACE interaction options to the terminal. MP + JIP Safe Version
 */
 
+// --- Robust variable acquisition at very top
 params ["_object"];
+if (isNull _object) then {
+    // Try to find by variable name (for JIP, editor objects)
+    _object = missionNamespace getVariable ["RB_Terminal", objNull];
+    if (isNull _object) exitWith { systemChat "[RB] Terminal object not found!"; };
+};
+
+// --- Run only on clients with interface
+if (!hasInterface) exitWith {};
 if (isNull _object) exitWith {};
 
-// Only run once per client
+// --- Only run once per client
 if (_object getVariable ["rb_hasActions", false]) exitWith {};
-_object setVariable ["rb_hasActions", true, true]; // sync across clients
+_object setVariable ["rb_hasActions", true, false];
 
-// Wait until client has interface (JIP safety)
-if (!hasInterface) exitWith {};
-
-// === Central function to safely register an action
+// --- Central function to safely register an action
 private _addAction = {
     params ["_obj", "_path", "_action"];
     [_obj, 0, _path, _action] call ace_interact_menu_fnc_addActionToObject;
@@ -49,8 +55,7 @@ private _scoreAction = [
 private _menus = [
     ["RB_Terminal_Management", "Roadblock Management"],
     ["RB_Terminal_Logistics", "Logistics"],
-    ["RB_Terminal_Admin", "Admin Tools"],
-    ["RB_Terminal_SaveCategory", "Save System"]
+    ["RB_Terminal_Admin", "Admin Tools"]
 ];
 
 {
@@ -67,17 +72,7 @@ private _menus = [
     [_object, ["ACE_MainActions"], _menu] call _addAction;
 } forEach _menus;
 
-// === Save Progress Placeholder
-private _actionSaveProgress = [
-    "RB_Terminal_SaveProgress",
-    "Save Progress",
-    "ui\icons\icon_save.paa",
-    { hint "💾 Save feature coming soon!"; },
-    { true }
-] call ace_interact_menu_fnc_createAction;
-[_object, ["ACE_MainActions", "RB_Terminal_SaveCategory"], _actionSaveProgress] call _addAction;
-
-// === Logistics Menu (Dynamic)
+// === Logistics Menu (Dynamic, New Array Format)
 {
     private _category     = _x select 0;
     private _optionsArray = _x select 1;
@@ -95,8 +90,8 @@ private _actionSaveProgress = [
 
     {
         private _index = _forEachIndex;
-        private _label     = _x select 0;
-        private _cost      = _x select 3;
+        private _label = _x select 0;
+        private _cost  = _x select 2;
 
         private _action = [
             format ["RB_Log_Request_%1_%2", _category, _index],
@@ -116,9 +111,10 @@ private _actionSaveProgress = [
     } forEach _optionsArray;
 } forEach (missionNamespace getVariable ["RB_LogisticsOptions", []]);
 
+// === Submenus
 [_object] call RB_fnc_addAdminActions;
 [_object] call RB_fnc_addManagementActions;
+[_object] call RB_fnc_addPersistenceActions;
 
-
-// ✅ Make sure you remoteExec this function in init.sqf like so:
+// ✅ Recommended call (as you note):
 // [_terminal] remoteExec ["RB_fnc_addTerminalActions", 0, true];

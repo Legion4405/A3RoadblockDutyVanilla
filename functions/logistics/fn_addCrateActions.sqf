@@ -7,13 +7,13 @@ params ["_crate"];
 
 if (isNull _crate) exitWith {};
 if (_crate getVariable ["rb_hasActions", false]) exitWith {};
-_crate setVariable ["rb_hasActions", true];
+_crate setVariable ["rb_hasActions", true, true];
 
 // === Destroy Crate Action
 private _action = [
     "RB_DestroyCrate",
     "Destroy Crate",
-    "ui\\icons\\icon_impound.paa",
+    "ui\icons\icon_impound.paa",
     {
         params ["_target", "_player"];
         deleteVehicle _target;

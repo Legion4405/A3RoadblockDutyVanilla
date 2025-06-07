@@ -19,7 +19,7 @@ while { true } do {
     private _numAlive = count _alivePlayers;
 
     if (_numAlive == 0 && { _score < _respawnCost }) then {
-        ["end1", true] call BIS_fnc_endMission;
+        ["end1", false] call BIS_fnc_endMission;
         break;
     };
 };
