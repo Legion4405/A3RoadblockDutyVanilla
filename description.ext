@@ -1,5 +1,6 @@
+author = "Legion4405";
 briefingName = "Roadblock Duty Malden";
-missionName = "Roadblock Duty Malden";
+missionName = "Roadblock Duty";
 onLoadName = "Roadblock Duty";
 missionAuthor = "Legion4405";
 missionOverview = "Operate a roadblock, by yourself or with friends.";

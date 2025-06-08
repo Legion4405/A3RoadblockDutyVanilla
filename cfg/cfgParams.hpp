@@ -83,3 +83,9 @@ class RB_AmbientAir {
     texts[] = {"Disabled", "Custom", "NATO", "Apex Gendarmerie", "UNA"};
     default = 3;
 };
+class RB_CleanupTimeout {
+    title = "Vehicle Waiting Timeout Time";
+    values[] = {2,3,4,5,6,7,8};
+    texts[] = {"2 minutes","3 minutes","4 minutes (default)","5 minutes","6 minutes","7 minutes","8 minutes"};
+    default = 4;
+};

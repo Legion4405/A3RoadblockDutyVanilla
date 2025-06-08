@@ -1,5 +1,6 @@
 // File: initPlayerLocal.sqf
 // Runs for every client, including JIP, after mission start
+[] execVM "scripts\system\initBriefing.sqf";
 
 // --- 1. Wait for arsenal unlocks to be set by the server
 waitUntil { !isNil "RB_ArsenalUnlocks" };

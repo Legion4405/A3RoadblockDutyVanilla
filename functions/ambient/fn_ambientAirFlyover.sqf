@@ -1,12 +1,10 @@
 /*
     File: fn_ambientAirFlyover.sqf
-    Description: Spawns random rotary or fixed-wing flyovers every 5-20 minutes using pools set up in initServer.sqf.
-    Has a 25% chance to spawn a close “pair” formation.
+    Description: Spawns random rotary or fixed-wing flyovers every 5–20 minutes using pools set up in initServer.sqf.
+    Has a 25% chance to spawn a close “pair” formation—each aircraft and its pilot/group is individually cleaned up on exit, death, or timeout.
 */
 
 if (!isServer) exitWith {};
-
-//systemChat "[RB] Ambient Air Flyover script started. Waiting for air pools...";
 
 // Wait for pools to be present and arrays
 waitUntil {
@@ -26,8 +24,7 @@ if (_roadblock isEqualTo [0,0,0]) exitWith { systemChat "[RB] Marker 'RB_Checkpo
 
 // Main loop
 while {true} do {
-    private _delay = 60 + (random 600); // 5-20 min
-    //systemChat format ["[RB] Next flyover in %1 seconds.", round _delay];
+    private _delay = 15 + (random 15); // 5–20 min
     sleep _delay;
 
     // Check if pools are still valid
@@ -35,7 +32,7 @@ while {true} do {
     private _canPlane = (count _fixed  > 0);
     if (!_canHeli && !_canPlane) exitWith { systemChat "[RB] Both pools empty during runtime, script stopping."; };
 
-    // Type selection (robust for SQF scoping!)
+    // Type selection
     private _isHeli = false;
     private _pool = [];
     if (_canHeli && _canPlane) then {
@@ -52,89 +49,93 @@ while {true} do {
     if (isNil "_class" || {_class == ""}) then { systemChat "[RB] Pool contained no valid class, skipping."; continue; };
 
     // --- 25% chance for a pair/formation ---
-    private _count = if (random 1 < 0.25) then {2} else {1};
-    //systemChat format ["[RB] Spawning %1 %2: %3", _count, if (_isHeli) then {"helicopter(s)"} else {"jet(s)"}, _class];
+    private _count = if (random 1 < 0.99) then {2} else {1};
 
-    // Random formation offset (for 2nd plane, 15-25 meters, random angle relative to leader)
+    // === Calculate shared flight path once ===
+    private _spawnDist = 10000;
+    private _exitDist  = 10000;
+    private _dir = random 360;
+
+    // Formation offsets (relative to leader)
     private _formationAngle = random 360;
-    private _formationDist  = 15 + random 10; // 15–25m
+    private _formationDist  = 15 + random 10;
     private _formationOffset = [
         _formationDist * cos _formationAngle,
         _formationDist * sin _formationAngle,
         0
-    ]; // Used only for wingman
+    ];
+
+    private _flybyDir   = _dir + (random 60 - 30); // scatter up to 30deg
+    private _flybyDist  = 3000 + random 3000;      // 3km–6km
+
+    // Leader's route
+    private _spawnPos_lead = [
+        (_roadblock select 0) + _spawnDist * cos _dir,
+        (_roadblock select 1) + _spawnDist * sin _dir,
+        0
+    ];
+    private _flybyPos_lead = [
+        (_roadblock select 0) + _flybyDist * cos _flybyDir,
+        (_roadblock select 1) + _flybyDist * sin _flybyDir,
+        0
+    ];
+    private _exitDir = _dir + 180;
+    private _exitPos_lead = [
+        (_roadblock select 0) + _exitDist * cos _exitDir,
+        (_roadblock select 1) + _exitDist * sin _exitDir,
+        0
+    ];
+
+    // Wingman's route (same heading, offset applied throughout)
+    private _spawnPos_wing = _spawnPos_lead vectorAdd _formationOffset;
+    private _flybyPos_wing = _flybyPos_lead vectorAdd _formationOffset;
+    private _exitPos_wing  = _exitPos_lead vectorAdd _formationOffset;
+
+    // Altitudes
+    private _spawnAlt = if (_isHeli) then { 80 + random 60 } else { 400 + random 350 };
+    private _flybyAlt = if (_isHeli) then { 70 + random 50 } else { 350 + random 200 };
+    private _exitAlt  = if (_isHeli) then { 80 + random 60 } else { 400 + random 350 };
+
+    _spawnPos_lead set [2, _spawnAlt];   _flybyPos_lead set [2, _flybyAlt];   _exitPos_lead set [2, _exitAlt];
+    _spawnPos_wing set [2, _spawnAlt];   _flybyPos_wing set [2, _flybyAlt];   _exitPos_wing set [2, _exitAlt];
+
+    // Now spawn each aircraft with matching routes, collect for group cleanup
+    private _aircraft = [];
+    private _groups   = [];
+    private _pilots   = [];
+    private _exitPoss = [];
 
     for "_i" from 0 to (_count - 1) do {
-        // 0 for leader, offset for wingman
-        private _thisOffset = if (_i == 0) then {[0,0,0]} else {_formationOffset};
+        private _isLeader = (_i == 0);
+        private _spawnPos = if (_isLeader) then {_spawnPos_lead} else {_spawnPos_wing};
+        private _flybyPos = if (_isLeader) then {_flybyPos_lead} else {_flybyPos_wing};
+        private _exitPos  = if (_isLeader) then {_exitPos_lead}  else {_exitPos_wing};
 
-        // === Calculate spawn/waypoint positions (all 10km out, all 3-6km flyby, all with offset)
-        private _spawnDist = 10000;
-        private _exitDist  = 10000;
-        private _dir = random 360;
-
-        private _spawnPos = [
-            (_roadblock select 0) + _spawnDist * cos _dir + (_thisOffset select 0),
-            (_roadblock select 1) + _spawnDist * sin _dir + (_thisOffset select 1),
-            0
-        ];
-
-        // Waypoint 1: 3000–6000m from checkpoint, random scatter, same offset
-        private _flybyDir   = _dir + (random 60 - 30); // scatter up to 30deg
-        private _flybyDist  = 3000 + random 3000;      // 3km–6km
-        private _flybyPos   = [
-            (_roadblock select 0) + _flybyDist * cos _flybyDir + (_thisOffset select 0),
-            (_roadblock select 1) + _flybyDist * sin _flybyDir + (_thisOffset select 1),
-            0
-        ];
-
-        // Waypoint 2: exit, far side of map, same offset
-        private _exitDir = _dir + 180;
-        private _exitPos = [
-            (_roadblock select 0) + _exitDist * cos _exitDir + (_thisOffset select 0),
-            (_roadblock select 1) + _exitDist * sin _exitDir + (_thisOffset select 1),
-            0
-        ];
-
-        // Altitudes
-        private _spawnAlt = if (_isHeli) then { 80 + random 60 } else { 400 + random 350 };
-        private _flybyAlt = if (_isHeli) then { 70 + random 50 } else { 350 + random 200 };
-        private _exitAlt  = if (_isHeli) then { 80 + random 60 } else { 400 + random 350 };
-
-        // Set Z/ASL for each
-        _spawnPos set [2, _spawnAlt];
-        _flybyPos set [2, _flybyAlt];
-        _exitPos  set [2, _exitAlt];
-
-        // === Spawn aircraft as civilian, set heading toward checkpoint
         private _side = civilian;
         private _grp  = createGroup _side;
         private _veh  = createVehicle [_class, _spawnPos, [], 0, "FLY"];
         if (isNull _veh) exitWith { systemChat format ["[RB] Failed to spawn vehicle class: %1", _class]; };
 
         _veh setPosASL _spawnPos;
-        // Set vehicle rotation toward checkpoint
         private _heading = [_spawnPos, _roadblock] call BIS_fnc_dirTo;
         _veh setDir _heading;
-
         _veh setVelocityModelSpace [80 + random 20, 0, 0];
         _veh setCaptive true;
         _veh engineOn true;
         private _desiredHeight = if (_isHeli) then {70 + random 40} else {350 + random 200};
         _veh flyInHeight _desiredHeight;
 
-        // Crew (only pilot needed)
+        // Crew
         private _crewClass = getText (configFile >> "CfgVehicles" >> _class >> "crew");
         if (_crewClass == "") then { _crewClass = "C_man_pilot_F"; }; // Civilian pilot fallback
         private _crewman = _grp createUnit [_crewClass, _spawnPos, [], 0, "NONE"];
         _crewman moveInDriver _veh;
 
-        // Set group/crew/vehicle behaviour to CARELESS
         _grp setBehaviour "CARELESS";
         { _x setBehaviour "CARELESS" } forEach (units _grp);
         _veh setBehaviour "CARELESS";
 
-        // Add waypoints: flyby (3–6km), then exit, both with offset
+        // Add waypoints—identical except for the offset
         private _wp1 = _grp addWaypoint [_flybyPos, 0];
         _wp1 setWaypointType "MOVE";
         _wp1 setWaypointSpeed "FULL";
@@ -145,17 +146,35 @@ while {true} do {
         _wp2 setWaypointSpeed "FULL";
         _wp2 setWaypointBehaviour "CARELESS";
 
-        // Delete after reaching exit WP, or after 6 minutes, or if vehicle dies
-        [_veh, _grp, _crewman, _exitPos] spawn {
-            params ["_v", "_g", "_p", "_exit"];
-            private _timeout = time + 360;
+        // Collect for group despawn
+        _aircraft pushBack _veh;
+        _groups   pushBack _grp;
+        _pilots   pushBack _crewman;
+        _exitPoss pushBack _exitPos;
+    };
+
+    // For each aircraft, monitor both flyby and exit waypoint positions
+    for "_j" from 0 to ((count _aircraft) - 1) do {
+        private _veh     = _aircraft select _j;
+        private _grp     = _groups select _j;
+        private _pilot   = _pilots select _j;
+        private _exitPos = _exitPoss select _j;
+        private _timeout = time + 360;
+
+        [_veh, _grp, _pilot, _exitPos, _timeout] spawn {
+            params ["_veh", "_grp", "_pilot", "_exitPos", "_timeout"];
             waitUntil {
-                sleep 3;
-                (!alive _v) || (!alive _p) || ((getPosASL _v) distance _exit < 250) || (time > _timeout)
+                sleep 2;
+                (!alive _veh)
+                || (!alive _pilot)
+                || ((getPosASL _veh) distance _exitPos < 1500)
+                || (time > _timeout)
             };
-            if (!isNull _v) then { deleteVehicle _v; };
-            if (!isNull _g) then { deleteGroup _g; };
-            if (!isNull _p) then { deleteVehicle _p; };
+            if (!isNull _veh) then { deleteVehicle _veh; };
+            if (!isNull _grp) then { deleteGroup _grp; };
+            if (!isNull _pilot) then { deleteVehicle _pilot; };
         };
     };
+
+
 };

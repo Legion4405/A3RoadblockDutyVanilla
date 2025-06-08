@@ -2,6 +2,8 @@
     File: fn_runCheckpointSpawner.sqf
     Description: Continuously spawns checkpoint entities (civilian or vehicle) at intervals based on intensity level.
 */
+private _cleanupTimeoutMinutes = ["RB_CleanupTimeout", 4] call BIS_fnc_getParamValue;
+private _cleanupTimeoutSeconds = _cleanupTimeoutMinutes * 60;
 
 private _intensity = ["RB_Intensity", 1] call BIS_fnc_getParamValue;
 
@@ -82,97 +84,114 @@ while { true } do {
         };
     } else {
         // === Civilian vehicle
-        private _spawn = getMarkerPos "RB_VehSpawn";
-        private _vehPool = missionNamespace getVariable ["RB_ActiveVehiclePool", ["C_Offroad_01_F"]];
-        private _vehClass = selectRandom _vehPool;
+    private _spawn = getMarkerPos "RB_VehSpawn";
+    private _vehPool = missionNamespace getVariable ["RB_ActiveVehiclePool", ["C_Offroad_01_F"]];
+    private _vehClass = selectRandom _vehPool;
 
-        private _veh = [_spawn, _vehClass] call RB_fnc_spawnCivilianVehicle;
-        _veh setDir (_spawn getDir (getMarkerPos "RB_VehSpawnDir"));
+    // Spawn the vehicle and civilians (let your spawn function handle passengers, or do it here)
+    private _veh = [_spawn, _vehClass] call RB_fnc_spawnCivilianVehicle;
+    _veh setDir (_spawn getDir (getMarkerPos "RB_VehSpawnDir"));
 
-        private _driver = driver _veh;
+    private _crew = crew _veh;
+    private _linkedCivilians = +_crew; // Start with those in vehicle
 
-        if (isNull _driver) then {
-            { if (alive _x) then { deleteVehicle _x }; } forEach crew _veh;
-            deleteVehicle _veh;
+    // If you spawn additional passengers separately, add them to this array:
+    // _linkedCivilians append _extraCiviliansArray;
 
-            missionNamespace setVariable ["RB_CurrentEntity", nil, true];
-            missionNamespace setVariable ["RB_SpawnerRunning", false, true];
-            diag_log "[RB] Vehicle spawned without a driver — cleaned up.";
-            continue;
+    // Store linked civilians on the vehicle
+    _veh setVariable ["rb_linkedCivilians", _linkedCivilians, true];
+
+    private _driver = driver _veh;
+
+    if (isNull _driver) then {
+        { if (alive _x) then { deleteVehicle _x }; } forEach (crew _veh);
+        { if (alive _x) then { deleteVehicle _x }; } forEach (_veh getVariable ["rb_linkedCivilians", []]);
+        deleteVehicle _veh;
+
+        missionNamespace setVariable ["RB_CurrentEntity", nil, true];
+        missionNamespace setVariable ["RB_SpawnerRunning", false, true];
+        diag_log "[RB] Vehicle spawned without a driver — cleaned up.";
+        continue;
+    };
+
+    _driver setBehaviour "CARELESS";
+    _driver setSpeedMode "LIMITED";
+    _driver doMove _holdPos;
+
+    missionNamespace setVariable ["RB_CurrentEntity", _veh, true];
+
+    // Timeout/arrival logic with proper cleanup
+    [_veh, _holdPos, _timeoutSeconds] spawn {
+        params ["_entity", "_dest", "_timeout"];
+        private _arrived = false;
+
+        for "_i" from 1 to _timeout do {
+            sleep 1;
+            if (isNull _entity) exitWith {};
+            if (_entity distance2D _dest < 10) exitWith { _arrived = true };
+            if (!alive _entity) exitWith {};
         };
 
-        _driver setBehaviour "CARELESS";
-        _driver setSpeedMode "LIMITED";
-        _driver doMove _holdPos;
+        if (isNull _entity || {!_arrived || !alive _entity}) then {
+            // Clean up all crew and linked civilians (even if not in car)
+            private _civs = _entity getVariable ["rb_linkedCivilians", []];
+            { if (alive _x) then { deleteVehicle _x }; } forEach (crew _entity);
+            { if (alive _x) then { deleteVehicle _x }; } forEach _civs;
+            deleteVehicle _entity;
 
-        missionNamespace setVariable ["RB_CurrentEntity", _veh, true];
+            missionNamespace setVariable ["RB_CurrentEntity", nil, true];
+            diag_log "[RB] Vehicle failed to arrive. Retrying.";
+        } else {
+            _entity setVariable ["readyForProcessing", true, true];
 
-        [_veh, _holdPos, _timeoutSeconds] spawn {
-            params ["_entity", "_dest", "_timeout"];
-            private _arrived = false;
-
-            for "_i" from 1 to _timeout do {
-                sleep 1;
-                if (isNull _entity) exitWith {};
-                if (_entity distance2D _dest < 10) exitWith { _arrived = true };
-                if (!alive _entity) exitWith {};
+            // Honk after 90 if not processed
+            [_entity] spawn {
+                params ["_veh"];
+                sleep 90;
+                if (!isNull _veh && {!(_veh getVariable ["rb_isProcessed", false])}) then {
+                    private _driver = driver _veh;
+                    if (!isNull _driver) then {
+                        private _hornWep = currentWeapon _veh;
+                        _driver forceWeaponFire [_hornWep, _hornWep];
+                        sleep 3;
+                        _driver forceWeaponFire [_hornWep, _hornWep];
+                    };
+                };
+            };
+            // Honk after 180 if not processed
+            [_entity] spawn {
+                params ["_veh"];
+                sleep 180;
+                if (!isNull _veh && {!(_veh getVariable ["rb_isProcessed", false])}) then {
+                    private _driver = driver _veh;
+                    if (!isNull _driver) then {
+                        private _hornWep = currentWeapon _veh;
+                        _driver forceWeaponFire [_hornWep, _hornWep];
+                        sleep 3;
+                        _driver forceWeaponFire [_hornWep, _hornWep];
+                        sleep 3;
+                        _driver forceWeaponFire [_hornWep, _hornWep];
+                    };
+                };
             };
 
-            if (isNull _entity || {!_arrived || !alive _entity}) then {
-                { if (alive _x) then { deleteVehicle _x }; } forEach crew _entity;
-                deleteVehicle _entity;
+            // Cleanup after 180 idle
+            [_entity] spawn {
+                params ["_veh"];
+                sleep 240;
+                if (!isNull _veh && {!(_veh getVariable ["rb_isProcessed", false])}) then {
+                    // Clean up all crew and linked civilians (even if not in car)
+                    private _civs = _veh getVariable ["rb_linkedCivilians", []];
+                    { if (alive _x) then { deleteVehicle _x }; } forEach (crew _veh);
+                    { if (alive _x) then { deleteVehicle _x }; } forEach _civs;
+                    deleteVehicle _veh;
 
-                missionNamespace setVariable ["RB_CurrentEntity", nil, true];
-                diag_log "[RB] Vehicle failed to arrive. Retrying.";
-            } else {
-                _entity setVariable ["readyForProcessing", true, true];
-
-                // Honk after 90 if not processed
-                [_entity] spawn {
-                    params ["_veh"];
-                    sleep 90;
-                    if (!isNull _veh && {!(_veh getVariable ["rb_isProcessed", false])}) then {
-                        private _driver = driver _veh;
-                        if (!isNull _driver) then {
-                            private _hornWep = currentWeapon _veh;
-                            _driver forceWeaponFire [_hornWep, _hornWep];
-                            sleep 3;
-                            _driver forceWeaponFire [_hornWep, _hornWep];
-                        };
-                    };
-                };
-                 // Honk after 120 if not processed
-                [_entity] spawn {
-                    params ["_veh"];
-                    sleep 120;
-                    if (!isNull _veh && {!(_veh getVariable ["rb_isProcessed", false])}) then {
-                        private _driver = driver _veh;
-                        if (!isNull _driver) then {
-                            private _hornWep = currentWeapon _veh;
-                            _driver forceWeaponFire [_hornWep, _hornWep];
-                            sleep 3;
-                            _driver forceWeaponFire [_hornWep, _hornWep];
-                            sleep 3;
-                            _driver forceWeaponFire [_hornWep, _hornWep];
-                        };
-                    };
-                };
-
-                // Cleanup after 180 idle
-                [_entity] spawn {
-                    params ["_veh"];
-                    sleep 180;
-                    if (!isNull _veh && {!(_veh getVariable ["rb_isProcessed", false])}) then {
-                        { if (alive _x) then { deleteVehicle _x }; } forEach crew _veh;
-                        deleteVehicle _veh;
-
-                        missionNamespace setVariable ["RB_CurrentEntity", nil, true];
-                        diag_log "[RB] Vehicle expired at HoldPoint after 2 min. Retrying.";
-                    };
+                    missionNamespace setVariable ["RB_CurrentEntity", nil, true];
+                    diag_log "[RB] Vehicle expired at HoldPoint after 2 min. Retrying.";
                 };
             };
         };
     };
-
+    };
     missionNamespace setVariable ["RB_SpawnerRunning", false, true];
 };
