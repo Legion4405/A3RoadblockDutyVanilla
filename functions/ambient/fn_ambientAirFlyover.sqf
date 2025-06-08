@@ -24,7 +24,7 @@ if (_roadblock isEqualTo [0,0,0]) exitWith { systemChat "[RB] Marker 'RB_Checkpo
 
 // Main loop
 while {true} do {
-    private _delay = 15 + (random 15); // 5–20 min
+    private _delay = 120 + (random 900); // 2-15 min
     sleep _delay;
 
     // Check if pools are still valid

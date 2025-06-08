@@ -12,14 +12,15 @@ private _cur = missionNamespace getVariable ["RB_RoadblockClosed", false];
 private _new = if (!isNil "_closed") then { _closed } else { !_cur };
 missionNamespace setVariable ["RB_RoadblockClosed", _new, true];
 
-private _msg   = if (_new) then { "🚧 Roadblock Closed." } else { "✅ Roadblock Opened." };
-private _title = "Roadblock Status";
-// Optional: Use a custom icon, or "" for none
-private _icon  = ""; // e.g. "a3\ui_f\data\map\markers\military\flag_ca.paa"
-private _dur   = 6;
+private _msg   = if (_new) then { "Roadblock Closed." } else { "Roadblock Opened." };
+private _title = "Roadblock Status:";
 
-// Show notification to all players
-[_msg, _title, _icon, _dur] remoteExec ["CBA_fnc_notify", 0];
-
+// Show BIS hint to all players
+[format ["%1\n%2", _title, _msg]] remoteExec ["hint", 0];
 // Optional: Server log
 diag_log format ["[RB] Roadblock state changed to %1", if (_new) then {"CLOSED"} else {"OPEN"}];
+sleep 5;
+[""] remoteExec ["hintSilent", 0];
+
+
+

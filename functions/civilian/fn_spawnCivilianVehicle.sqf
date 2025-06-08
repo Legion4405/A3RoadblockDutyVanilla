@@ -114,7 +114,7 @@ if (_flagged) then {
 _vehicle setVariable ["rb_vehicleCrew", _crew, true];
 
 // === Bomb (10% chance)
-if (random 1 < 0.10) then {
+if (random 1 < 0.1) then {
     private _bomb = createVehicle ["DemoCharge_F", getPos _vehicle, [], 0, "NONE"];
     _bomb attachTo [_vehicle, [0, 0, 0]];
     _bomb hideObjectGlobal true;

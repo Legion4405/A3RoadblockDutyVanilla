@@ -12,7 +12,7 @@ class EditorData
 	};
 	class ItemIDProvider
 	{
-		nextID=342;
+		nextID=346;
 	};
 	class MarkerIDProvider
 	{
@@ -20,10 +20,10 @@ class EditorData
 	};
 	class Camera
 	{
-		pos[]={3812.5767,117.09927,4042.0061};
-		dir[]={0.018620769,-0.61498082,0.78832322};
-		up[]={0.01452226,0.78854209,0.61480969};
-		aside[]={0.99972135,7.5233402e-09,-0.023614202};
+		pos[]={3822.2927,85.863739,4127.1519};
+		dir[]={-0.60271209,-0.76892108,-0.21331649};
+		up[]={-0.72486192,0.63934118,-0.25654909};
+		aside[]={-0.33364823,6.8917871e-08,0.94270039};
 	};
 };
 binarizationWanted=0;
@@ -1214,15 +1214,15 @@ class Mission
 		class Item2
 		{
 			dataType="Trigger";
-			position[]={3802.6646,58.204433,4126.5};
-			angle=1.651657;
+			position[]={3802.8889,58.204273,4126.46};
+			angle=1.6516575;
 			class Attributes
 			{
 				name="RB_DetentionZone";
-				onActivation="{ " \n "    if (isNull _x || {!alive _x}) exitWith {}; " \n " " \n "    if (!(_x getVariable [""rb_processed"", false])) then { " \n "        _x setVariable [""rb_processed"", true]; " \n " " \n "        private _score = RB_Terminal getVariable [""rb_score"", 0]; " \n "        private _civName = name _x; " \n " " \n "        private _reasons = []; " \n "        private _contraband = _x getVariable [""civ_contraband"", []]; " \n "        private _identity = _x getVariable [""civ_identity"", [""Unknown"", ""Unknown"", ""Unknown"", ""UNKNOWN""]]; " \n "        private _origin = _identity#1; " \n " " \n "        if (_contraband isNotEqualTo []) then { _reasons pushBack ""Contraband""; }; " \n " " \n "        if (!isNil ""RB_BannedTowns"" && { _origin in RB_BannedTowns }) then { " \n "            _reasons pushBack ""Banned Origin""; " \n "        }; " \n " " \n "        if ( " \n "            _x getVariable [""cached_veh_contraband"", []] isNotEqualTo [] || " \n "            _x getVariable [""cached_veh_plateMismatch"", false] || " \n "            _x getVariable [""cached_veh_regNameMismatch"", false] || " \n "            _x getVariable [""cached_veh_regIDMismatch"", false] " \n "        ) then { " \n "            _reasons pushBack ""Vehicle Fraud""; " \n "        }; " \n " " \n "        private _isIllegal = (_reasons isNotEqualTo []); " \n "        private _delta = if (_isIllegal) then { 5 } else { -5 }; " \n "        private _newScore = _score + _delta; " \n " " \n "        RB_Terminal setVariable [""rb_score"", _newScore, true]; " \n " " \n "        private _color = if (_delta > 0) then { ""#00ff00"" } else { ""#ff0000"" }; " \n " " \n "        private _msg = format [ " \n "            ""<t size='1.25' font='PuristaBold' color='%1'>Civilian Detained</t><br/>"" + " \n "            ""<t color='#ffffff'>Name:</t> %2<br/>"" + " \n "            ""<t color='#ffffff'>Status:</t> %3<br/>"" + " \n "            ""<t color='#ffffff'>Score Change:</t> <t color='%1'>%4</t><br/>"" + " \n "            ""<t color='#ffffff'>Violations:</t><br/>%5<br/><br/>"" + " \n "            ""<t size='1' color='#cccccc'>New Total Score: %6</t>"", " \n "            _color, " \n "            _civName, " \n "            if (_isIllegal) then {""❌ Illegal""} else {""✔️ Innocent""}, " \n "            if (_delta > 0) then {""+5""} else {""-5""}, " \n "            if (_reasons isEqualTo []) then {""None""} else {_reasons apply { format [""• %1"", _x] } joinString ""<br/>""}, " \n "            _newScore " \n "        ]; " \n " " \n "        [_msg, 12] remoteExec [""ace_common_fnc_displayTextStructured"", 0]; " \n " " \n "        deleteVehicle _x; " \n "    }; " \n "} forEach thisList; " \n "";
-				sizeA=0.98048019;
-				sizeB=3.8888552;
-				sizeC=2.3217032;
+				onActivation="{ " \n "    if (isNull _x || {!alive _x}) exitWith {}; " \n " " \n "    if (!(_x getVariable [""rb_processed"", false])) then { " \n "        _x setVariable [""rb_processed"", true]; " \n " " \n "        private _score = RB_Terminal getVariable [""rb_score"", 0]; " \n "        private _civName = name _x; " \n " " \n "        private _result = [_x] call RB_fnc_isCivilianIllegal; " \n "        private _isIllegal = _result select 0; " \n "        private _reason = _result select 1; " \n "        private _isLegitArrest = if (count _result > 2) then { _result select 2 } else { false }; " \n " " \n "        private _delta = if (_isIllegal) then { " \n "            if (_isLegitArrest) then { 5 } else { -10 } " \n "        } else { " \n "            -5 " \n "        }; " \n "        private _newScore = _score + _delta; " \n " " \n "        RB_Terminal setVariable [""rb_score"", _newScore, true]; " \n " " \n "        private _color = if (_delta > 0) then { ""#00ff00"" } else { ""#ff0000"" }; " \n " " \n "        private _msg = format [ " \n "            ""<t size='1.25' font='PuristaBold' color='%1'>Civilian Detained</t><br/>"" + " \n "            ""<t color='#ffffff'>Name:</t> %2<br/>"" + " \n "            ""<t color='#ffffff'>Status:</t> %3<br/>"" + " \n "            ""<t color='#ffffff'>Score Change:</t> <t color='%1'>%4</t><br/>"" + " \n "            ""<t color='#ffffff'>Violations:</t><br/>%5<br/><br/>"" + " \n "            ""<t size='1' color='#cccccc'>New Total Score: %6</t>"", " \n "            _color, " \n "            _civName, " \n "            if (_isIllegal) then { " \n "                if (_isLegitArrest) then { ""✅ Correct Arrest"" } else { ""❌ Mistaken Arrest"" } " \n "            } else { " \n "                ""✔️ Innocent"" " \n "            }, " \n "            if (_delta > 0) then { format[""+%1"", _delta] } else { str _delta }, " \n "            if (_reason == """") then {""None""} else {format [""• %1"", _reason]}, " \n "            _newScore " \n "        ]; " \n " " \n "        [_msg, 12] remoteExec [""ace_common_fnc_displayTextStructured"", 0]; " \n " " \n "        deleteVehicle _x; " \n "    }; " \n "} forEach thisList; " \n "";
+				sizeA=0.98000002;
+				sizeB=3.8889999;
+				sizeC=2.322;
 				repeatable=1;
 				activationBy="CIV";
 				isRectangle=1;
@@ -1230,7 +1230,7 @@ class Mission
 			};
 			id=12;
 			type="EmptyDetectorArea10x10";
-			atlOffset=0.30710983;
+			atlOffset=0.30699921;
 		};
 		class Item3
 		{
@@ -1663,15 +1663,14 @@ class Mission
 		class Item27
 		{
 			dataType="Marker";
-			position[]={3816.2161,58.244015,4142.2979};
+			position[]={3816.9541,58.324104,4147.0239};
 			name="RB_HoldPoint";
 			markerType="ELLIPSE";
 			type="";
 			a=2;
 			b=2;
-			angle=9.2339973;
+			angle=13.948153;
 			id=46;
-			atlOffset=7.6293945e-06;
 		};
 		class Item28
 		{

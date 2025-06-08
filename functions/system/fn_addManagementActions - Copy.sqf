@@ -38,8 +38,8 @@ private _actionStart = [
         if (isNull _entity) exitWith { hint "❌ No entity is waiting."; };
         if (!(_entity getVariable ["readyForProcessing", false])) exitWith { hint "❌ Entity not ready for processing."; };
         if (side group _entity == east) exitWith { hint "⚠️ Cannot process enemies."; };
+
         private _checkpointPos = getMarkerPos "RB_Checkpoint";
-        private _holdpointPos = getMarkerPos "RB_HoldPoint";
 
         if (_entity isKindOf "Man") then {
             private _grp = group _entity;
@@ -55,8 +55,8 @@ private _actionStart = [
             if (!isNull _gate) then {
                 _gate animate ["Door_1_rot", 1]; // Open gate
             };
-            _entity setPosATL _holdpointPos;
-            [_entity, _checkpointPos, _holdpointPos] remoteExec ["RB_fnc_moveVehicleSmooth", 2];
+
+            [_entity, _checkpointPos] remoteExec ["RB_fnc_moveVehicleSmooth", 2];
 
         };
         _entity setVariable ["rb_interactionEnabled", true, true];

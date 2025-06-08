@@ -24,6 +24,34 @@ private _vehList = vehicles select {
 };
 
 private _veh = if (count _vehList > 0) then { _vehList select 0 } else { objNull };
+// If there is a processed vehicle but NO civilians to assign, process and score the vehicle immediately
+if (!isNull _veh && {count _civs == 0}) exitWith {
+    _veh setVariable ["rb_alreadyCleared", true, true];
+
+    // --- Score the vehicle itself
+    private _vehResult = [_veh] call RB_fnc_isCivilianIllegal;
+    private _isVehIllegal = _vehResult select 0;
+    private _vehReason = _vehResult select 1;
+    private _vehBomb = _veh getVariable ["veh_hasBomb", false];
+    private _vehDelta = if (_isVehIllegal || _vehBomb) then { -10 } else { 5 };
+
+    private _score = RB_Terminal getVariable ["rb_score", 0];
+    private _newScore = _score + _vehDelta;
+    RB_Terminal setVariable ["rb_score", _newScore, true];
+
+    private _resultText = format [
+        "<t size='1.25' font='PuristaBold' color='%1'>Vehicle Processed</t><br/>%2<br/><br/><t size='1' font='PuristaMedium' color='#cccccc'>Total Score: %3</t>",
+        if (_vehDelta > 0) then {"#00ff00"} else {"#ff0000"},
+        if (_vehBomb) then { "❌ -10 (Undiscovered bomb)" } else {
+            if (_isVehIllegal) then { format ["❌ -10 (%1)", _vehReason] } else { "✅ +5 (Clean vehicle)" }
+        },
+        _newScore
+    ];
+    [_resultText, 15] remoteExec ["ace_common_fnc_displayTextStructured", 0];
+
+    deleteVehicle _veh;
+};
+
 
 if (!isNull _veh) then {
     _veh setVariable ["rb_alreadyCleared", true, true];

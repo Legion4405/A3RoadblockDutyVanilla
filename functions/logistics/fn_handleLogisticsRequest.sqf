@@ -139,9 +139,8 @@ _driver doMove _end;
             private _uniqueID = format ["%1_%2_%3", _type, round _now, _rand];
 
             _truck setVariable ["rb_persistenceID", _uniqueID, true];
-            [_veh] remoteExec ["RB_fnc_addVehicleSalvageActions", 0, true];
-
-
+            [_truck] remoteExec ["RB_fnc_addVehicleSalvageActions", 0, true];
+            _truck engineOn false;
         }
         else {
             deleteVehicle _truck;
