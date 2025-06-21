@@ -115,6 +115,11 @@ private _menus = [
 [_object] call RB_fnc_addAdminActions;
 [_object] call RB_fnc_addManagementActions;
 [_object] call RB_fnc_addPersistenceActions;
+//[_object] remoteExec ["RB_fnc_addManagementActions", 0, true];
+//[_object] remoteExec ["RB_fnc_addAdminActions", 0, true];
+//[_object] remoteExec ["RB_fnc_addPersistenceActions", 0, true];
+
+
 
 // ✅ Recommended call (as you note):
 // [_terminal] remoteExec ["RB_fnc_addTerminalActions", 0, true];

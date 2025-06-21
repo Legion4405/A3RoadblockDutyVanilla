@@ -6,16 +6,21 @@
 
 if (!isServer) exitWith {};
 
-// === Find all available enemy spawn markers
+// === Find all available enemy spawn markers with no players within 200m
 private _spawnMarkers = [];
 private _i = 1;
 while {true} do {
     private _markerName = format ["RB_EnemySpawn_%1", _i];
     if (getMarkerPos _markerName isEqualTo [0,0,0]) exitWith {};
-    _spawnMarkers pushBack _markerName;
+    private _markerPos = getMarkerPos _markerName;
+    // Only add if NO player is within 200m
+    if ({_markerPos distance _x < 200} count allPlayers == 0) then {
+        _spawnMarkers pushBack _markerName;
+    };
     _i = _i + 1;
 };
-if (_spawnMarkers isEqualTo []) exitWith { diag_log "[RB] No enemy spawn markers found!"; };
+if (_spawnMarkers isEqualTo []) exitWith { diag_log "[RB] No enemy spawn markers found (all blocked by players)!"; };
+
 
 private _checkpoint = getMarkerPos "RB_Checkpoint";
 if (_checkpoint isEqualTo [0,0,0]) exitWith { diag_log "[RB] RB_Checkpoint marker not found!"; };

@@ -6,7 +6,12 @@ waitUntil { !isNil "paramsArray" };
 switch (_faction) do {
     case 0: { RB_StarterLoadout_Custom };
     case 1: { RB_StarterLoadout_NATO };
-    case 2: { RB_StarterLoadout_APEX_Gendarmerie };
-    case 3: { RB_StarterLoadout_CDLC_UNA };
+    case 2: { RB_StarterLoadout_APEX_NATO };
+    case 3: { RB_StarterLoadout_Contact_NATO };
+    case 4: { RB_StarterLoadout_Contact_LDF };
+    case 5: { RB_StarterLoadout_APEX_Gendarmerie };
+    case 6: { RB_StarterLoadout_CDLC_UNA };
+    case 7: { RB_StarterLoadout_RHS_USA };
+    case 8: { RB_StarterLoadout_3CB_BAF };
     default { RB_StarterLoadout_NATO };
 };

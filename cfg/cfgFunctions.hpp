@@ -36,6 +36,7 @@ class RB {
         class extractLoadoutItems {};
         class updateBannedTownsDiary {};
         class toggleRoadBlock {};
+        class applyWeather {};
     };
     class Logistics {
         file = "functions\logistics";
@@ -57,5 +58,10 @@ class RB {
         file = "functions\persistence";
         class loadProgress {};
         class saveProgress {};
+    };
+    class Judging {
+        file = "functions\judging";
+        class judgeCivilian {};
+        class judgeVehicle {};
     };
 };

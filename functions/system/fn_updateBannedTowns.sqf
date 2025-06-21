@@ -23,8 +23,8 @@ private _allTowns = nearestLocations [
 // === Step 3: Shuffle and select 3–5 random town names
 private _townNames = _allTowns apply { text _x };
 _townNames = _townNames call BIS_fnc_arrayShuffle;
-
-private _count = 3 + floor random 3;
+//3+ran 3
+private _count = 1 + floor random 5;
 private _bannedTowns = _townNames select [0, _count];
 
 missionNamespace setVariable ["RB_BannedTowns", _bannedTowns, true];

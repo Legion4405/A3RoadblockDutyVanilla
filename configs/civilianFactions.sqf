@@ -217,7 +217,7 @@ RB_CivilianPool_3CB_ME = [
 
 // === Civilian Vehicle Pools ===
 RB_CivilianVehiclePool_Vanilla = [
-    "C_Offroad_01_F", "C_Hatchback_01_F", "C_Hatchback_01_sport_F", "C_Offroad_02_unarmed_F",
+    "C_Offroad_01_F", "C_Hatchback_01_F", "C_Offroad_02_unarmed_F",
     "C_Truck_02_transport_F", "C_Truck_02_covered_F", "C_Van_01_transport_F", "C_Van_02_vehicle_F", "C_SUV_01_F"
 ];
 

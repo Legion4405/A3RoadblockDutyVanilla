@@ -13,8 +13,9 @@ private _addAction = {
 };
 
 // Check admin status
-private _isAdmin = (serverCommandAvailable "#kick") || {!isNull (getAssignedCuratorLogic player)};
+private _isAdmin = (!isMultiplayer) || (serverCommandAvailable "#kick") || {!isNull (getAssignedCuratorLogic player)};
 if (!_isAdmin) exitWith {};
+
 
 // === Time Scale Submenu
 private _timeScaleMenu = [
@@ -191,7 +192,8 @@ private _reset = [
             missionNamespace setVariable ["rb_processingInProgress", false, true];
             missionNamespace setVariable ["RB_SpawnerRunning", false, true];
 
-            RB_SpawnerHandle = [] execVM "scripts\runCheckpointSpawner.sqf";
+            //RB_SpawnerHandle = [] execVM "scripts\runCheckpointSpawner.sqf";
+            ["scripts\runCheckpointSpawner.sqf"] remoteExec ["BIS_fnc_execVM", 0, true];
             systemChat "✅ Checkpoint reset complete. Spawner restarted.";
             diag_log "[RB] Spawner restarted successfully via reset terminal.";
         };

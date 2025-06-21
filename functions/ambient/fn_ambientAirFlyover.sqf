@@ -36,7 +36,7 @@ while {true} do {
     private _isHeli = false;
     private _pool = [];
     if (_canHeli && _canPlane) then {
-        _isHeli = random 1 < 0.5;
+        _isHeli = random 1 < 0.65;
         _pool   = if (_isHeli) then {_rotary} else {_fixed};
     } else {
         _isHeli = _canHeli;
@@ -49,7 +49,7 @@ while {true} do {
     if (isNil "_class" || {_class == ""}) then { systemChat "[RB] Pool contained no valid class, skipping."; continue; };
 
     // --- 25% chance for a pair/formation ---
-    private _count = if (random 1 < 0.99) then {2} else {1};
+    private _count = if (random 1 < 0.4) then {2} else {1};
 
     // === Calculate shared flight path once ===
     private _spawnDist = 10000;

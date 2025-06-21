@@ -7,6 +7,7 @@ RB_SpawnerHandle = [] execVM "scripts\runCheckpointSpawner.sqf";
     [] execVM "scripts\system\garbageCleanup.sqf"; 
     [] execVM "scripts\initContraband.sqf";
     [] execVM "functions\ambient\fn_ambientAirFlyover.sqf";
+    [] execVM "functions\ambient\fn_ambientTraffic.sqf";
 
 // Handle banned towns and respawn logic 
 [] spawn {
@@ -23,4 +24,6 @@ RB_SpawnerHandle = [] execVM "scripts\runCheckpointSpawner.sqf";
         ] remoteExec ["RB_fnc_updateBannedTownsDiary", 0, true];
     };
 };
+
+setTimeMultiplier 4;
 

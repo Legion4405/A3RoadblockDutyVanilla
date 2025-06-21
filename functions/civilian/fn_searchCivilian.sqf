@@ -1,8 +1,8 @@
 params ["_civ"];
 
 // Retrieve civilian items
-private _contraband = _civ getVariable ["civ_contraband", []];
-private _misc       = _civ getVariable ["civ_miscItems", []];
+private _contraband = _civ getVariable ["rb_contraband", []];
+private _misc       = _civ getVariable ["rb_miscItems", []];
 
 // Combine and deduplicate
 private _items = _misc + _contraband;

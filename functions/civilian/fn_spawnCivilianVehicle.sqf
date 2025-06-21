@@ -1,4 +1,7 @@
-// scripts\vehicle\spawnCivilianVehicle.sqf
+// scripts\vehicle\fn_spawnCivilianVehicle.sqf
+// Spawns a civilian vehicle, fully restores all registration and bomb/contraband logic.
+// NO judgment or scoring in this script!
+
 params ["_position"];
 
 // === Choose vehicle type from active pool
@@ -23,41 +26,48 @@ for "_i" from 0 to (_crewCount - 1) do {
     _civ setVariable ["rb_isCivilian", true, true];
     _civ setVariable ["rb_vehicle", _vehicle, true];
 
+    // === Assign identity and contraband here (safe for all future checks!)
+    if (isNil {_civ getVariable "civ_identity"}) then {
+        [_civ] call RB_fnc_assignIdentityAndContraband;
+    };
+
+    // === ACE actions (JIP safe)
+    [_civ] remoteExecCall ["RB_fnc_addCivilianActions", 0, _civ];
+
     _crew pushBack _civ;
 };
 
 // === Move civilians into vehicle (driver first)
 (_crew#0) moveInDriver _vehicle;
+_vehicle setVariable ["rb_initialDriver", _crew#0, true];
+
 for "_i" from 1 to ((count _crew) - 1) do {
     (_crew#_i) moveInAny _vehicle;
     (_crew#_i) setBehaviour "CARELESS";
 };
 
-// === Assign identity and ACE actions
-{
-    if (isNil {_x getVariable "civ_identity"}) then {
-        [_x] call RB_fnc_assignIdentityAndContraband;
-    };
-    [_x] remoteExecCall ["RB_fnc_addCivilianActions", 0, _x];
-} forEach _crew;
-
+// === Vehicle contraband/items
 private _illegalPool = missionNamespace getVariable ["RB_ActiveContraband", []];
 private _legalPool   = missionNamespace getVariable ["RB_NonContrabandItems", []];
 private _vehItems = [];
 
-// === Legal items (0–5)
+// Legal items
 private _numLegalItems = floor random 6;
 for "_i" from 1 to _numLegalItems do {
     _vehItems pushBackUnique (selectRandom _legalPool);
 };
 
-// === 15% chance of contraband
+// Contraband items (15% chance)
 if (random 1 < 0.15) then {
     for "_i" from 1 to (1 + floor random 2) do {
         _vehItems pushBackUnique (selectRandom _illegalPool);
     };
 };
-_vehicle setVariable ["veh_contraband", _vehItems, true];
+
+// Save variables
+_vehicle setVariable ["veh_items", _vehItems, true];
+_vehicle setVariable ["veh_contraband", _vehItems select { _x in _illegalPool }, true];
+
 
 // === Registration setup
 private _driver = _crew#0;
@@ -71,23 +81,37 @@ private _regID   = _realID;
 // === 15% chance of mismatch
 if (random 1 < 0.15) then {
     if (selectRandom ["name", "id"] == "name") then {
-        _regName = selectRandom ["Nikolas Vrettos", "Emre Kamal", "Samuel Bakari", "Unverified"];
+        _regName = selectRandom RB_FakeNames;
     } else {
-        _regID = ([_realID select [0,2], "-", str (floor random [1000000,9999999,1])] joinString "");
+        private _prefix = (_realID select [0,2]);
+        _regID = _prefix + "-";
+        for "_i" from 1 to 7 do { _regID = _regID + str (floor (random 10)); };
     };
 };
 
-// === Plate
-private _realPlate = format ["RB-%1", floor (random 900000 + 100000)];
+// Get world name and uppercase it
+private _worldNameRaw = toUpper worldName;                // "MALDEN", "S'AHATRA", etc.
+
+// Convert to array of chars and filter only A-Z
+private _worldNameArray = toArray _worldNameRaw;
+private _worldNameFilteredArray = _worldNameArray select { _x in toArray "ABCDEFGHIJKLMNOPQRSTUVWXYZ" };
+
+// Get first two letters and convert back to string
+private _prefix = toString (_worldNameFilteredArray select [0, 2]);
+
+// Plate assignment as before
+private _realPlate = format ["%1-%2", _prefix, floor (random 900000 + 100000)];
 _vehicle setPlateNumber _realPlate;
 
 private _regPlate = if (random 1 < 0.15) then {
-    format ["RB-%1", floor (random 900000 + 100000)];
+    format ["%1-%2", _prefix, floor (random 900000 + 100000)];
 } else {
     _realPlate;
 };
 
-// === Store registration and violations
+
+
+// === Store registration and violations (no scoring here)
 _vehicle setVariable ["veh_registration", [_regName, _regID, _regPlate], true];
 
 private _plateMismatch = (toUpper _regPlate != toUpper _realPlate);
@@ -101,19 +125,12 @@ _vehicle setVariable ["cached_veh_regNameMismatch", _nameMismatch, true];
 _vehicle setVariable ["cached_veh_regIDMismatch", _idMismatch, true];
 _vehicle setVariable ["cached_veh_regOwner", str _realName, true];
 
+// === Do NOT set any scoring or 'civ_isIllegal' or similar flags here! All judgment is done elsewhere.
 
-// === Mark civilians as illegal if violations exist
-private _flagged = _plateMismatch || _nameMismatch || _idMismatch || _hasContraband;
-if (_flagged) then {
-    {
-        _x setVariable ["civ_isIllegal", true, true];
-    } forEach _crew;
-};
-
-// === Cache crew list
+// === Cache crew list for later checks
 _vehicle setVariable ["rb_vehicleCrew", _crew, true];
 
-// === Bomb (10% chance)
+// === Bomb (10% chance, disables on clear as before)
 if (random 1 < 0.1) then {
     private _bomb = createVehicle ["DemoCharge_F", getPos _vehicle, [], 0, "NONE"];
     _bomb attachTo [_vehicle, [0, 0, 0]];
@@ -122,7 +139,12 @@ if (random 1 < 0.1) then {
     _bomb enableSimulationGlobal false;
     _bomb allowDamage false;
 
-    _vehicle setVariable ["veh_hasBomb", true, true];
+    _vehicle setVariable ["rb_hasBomb", true, true];
+    _vehicle setVariable ["rb_hadBomb", true, true];
+    _vehicle setVariable ["rb_bombDefused", false, true];
+} else {
+    _vehicle setVariable ["rb_hasBomb", false, true];
+    _vehicle setVariable ["rb_bombDefused", false, true];
 };
 
 _vehicle

@@ -21,7 +21,7 @@ showScoretable = 0;
 class Header {
     gameType = "Coop";
     minPlayers = 1;
-    maxPlayers = 10;
+    maxPlayers = 8;
 };
 
 

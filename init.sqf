@@ -8,8 +8,17 @@
 // 1. Compile all config files
 call compile preprocessFileLineNumbers "configs\config.sqf";
 call compile preprocessFileLineNumbers "configs\enemyFactions.sqf";
+
+call compile preprocessFileLineNumbers "configs\playerFactions\apex_gerndarmerie.sqf";
+call compile preprocessFileLineNumbers "configs\playerFactions\apex_nato.sqf";
+call compile preprocessFileLineNumbers "configs\playerFactions\vanilla_nato.sqf";
+call compile preprocessFileLineNumbers "configs\playerFactions\contact_nato.sqf";
+call compile preprocessFileLineNumbers "configs\playerFactions\contact_ldf.sqf";
+call compile preprocessFileLineNumbers "configs\playerFactions\ws_una.sqf";
+call compile preprocessFileLineNumbers "configs\playerFactions\rhs_usa.sqf";
+call compile preprocessFileLineNumbers "configs\playerFactions\3cb_british.sqf";
+
 call compile preprocessFileLineNumbers "configs\civilianFactions.sqf";
-call compile preprocessFileLineNumbers "configs\playerFactions.sqf";
 call compile preprocessFileLineNumbers "configs\customFactions.sqf";
 
 // 2. If SERVER, read parameters, apply configs, and handle persistence
@@ -71,12 +80,32 @@ if (isServer) then {
             RB_LogisticsVehicleClass  = "B_Truck_01_box_F";
         };
         case 2: {
-            RB_LogisticsOptions       = +RB_LogisticsOptions_APEX_Gendarmerie;
-            RB_LogisticsVehicleClass  = "B_GEN_Van_02_vehicle_F";
+            RB_LogisticsOptions       = +RB_LogisticsOptions_APEX_NATO;
+            RB_LogisticsVehicleClass  = "B_T_Truck_01_box_F";
         };
         case 3: {
+            RB_LogisticsOptions       = +RB_LogisticsOptions_Contact_NATO;
+            RB_LogisticsVehicleClass  = "B_Truck_01_box_F";
+        };
+        case 4: {
+            RB_LogisticsOptions       = +RB_LogisticsOptions_Contact_LDF;
+            RB_LogisticsVehicleClass  = "B_GEN_Van_02_vehicle_F";
+        };
+        case 5: {
+            RB_LogisticsOptions       = +RB_LogisticsOptions_APEX_Gendarmerie;
+            RB_LogisticsVehicleClass  = "I_E_Truck_02_F";
+        };
+        case 6: {
             RB_LogisticsOptions       = +RB_LogisticsOptions_CDLC_UNA;
             RB_LogisticsVehicleClass  = "B_UN_Truck_01_box_lxWS";
+        };
+        case 7: {
+            RB_LogisticsOptions       = +RB_LogisticsOptions_RHS_USA;
+            RB_LogisticsVehicleClass  = "rhsusf_M1078A1P2_B_D_CP_fmtv_usarmy";
+        };
+        case 8: {
+            RB_LogisticsOptions       = +RB_LogisticsOptions_3CB_BAF;
+            RB_LogisticsVehicleClass  = "UK3CB_BAF_MAN_HX58_Transport_Green_MTP";
         };
         default {
             RB_LogisticsOptions       = +RB_LogisticsOptions_Vanilla_NATO;
@@ -163,14 +192,29 @@ if (isServer) then {
             RB_Ambient_Fixed_Selected  = +RB_Ambient_Fixed_NATO;
         };
         case 3: {
+            // NATO ambient
+            RB_Ambient_Rotary_Selected = +RB_Ambient_Rotary_APEX_NATO;
+            RB_Ambient_Fixed_Selected  = +RB_Ambient_Fixed_APEX_NATO;
+        };
+        case 4: {
             // Gendarmerie ambient
             RB_Ambient_Rotary_Selected = +RB_Ambient_Rotary_Gendarmerie;
             RB_Ambient_Fixed_Selected  = +RB_Ambient_Fixed_Gendarmerie;
         };
-        case 4: {
+        case 5: {
             // UNA ambient
             RB_Ambient_Rotary_Selected = +RB_Ambient_Rotary_UNA;
             RB_Ambient_Fixed_Selected  = +RB_Ambient_Fixed_UNA;
+        };
+        case 6: {
+            // US Army ambient
+            RB_Ambient_Rotary_Selected = +RB_Ambient_Rotary_RHS_USA;
+            RB_Ambient_Fixed_Selected  = +RB_Ambient_Fixed_RHS_USA;
+        };
+        case 7: {
+            // 3CB BAFambient
+            RB_Ambient_Rotary_Selected = +RB_Ambient_Rotary_3CB_BAF;
+            RB_Ambient_Fixed_Selected  = +RB_Ambient_Fixed_3CB_BAF;
         };
         default {
             RB_Ambient_Rotary_Selected = +RB_Ambient_Rotary_Custom;

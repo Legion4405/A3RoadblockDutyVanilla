@@ -15,8 +15,8 @@ private _checkpoint = getMarkerPos "RB_Checkpoint";
 private _mortarSite = getMarkerPos "RB_MortarSite";
 
 while { true } do {
-    // === Delay between mortar events (5–20 min)
-    private _delay = 180 + random 900;
+// === Delay between mortar events (5-15 min)
+    private _delay = 300 + random 900;
     sleep _delay;
 
     if (({isPlayer _x} count allPlayers) == 0) then { continue; };

@@ -30,14 +30,20 @@ private _cost      = _data select 2;
 
 private _start   = getMarkerPos "RB_LogisticsStart";
 private _end     = getMarkerPos "RB_LogisticsEnd";
-private _drop    = getMarkerPos "RB_LogisticsDrop";
+private _drop    = getMarkerPos "RB_LogisticsEnd";
 private _dirPos  = getMarkerPos "RB_LogisticsStartDir";
 
-// === Prevent overlapping deliveries
-if (missionNamespace getVariable ["RB_LogisticsActive", false]) exitWith {
-    private _msg = "<t color='#ffff00'><t size='1.2'>⚠️ A delivery is already in progress. Please wait.</t>";
+// === Prevent spam: 15s cooldown between requests
+private _lastTime = missionNamespace getVariable ["RB_LogisticsLastTime", 0];
+private _waitLeft = ceil ((_lastTime + 15) - time) max 0;
+if (_waitLeft > 0) exitWith {
+    private _msg = format [
+        "<t color='#ffff00'><t size='1.2'>⚠️ Please wait %1 seconds before making another logistics request.</t>",
+        _waitLeft
+    ];
     [_msg, 3] remoteExec ["ace_common_fnc_displayTextStructured", _player, false];
 };
+missionNamespace setVariable ["RB_LogisticsLastTime", time, true];
 
 // === Validate markers
 if (_start isEqualTo [0,0,0] || _end isEqualTo [0,0,0] || _drop isEqualTo [0,0,0]) exitWith {
@@ -85,21 +91,34 @@ clearMagazineCargoGlobal _truck;
 clearItemCargoGlobal _truck;
 clearBackpackCargoGlobal _truck;
 
+// Create and configure driver group
 private _grp = createGroup west;
 private _driver = _grp createUnit ["B_Soldier_F", _start, [], 0, "NONE"];
 _driver moveInDriver _truck;
 _grp addVehicle _truck;
 _grp selectLeader _driver;
 
-_driver setBehaviour "SAFE";
+// Set behaviour and speed
+_driver setBehaviour "CARELESS";
 _driver setCombatMode "BLUE";
+_grp setBehaviour "CARELESS";
+_grp setSpeedMode "LIMITED";
+
+// Add waypoint-based movement to destination
+{
+    deleteWaypoint [_grp, _forEachIndex];
+} forEach waypoints _grp; // Clean any auto-added waypoints
+
+private _wp = _grp addWaypoint [_end, 0];
+_wp setWaypointType "MOVE";
+_wp setWaypointSpeed "LIMITED";
+_wp setWaypointBehaviour "CARELESS";
+_wp setWaypointCompletionRadius 8;
+_grp setCurrentWaypoint _wp;
 
 _truck setVariable ["rb_logisticsDriver", _driver];
 _truck setVariable ["rb_logisticsLabel", _label];
 _truck setVariable ["rb_logisticsCost", _cost];
-
-_truck setDestination [_end, "LEADER PLANNED", true];
-_driver doMove _end;
 
 // === Monitor delivery
 [_truck, _drop, _contents, _label, _isVehicle, _isTurret, _player, _cost] spawn {
@@ -133,7 +152,7 @@ _driver doMove _end;
 
             _truck setVariable ["rb_isPersistentLogi", true, true];
 
-            private _now = diag_tickTime;  // or use serverTime if you want
+            private _now = diag_tickTime;
             private _type = typeOf _truck;
             private _rand = floor random 1e6;
             private _uniqueID = format ["%1_%2_%3", _type, round _now, _rand];
@@ -151,7 +170,7 @@ _driver doMove _end;
                 _obj setDir random 360;
                 _obj setVariable ["rb_isPersistentLogi", true, true];
 
-                private _now = diag_tickTime;  // or use serverTime if you want
+                private _now = diag_tickTime;
                 private _type = typeOf _obj;
                 private _rand = floor random 1e6;
                 private _uniqueID = format ["%1_%2_%3", _type, round _now, _rand];
@@ -168,15 +187,13 @@ _driver doMove _end;
             else {
                 // --- ACE Arsenal Unlock Instead of Crate ---
                 private _arsenalBox = missionNamespace getVariable ["RB_Arsenal", objNull];
-                private _newUnlocks = _contents; // _contents is array of classnames (new unlocks)
+                private _newUnlocks = _contents;
 
                 if (!isNull _arsenalBox) then {
-                    // 1. Add new unlocks to the global unlocks array (prevent duplicates)
                     {
                         if !(_x in RB_ArsenalUnlocks) then { RB_ArsenalUnlocks pushBack _x; };
                     } forEach _newUnlocks;
 
-                    // 2. Apply the full updated unlocks array to the arsenal (so all items remain unlocked, even after reload)
                     [_arsenalBox, RB_ArsenalUnlocks, true] remoteExec ["ace_arsenal_fnc_addVirtualItems", 0, true];
 
                     private _msg = format [

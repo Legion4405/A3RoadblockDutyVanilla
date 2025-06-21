@@ -1,4 +1,10 @@
-
+class RB_Header_1
+{
+    title = "• Persistence •";
+    values[] = {0};
+    texts[] = {""};
+    default = 0;
+};
 class RB_LoadSaveSlot
 {
     title = "Persistence: Load Save Slot";
@@ -6,28 +12,79 @@ class RB_LoadSaveSlot
     texts[] = {"Fresh Start", "Load Slot 1", "Load Slot 2", "Load Slot 3"};
     default = 0;
 };
+class RB_Spacer_1
+{
+    title = " ";
+    values[] = {0};
+    texts[] = {""};
+    default = 0;
+};
+class RB_Header_2
+{
+    title = "• Player Classes •";
+    values[] = {0};
+    texts[] = {""};
+    default = 0;
+};
 class RB_LogisticsFaction
 {
     title = "Player Faction";
-    values[] = {0, 1, 2, 3};
-    texts[] = {"Custom", "Vanilla NATO", "Apex Gendarmerie", "CDLC Western Sahara UNA"};
+    values[] = {0, 1, 2, 3, 4, 5, 6, 7, 8};
+    texts[] = {"Custom", "Vanilla NATO", "APEX NATO", "Contact NATO", "Contact LDF", "APEX Gendarmerie", "CDLC Western Sahara UNA", "RHS US Army", "3CB British Armed Forces"};
     default = 1;
 };
-
+class RB_AmbientAir {
+    title = "Ambient Air Activity";
+    values[] = {0, 1, 2, 3, 4, 5, 6, 7};
+    texts[] = {"Disabled", "Custom", "NATO", "APEX NATO", "APEX Gendarmerie", "WS UNA", "RHS US Army", "3CB British Armed Forces"};
+    default = 2;
+};
+class RB_Spacer_2
+{
+    title = " ";
+    values[] = {0};
+    texts[] = {""};
+    default = 0;
+};
+class RB_Header_3
+{
+    title = "• Civilian Classes •";
+    values[] = {0};
+    texts[] = {""};
+    default = 0;
+};
 class RB_CivilianPool {
     title = "Civilian Class Pool";
     values[] = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
     texts[] = {"Custom","Vanilla", "Vanilla African", "Vanilla Asian", "Vanilla Eastern European", "Vanilla Tanoan", "Vanilla Mixed", "CDLC Sefrou-Ramal", "3CB African", "3CB Chernarus", "3CB Middle Eastern"};
     default = 6;
 };
-
 class RB_CivilianVehiclePool {
     title = "Civilian Vehicle Pool";
     values[] = {0, 1, 2, 3, 4, 5, 6};
     texts[] = {"Custom", "Vanilla Vehicles", "3CB Vehicles", "CUP Western Vehicles", "CUP Middle Eastern Vehicles", "RDS Vehicles", "SOG PF Vehicles"};
     default = 1;
 };
-
+class RB_AmbientTrafficIntensity {
+        title = "Ambient Civilian Traffic Intensity";
+        values[] = {0,1,2,3,4};
+        texts[] = {"Disabled", "Low", "Medium", "High", "Very High"};
+        default = 2; // Medium
+    };
+class RB_Spacer_3
+{
+    title = " ";
+    values[] = {0};
+    texts[] = {""};
+    default = 0;
+};
+class RB_Header_4
+{
+    title = "• Enemy Classes •";
+    values[] = {0};
+    texts[] = {""};
+    default = 0;
+};
 class RB_EnemyFaction {
     title = "Enemy Infantry Pool";
     values[] = {0, 1, 2, 3, 4, 5, 6, 7, 8};
@@ -41,7 +98,21 @@ class RB_EnemyVehiclePool {
     texts[] = {"Custom", "Vanilla", "CDLC Western Sahara", "CUP vehicles", "3CB Vehicles", "SOG Armed Trucks"};
     default = 1;
 };
-    class RB_RespawnCost {
+class RB_Spacer_4
+{
+    title = " ";
+    values[] = {0};
+    texts[] = {""};
+    default = 0;
+};
+class RB_Header_5
+{
+    title = "• Difficulty Settings •";
+    values[] = {0};
+    texts[] = {""};
+    default = 0;
+};
+class RB_RespawnCost {
     title = "Respawn Point Cost";
     values[] = {0,10,15,20,25,50,75,100};
     texts[]  = {"Free", "10", "15", "20", "25", "50", "75", "100"};
@@ -76,16 +147,4 @@ class RB_EnemyVehicleFrequency {
     values[] = {0, 1, 2, 3};
     texts[] = {"Low", "Medium", "High", "Very High"};
     default = 1;
-};
-class RB_AmbientAir {
-    title = "Ambient Air Activity";
-    values[] = {0, 1, 2, 3, 4};
-    texts[] = {"Disabled", "Custom", "NATO", "Apex Gendarmerie", "UNA"};
-    default = 3;
-};
-class RB_CleanupTimeout {
-    title = "Vehicle Waiting Timeout Time";
-    values[] = {2,3,4,5,6,7,8};
-    texts[] = {"2 minutes","3 minutes","4 minutes (default)","5 minutes","6 minutes","7 minutes","8 minutes"};
-    default = 4;
 };

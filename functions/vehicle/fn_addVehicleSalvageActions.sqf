@@ -2,19 +2,15 @@
     File: fn_addVehicleSalvageFunctions.sqf
     Description: Adds ACE salvage interaction to eligible vehicles. MP + JIP Safe
 */
-
 params ["_vehicle"];
+if (!hasInterface) exitWith {};
 if (isNull _vehicle) exitWith {};
-if (!hasInterface) exitWith {}; // Only run on clients
-
-// Only add once per client
+waitUntil {
+    !isNull _vehicle &&
+    { _vehicle in vehicles } &&
+    { _vehicle isKindOf "LandVehicle" }
+};
 if (_vehicle getVariable ["rb_hasActions", false]) exitWith {};
-_vehicle setVariable ["rb_hasActions", true, true]; // synced globally
-
-// Check if vehicle is NOT in civilian pool
-private _vehClass = typeOf _vehicle;
-private _civilianPool = missionNamespace getVariable ["RB_CivilianVehiclePool", []];
-if (_vehClass in _civilianPool) exitWith {};
 
 // === Create 'Salvage' category
 private _salvageCategory = [
@@ -31,8 +27,7 @@ private _salvageCategory = [
 private _salvageAction = [
     "RB_SalvageVehicle",
     "Salvage Vehicle",
-    "\a3\ui_f\data\IGUI\Cfg\Actions\obsolete_ca.paa",
-    {
+    "ui\icons\icon_salvage.paa",    {
         params ["_target", "_player"];
 
         deleteVehicle _target;

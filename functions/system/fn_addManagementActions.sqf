@@ -79,7 +79,10 @@ private _actionStart = [
 
         private _violationsText = if (_violationsList isEqualTo []) then {"None"} else {_violationsList joinString ", "};
         //hint format ["🚨 Vehicle Illegal Reasons:\n%1", _violationsText];
+        //[_entity] remoteExec ["RB_fnc_addVehicleActions", 2, true];
+        //[_entity] call RB_fnc_addVehicleActions;
         [_entity] remoteExec ["RB_fnc_addVehicleActions", 0, true];
+
 
         missionNamespace setVariable ["rb_processingInProgress", true, true];
         missionNamespace setVariable ["RB_CurrentEntity", nil, true];

@@ -8,11 +8,11 @@ if (!isServer) exitWith {};
 private _intensity = ["RB_EnemyAttackIntensity", 1] call BIS_fnc_getParamValue;
 
 private _delayRange = switch (_intensity) do {
-    case 0: { [600, 900] };   // Low: 10–15 min
-    case 1: { [300, 480] };   // Medium: 5–8 min
-    case 2: { [120, 240] };   // High: 2–4 min
-    case 3: { [60, 120] };    // Very High: 1–2 min
-    default { [300, 480] };
+    case 0: { [600, 960] };
+    case 1: { [480, 900] };
+    case 2: { [360, 600] };
+    case 3: { [240, 480] };
+    default { [480, 900] };
 };
 
 while { true } do {

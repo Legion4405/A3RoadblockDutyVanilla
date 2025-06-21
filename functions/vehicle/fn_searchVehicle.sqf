@@ -8,7 +8,7 @@ if (isNull _vehicle || {!alive _vehicle}) exitWith {
 };
 
 // === Retrieve stored inventory and contraband
-private _inventory = _vehicle getVariable ["veh_inventory", []];
+private _inventory = _vehicle getVariable ["veh_items", []];
 private _contraband = _vehicle getVariable ["veh_contraband", []];
 
 // === Combine and deduplicate

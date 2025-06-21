@@ -1,12 +1,14 @@
 /*
     File: fn_clearProcessed.sqf
-    Description: Batches all processed civilians into a processed vehicle, assigns a driver if needed, sends them to RB_ExitPoint, and scores everyone together in one message upon arrival. Civilians on foot are only scored if not in a processed vehicle. No double scoring!
+    Description: Releases processed civilians and vehicles, gives/takes points for correct or wrong releases, batches notifications with detailed reasons.
 */
 if (!isServer) exitWith {};
 
 missionNamespace setVariable ["rb_processingInProgress", false, true];
 
 if (isNil "RB_CivBatch") then { RB_CivBatch = [] };
+
+private _scoringMap = missionNamespace getVariable ["RB_ScoringTableMap", createHashMap];
 
 // === Gather all processed, not yet cleared civilians
 private _civs = allUnits select {
@@ -15,7 +17,7 @@ private _civs = allUnits select {
     {alive _x}
 };
 
-// === See if there is any processed vehicle available
+// === Find processed, not yet cleared civilian vehicles
 private _vehList = vehicles select {
     _x getVariable ["rb_isCivilianVehicle", false] &&
     _x getVariable ["rb_vehicleProcessed", false] &&
@@ -24,43 +26,43 @@ private _vehList = vehicles select {
 };
 
 private _veh = if (count _vehList > 0) then { _vehList select 0 } else { objNull };
-// If there is a processed vehicle but NO civilians to assign, process and score the vehicle immediately
+
+// === If vehicle exists but no civs, process vehicle immediately
 if (!isNull _veh && {count _civs == 0}) exitWith {
     _veh setVariable ["rb_alreadyCleared", true, true];
+    private _vehResult  = [_veh] call RB_fnc_judgeVehicle;
+    private _vehDelta   = _vehResult select 2;
+    private _vehStatus  = _vehResult select 3;
+    private _vehReasons = _vehResult select 1;
 
-    // --- Score the vehicle itself
-    private _vehResult = [_veh] call RB_fnc_isCivilianIllegal;
-    private _isVehIllegal = _vehResult select 0;
-    private _vehReason = _vehResult select 1;
-    private _vehBomb = _veh getVariable ["veh_hasBomb", false];
-    private _vehDelta = if (_isVehIllegal || _vehBomb) then { -10 } else { 5 };
-
-    private _score = RB_Terminal getVariable ["rb_score", 0];
+    private _score   = RB_Terminal getVariable ["rb_score", 0];
     private _newScore = _score + _vehDelta;
     RB_Terminal setVariable ["rb_score", _newScore, true];
 
+    private _vehReasonStr = if (_vehReasons isNotEqualTo []) then {
+        "• " + (_vehReasons joinString "<br/>• ")
+    } else { "" };
+
+    private _color = if (_vehDelta > 0) then {"#00ff00"} else {"#ff0000"};
     private _resultText = format [
-        "<t size='1.25' font='PuristaBold' color='%1'>Vehicle Processed</t><br/>%2<br/><br/><t size='1' font='PuristaMedium' color='#cccccc'>Total Score: %3</t>",
-        if (_vehDelta > 0) then {"#00ff00"} else {"#ff0000"},
-        if (_vehBomb) then { "❌ -10 (Undiscovered bomb)" } else {
-            if (_isVehIllegal) then { format ["❌ -10 (%1)", _vehReason] } else { "✅ +5 (Clean vehicle)" }
-        },
+        "<t size='1.25' font='PuristaBold' color='%1'>Vehicle Released</t><br/>%2<br/><t color='#aaaaaa'>%3</t><br/><br/><t size='1' font='PuristaMedium' color='#cccccc'>Total Score: %4</t>",
+        _color,
+        _vehStatus,
+        _vehReasonStr,
         _newScore
     ];
     [_resultText, 15] remoteExec ["ace_common_fnc_displayTextStructured", 0];
-
     deleteVehicle _veh;
 };
-
 
 if (!isNull _veh) then {
     _veh setVariable ["rb_alreadyCleared", true, true];
 
-    // === Assign driver FIRST
     private _remainingCivs = +_civs;
     private _crew = crew _veh;
     private _driver = driver _veh;
 
+    // === Assign driver if needed
     if (isNull _driver) then {
         private _driverCiv = if (count _remainingCivs > 0) then { _remainingCivs select 0 } else { objNull };
         if (!isNull _driverCiv) then {
@@ -76,18 +78,16 @@ if (!isNull _veh) then {
             RB_CivBatch pushBackUnique _driverCiv;
             _driver = _driverCiv;
             _remainingCivs deleteAt 0;
-            // Make the vehicle belong to the driver's group
             private _group = group _driverCiv;
             _group addVehicle _veh;
         } else {
             diag_log "[RB] ERROR: No driver available for processed vehicle!";
         }
     } else {
-        // Ensure vehicle ownership is set regardless
         (group _driver) addVehicle _veh;
     };
 
-    // === Assign remaining processed civs as passengers/cargo
+    // Assign remaining as passengers
     {
         _x setVariable ["rb_alreadyCleared", true, true];
         unassignVehicle _x;
@@ -101,42 +101,31 @@ if (!isNull _veh) then {
         _x disableAI "MOVE";
         RB_CivBatch pushBackUnique _x;
     } forEach _remainingCivs;
-// === Ensure the vehicle actually drives to the exit using waypoints
-if (!isNull _driver) then {
-    private _dest = getMarkerPos "RB_ExitPoint";
-    if (_dest isEqualTo [0,0,0]) exitWith { diag_log "[RB] ERROR: Marker 'RB_ExitPoint' not found."; };
 
-    // Fetch or create the group
-    private _vehGroup = group _driver;
-    if (isNull _vehGroup || {_vehGroup == grpNull}) then {
-        _vehGroup = createGroup civilian;
-        [_driver] joinSilent _vehGroup;
-    };
-
-    // Remove old waypoints
-    for "_i" from (count waypoints _vehGroup - 1) to 1 step -1 do {
-        deleteWaypoint [_vehGroup, _i];
-    };
-
-    // Add waypoint to exit point
-    private _wp = _vehGroup addWaypoint [_dest, 0];
-    _wp setWaypointType "MOVE";
-    _wp setWaypointBehaviour "SAFE";
-    _wp setWaypointSpeed "LIMITED";
-    _wp setWaypointCompletionRadius 10;
-    _vehGroup setCurrentWaypoint _wp;
-
-    // Extra: Sync facing to exit if needed
-    _veh setVariable ["rb_sentToExit", true, true];
-};
-
-
+    // === Give vehicle waypoint to exit
+    if (!isNull _driver) then {
+        private _dest = getMarkerPos "RB_ExitPoint";
+        if (_dest isEqualTo [0,0,0]) exitWith { diag_log "[RB] ERROR: Marker 'RB_ExitPoint' not found."; };
+        private _vehGroup = group _driver;
+        if (isNull _vehGroup || {_vehGroup == grpNull}) then {
+            _vehGroup = createGroup civilian;
+            [_driver] joinSilent _vehGroup;
+        };
+        for "_i" from (count waypoints _vehGroup - 1) to 1 step -1 do {
+            deleteWaypoint [_vehGroup, _i];
+        };
+        private _wp = _vehGroup addWaypoint [_dest, 0];
+        _wp setWaypointType "MOVE";
+        _wp setWaypointBehaviour "CARELESS";
+        _wp setWaypointSpeed "LIMITED";
+        _wp setWaypointCompletionRadius 10;
+        _vehGroup setCurrentWaypoint _wp;
+        _veh setVariable ["rb_sentToExit", true, true];
+    }
 } else {
-    // === No vehicle: Civs walk to exit point using group waypoints (MP/JIP safe)
+    // === On-foot civs: walk to exit
     private _dest = getMarkerPos "RB_ExitPoint";
     if (_dest isEqualTo [0,0,0]) exitWith { diag_log "[RB] ERROR: Marker 'RB_ExitPoint' not found."; };
-
-    // To ensure all civs walk as a group, put them in one group (civilian side)
     private _civGroup = createGroup civilian;
     {
         _x setVariable ["rb_alreadyCleared", true, true];
@@ -146,24 +135,18 @@ if (!isNull _driver) then {
         _x setSpeedMode "LIMITED";
         RB_CivBatch pushBackUnique _x;
     } forEach _civs;
-
-    // Remove old waypoints (if any)
     for "_i" from (count waypoints _civGroup - 1) to 1 step -1 do {
         deleteWaypoint [_civGroup, _i];
     };
-
-    // Add one MOVE waypoint to exit
     private _wp = _civGroup addWaypoint [_dest, 0];
     _wp setWaypointType "MOVE";
-    _wp setWaypointBehaviour "SAFE";
+    _wp setWaypointBehaviour "CARELESS";
     _wp setWaypointSpeed "LIMITED";
     _wp setWaypointCompletionRadius 8;
     _civGroup setCurrentWaypoint _wp;
 };
 
-
-
-// === Monitor for arrival at RB_ExitPoint (for both foot civs and vehicles/crew)
+// === Monitor for arrival at RB_ExitPoint
 [] spawn {
     private _exit = getMarkerPos "RB_ExitPoint";
     if (_exit isEqualTo [0,0,0]) exitWith {};
@@ -171,102 +154,114 @@ if (!isNull _driver) then {
     while {true} do {
         sleep 2;
 
-        // === On-foot civilians who are NOT inside a processed vehicle
+        // === Arrived on-foot civs
         private _arrivedCivs = RB_CivBatch select {
             alive _x &&
             (_x distance2D _exit < 10) &&
             {!(_x getVariable ["rb_scoreGiven", false])} &&
-            // Only process if NOT inside a processed vehicle
             ((vehicle _x == _x) || { !(vehicle _x getVariable ["rb_sentToExit", false]) })
         };
 
-        // === Vehicles with sentToExit flag, that arrived
+        // === Arrived vehicles
         private _vehList = vehicles select {
             _x getVariable ["rb_sentToExit", false] &&
             (_x distance2D _exit < 10) &&
             {alive _x}
         };
 
-        // === Batch and score all vehicle occupants and the vehicle in one notification
+        // === Score vehicles and their crew as batch
+        private _scoringMap = missionNamespace getVariable ["RB_ScoringTableMap", createHashMap];
+
         {
             private _veh = _x;
             if (!alive _veh) then { continue };
-
             private _crew = crew _veh;
-            private _deltaTotal = 0;
-            private _resultList = [];
+            private _vehResult  = [_veh] call RB_fnc_judgeVehicle;
+            private _vehDelta   = _vehResult select 2;
+            private _vehStatus  = _vehResult select 3;
+            private _vehReasons = _vehResult select 1;
+            private _deltaTotal = _vehDelta;
 
-            // --- Score all crew and add to batch message
+            // Compose vehicle reason string
+            private _vehReasonStr = if (_vehReasons isNotEqualTo []) then {
+                "• " + (_vehReasons joinString "<br/>• ")
+            } else { "" };
+
+            private _resultList = [
+                format ["<b>🚗 Vehicle:</b> %1<br/><t color='#aaaaaa'>%2</t>", _vehStatus, _vehReasonStr]
+            ];
+
+            // Now per crew
             {
                 if (!alive _x) exitWith {};
-                private _illegalResult = [_x] call RB_fnc_isCivilianIllegal;
-                private _wasIllegal = _illegalResult select 0;
-                private _reason = _illegalResult select 1;
-                private _delta = if (_wasIllegal) then { -10 } else { 5 };
-                _deltaTotal = _deltaTotal + _delta;
+                private _releaseResult = [_x] call RB_fnc_judgeCivilian;
+                private _arrestable = _releaseResult select 0;
+                private _civReasons = _releaseResult select 1;
+                private _scoreDelta = if (_arrestable) then {
+                    _scoringMap getOrDefault ["wrong_release", -8]
+                } else {
+                    _scoringMap getOrDefault ["correct_release", 3]
+                };
+                _deltaTotal = _deltaTotal + _scoreDelta;
                 _x setVariable ["rb_scoreGiven", true, true];
 
+                private _civReasonStr = if (_civReasons isNotEqualTo []) then {
+                    "• " + (_civReasons joinString "<br/>• ")
+                } else { "None" };
+
                 _resultList pushBack format [
-                    "%1: %2%3",
+                    "%1: %2<br/><t color='#aaaaaa'>%3</t>",
                     name _x,
-                    if (_delta > 0) then {"✅ +5"} else {"❌ -10"},
-                    if (_wasIllegal) then { format ["<br/><t color='#aaaaaa'>Reason: %1</t>", _reason] } else {""}
+                    if (_scoreDelta > 0) then {"✅ +3 (Innocent Released)"} else {"❌ -8 (Wrongful Release)"},
+                    _civReasonStr
                 ];
 
                 deleteVehicle _x;
                 RB_CivBatch = RB_CivBatch - [_x];
             } forEach _crew;
 
-            // --- Score the vehicle itself
-            private _vehResult = [_veh] call RB_fnc_isCivilianIllegal;
-            private _isVehIllegal = _vehResult select 0;
-            private _vehReason = _vehResult select 1;
-            private _vehBomb = _veh getVariable ["veh_hasBomb", false];
-            private _vehDelta = if (_isVehIllegal || _vehBomb) then { -10 } else { 5 };
-            _deltaTotal = _deltaTotal + _vehDelta;
+            private _score = RB_Terminal getVariable ["rb_score", 0];
+            private _newScore = _score + _deltaTotal;
+            RB_Terminal setVariable ["rb_score", _newScore, true];
 
-            _resultList pushBack (format ["🚗 Vehicle: %1", if (_vehBomb) then { "❌ -10 (Undiscovered bomb)" } else {
-                if (_isVehIllegal) then { format ["❌ -10 (%1)", _vehReason] } else { "✅ +5 (Clean vehicle)" }
-            }]);
-
-            // --- Compose and show single notification for whole vehicle batch
-            if (_deltaTotal != 0 || count _resultList > 0) then {
-                private _score = RB_Terminal getVariable ["rb_score", 0];
-                private _newScore = _score + _deltaTotal;
-                RB_Terminal setVariable ["rb_score", _newScore, true];
-
-                private _color = if (_deltaTotal >= 0) then { "#00ff00" } else { "#ff0000" };
-                private _resultText = format [
-                    "<t size='1.25' font='PuristaBold' color='%1'>Vehicle Processed</t><br/>%2<br/><br/><t size='1' font='PuristaMedium' color='#cccccc'>Total Score: %3</t>",
-                    _color,
-                    (_resultList joinString "<br/><br/>"),
-                    _newScore
-                ];
-                [_resultText, 15] remoteExec ["ace_common_fnc_displayTextStructured", 0];
-            };
-
+            private _color = if (_deltaTotal >= 0) then { "#00ff00" } else { "#ff0000" };
+            private _resultText = format [
+                "<t size='1.25' font='PuristaBold' color='%1'>Vehicle Released</t><br/>%2<br/><br/><t size='1' font='PuristaMedium' color='#cccccc'>Total Score: %3</t>",
+                _color,
+                (_resultList joinString "<br/><br/>"),
+                _newScore
+            ];
+            [_resultText, 15] remoteExec ["ace_common_fnc_displayTextStructured", 0];
             deleteVehicle _veh;
         } forEach _vehList;
 
-        // === Score and delete foot civs (one at a time, like before)
+        // === Score and delete foot civs
         {
             RB_CivBatch = RB_CivBatch - [_x];
-            private _illegalResult = [_x] call RB_fnc_isCivilianIllegal;
-            private _wasIllegal = _illegalResult select 0;
-            private _reason = _illegalResult select 1;
-            private _delta = if (_wasIllegal) then { -10 } else { 5 };
+            private _releaseResult = [_x] call RB_fnc_judgeCivilian;
+            private _arrestable = _releaseResult select 0;
+            private _civReasons = _releaseResult select 1;
+            private _scoreDelta = if (_arrestable) then {
+                _scoringMap getOrDefault ["wrong_release", -8]
+            } else {
+                _scoringMap getOrDefault ["correct_release", 3]
+            };
             _x setVariable ["rb_scoreGiven", true, true];
 
             private _score = RB_Terminal getVariable ["rb_score", 0];
-            RB_Terminal setVariable ["rb_score", _score + _delta, true];
+            RB_Terminal setVariable ["rb_score", _score + _scoreDelta, true];
+
+            private _civReasonStr = if (_civReasons isNotEqualTo []) then {
+                "• " + (_civReasons joinString "<br/>• ")
+            } else { "None" };
 
             private _resultText = format [
-                "<t size='1.25' font='PuristaBold' color='%1'>Civilian Released</t><br/>%2: %3%4<br/><br/><t size='1' font='PuristaMedium' color='#cccccc'>Total Score: %5</t>",
-                if (_delta > 0) then {"#00ff00"} else {"#ff0000"},
+                "<t size='1.25' font='PuristaBold' color='%1'>Civilian Released</t><br/>%2: %3<br/><t color='#aaaaaa'>%4</t><br/><br/><t size='1' font='PuristaMedium' color='#cccccc'>Total Score: %5</t>",
+                if (_scoreDelta > 0) then {"#00ff00"} else {"#ff0000"},
                 name _x,
-                if (_delta > 0) then {"✅ +5"} else {"❌ -10"},
-                if (_wasIllegal) then { format ["<br/><t color='#aaaaaa'>Reason: %1</t>", _reason] } else {""},
-                _score + _delta
+                if (_scoreDelta > 0) then {"✅ +3 (Innocent Released)"} else {"❌ -8 (Wrongful Release)"},
+                _civReasonStr,
+                _score + _scoreDelta
             ];
             [_resultText, 12] remoteExec ["ace_common_fnc_displayTextStructured", 0];
 

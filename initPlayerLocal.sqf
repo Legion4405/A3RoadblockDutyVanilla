@@ -1,6 +1,8 @@
 // File: initPlayerLocal.sqf
 // Runs for every client, including JIP, after mission start
+[] execVM "scripts\system\initTutorial.sqf";
 [] execVM "scripts\system\initBriefing.sqf";
+
 
 // --- 1. Wait for arsenal unlocks to be set by the server
 waitUntil { !isNil "RB_ArsenalUnlocks" };
@@ -12,11 +14,5 @@ private _text = format [
     "<t size='1.2' font='PuristaBold'>The following items are considered illegal:</t><br/><br/>• %1",
     _list
 ];
-player createDiarySubject ["RB_Roadblock", "Roadblock Duty"];
-player createDiaryRecord ["RB_Roadblock", ["Banned Contraband", _text]];
-
-[] spawn {
-    waitUntil { !isNull (missionNamespace getVariable ["RB_PuppyDog", objNull]) };
-    private _dog = missionNamespace getVariable ["RB_PuppyDog", objNull];
-    [_dog] call RB_fnc_addPuppyActions;
-};
+player createDiarySubject ["RB_Roadblock_Contraband", "Banned Contraband"];
+player createDiaryRecord ["RB_Roadblock_Contraband", ["Banned Contraband", _text]];
