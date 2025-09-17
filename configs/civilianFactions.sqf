@@ -1,75 +1,17 @@
 // === Civilian Class Pools ===
 RB_CivilianPool_Vanilla = [
-"C_man_p_beggar_F", 
-"C_man_1", 
-"C_Man_casual_1_F", 
-"C_Man_casual_2_F", 
-"C_Man_casual_3_F", 
-"C_Man_casual_4_v2_F", 
-"C_Man_casual_5_v2_F", 
-"C_Man_casual_6_v2_F", 
-"C_Man_casual_7_F", 
-"C_Man_casual_8_F", 
-"C_Man_casual_9_F", 
-"C_Man_formal_1_F", 
-"C_Man_formal_2_F", 
-"C_Man_formal_3_F", 
-"C_Man_formal_4_F", 
-"C_Man_smart_casual_1_F", 
-"C_Man_smart_casual_2_F", 
-"C_man_sport_3_F", 
-"C_Man_casual_4_F", 
-"C_Man_casual_5_F", 
-"C_Man_casual_6_F", 
-"C_man_polo_1_F", 
-"C_man_polo_2_F", 
-"C_man_polo_3_F", 
-"C_man_polo_4_F", 
-"C_man_polo_5_F", 
-"C_man_polo_6_F", 
-"C_man_1_2_F", 
-"C_man_1_3_F", 
-"C_Man_Fisherman_01_F", 
-"C_man_p_fugitive_F", 
-"C_man_p_shorts_1_F", 
-"C_man_hunter_1_F", 
-"C_man_shorts_2_F", 
-"C_man_shorts_3_F", 
-"C_man_shorts_4_F", 
-"C_Man_UtilityWorker_01_F"
+"C_man_p_beggar_F", "C_man_1", "C_Man_casual_1_F", "C_Man_casual_2_F", "C_Man_casual_3_F", "C_Man_casual_4_v2_F", "C_Man_casual_5_v2_F", "C_Man_casual_6_v2_F", 
+"C_Man_casual_7_F", "C_Man_casual_8_F", "C_Man_casual_9_F", "C_Man_formal_1_F", "C_Man_formal_2_F", "C_Man_formal_3_F", "C_Man_formal_4_F", "C_Man_smart_casual_1_F", 
+"C_Man_smart_casual_2_F", "C_man_sport_3_F", "C_Man_casual_4_F", "C_Man_casual_5_F", "C_Man_casual_6_F", "C_man_polo_1_F", "C_man_polo_2_F", "C_man_polo_3_F", 
+"C_man_polo_4_F", "C_man_polo_5_F", "C_man_polo_6_F", "C_man_1_2_F", "C_man_1_3_F", "C_Man_Fisherman_01_F", "C_man_p_fugitive_F", "C_man_p_shorts_1_F", 
+"C_man_hunter_1_F", "C_man_shorts_2_F", "C_man_shorts_3_F", "C_man_shorts_4_F", "C_Man_UtilityWorker_01_F"
 ];
 
 RB_CivilianPool_Vanilla_African = [
-"C_man_p_beggar_F_afro", 
-"C_Man_casual_1_F_afro", 
-"C_Man_casual_3_F_afro", 
-"C_Man_casual_2_F_afro", 
-"C_Man_casual_4_v2_F_afro", 
-"C_Man_casual_5_v2_F_afro", 
-"C_Man_casual_6_v2_F_afro", 
-"C_Man_casual_7_F_afro", 
-"C_Man_casual_8_F_afro", 
-"C_Man_casual_9_F_afro", 
-"C_Man_formal_1_F_afro", 
-"C_Man_formal_2_F_afro", 
-"C_Man_formal_3_F_afro", 
-"C_Man_formal_4_F_afro", 
-"C_Man_smart_casual_1_F_afro", 
-"C_Man_smart_casual_2_F_afro", 
-"C_man_sport_1_F_afro", 
-"C_man_sport_3_F_afro", 
-"C_man_sport_2_F_afro", 
-"C_Man_casual_4_F_afro", 
-"C_Man_casual_6_F_afro", 
-"C_man_polo_1_F_afro", 
-"C_man_polo_2_F_afro", 
-"C_man_polo_3_F_afro", 
-"C_man_polo_4_F_afro", 
-"C_man_polo_5_F_afro", 
-"C_man_p_fugitive_F_afro", 
-"C_man_shorts_2_F_afro", 
-"C_man_shorts_3_F_afro", 
-"C_man_shorts_4_F_afro"
+"C_man_p_beggar_F_afro", "C_Man_casual_1_F_afro", "C_Man_casual_3_F_afro", "C_Man_casual_2_F_afro", "C_Man_casual_4_v2_F_afro", "C_Man_casual_5_v2_F_afro", "C_Man_casual_6_v2_F_afro", "C_Man_casual_7_F_afro", 
+"C_Man_casual_8_F_afro", "C_Man_casual_9_F_afro", "C_Man_formal_1_F_afro", "C_Man_formal_2_F_afro", "C_Man_formal_3_F_afro", "C_Man_formal_4_F_afro", "C_Man_smart_casual_1_F_afro", "C_Man_smart_casual_2_F_afro", 
+"C_man_sport_1_F_afro", "C_man_sport_3_F_afro", "C_man_sport_2_F_afro", "C_Man_casual_4_F_afro", "C_Man_casual_6_F_afro", "C_man_polo_1_F_afro", "C_man_polo_2_F_afro", "C_man_polo_3_F_afro", 
+"C_man_polo_4_F_afro", "C_man_polo_5_F_afro", "C_man_p_fugitive_F_afro", "C_man_shorts_2_F_afro", "C_man_shorts_3_F_afro", "C_man_shorts_4_F_afro"
 ];
 
 RB_CivilianPool_Vanilla_Asian = [
@@ -215,6 +157,15 @@ RB_CivilianPool_3CB_ME = [
     "UK3CB_TKC_C_WORKER"
 ];
 
+RB_CivilianPool_SOGPF = [
+"vn_c_men_13", "vn_c_men_22", "vn_c_men_23", "vn_c_men_24", "vn_c_men_25", 
+"vn_c_men_26", "vn_c_men_27", "vn_c_men_28", "vn_c_men_29", "vn_c_men_30", 
+"vn_c_men_31", "vn_c_men_14", "vn_c_men_32", "vn_c_men_15", "vn_c_men_16", 
+"vn_c_men_18", "vn_c_men_19", "vn_c_men_20", "vn_c_men_21", "vn_c_men_05", 
+"vn_c_men_06", "vn_c_men_01", "vn_c_men_03", "vn_c_men_04", "vn_c_men_09", 
+"vn_c_men_10", "vn_c_men_11",  "vn_c_men_12"
+];
+
 // === Civilian Vehicle Pools ===
 RB_CivilianVehiclePool_Vanilla = [
     "C_Offroad_01_F", "C_Hatchback_01_F", "C_Offroad_02_unarmed_F",
@@ -231,58 +182,21 @@ RB_CivilianVehiclePool_3CB = [
 ];
 
 RB_CivilianVehiclePool_CUP_West = [
-    "CUP_C_Datsun", 
-    "CUP_C_Datsun_4seat", 
-    "CUP_C_Golf4_black_Civ", 
-    "CUP_C_Golf4_blue_Civ", 
-    "CUP_C_Golf4_green_Civ", 
-    "CUP_C_Golf4_random_Civ", 
-    "CUP_C_Octavia_CIV", 
-    "CUP_C_Skoda_CR_CIV", 
-    "CUP_C_Skoda_Blue_CIV", 
-    "CUP_C_Skoda_Green_CIV", 
-    "CUP_C_Skoda_Red_CIV", 
-    "CUP_C_Skoda_White_CIV", 
-    "CUP_C_S1203_CIV_CR", 
-    "CUP_C_Datsun_Covered", 
-    "CUP_C_Datsun_Plain", 
-    "CUP_C_Datsun_Tubeframe", 
-    "CUP_C_Volha_CR_CIV", 
-    "CUP_C_Golf4_CR_Civ", 
-    "CUP_O_Hilux_unarmed_CR_CIV", 
-    "CUP_O_Hilux_unarmed_CR_CIV_Red", 
-    "CUP_O_Hilux_unarmed_CR_CIV_Tan", 
-    "CUP_O_Hilux_unarmed_CR_CIV_White", 
-    "CUP_C_Ikarus_Chernarus", 
-    "CUP_C_Bus_City_CRCIV", 
-    "CUP_C_SUV_CIV", 
-    "CUP_C_Ural_Civ_03", 
-    "CUP_C_Ural_Open_Civ_03", 
-    "CUP_C_Lada_CIV", 
-    "CUP_C_Lada_Red_CIV", 
-    "CUP_C_Lada_White_CIV"
+    "CUP_C_Datsun",     "CUP_C_Datsun_4seat",     "CUP_C_Golf4_black_Civ",     "CUP_C_Golf4_blue_Civ", 
+    "CUP_C_Golf4_green_Civ",     "CUP_C_Golf4_random_Civ",     "CUP_C_Octavia_CIV",     "CUP_C_Skoda_CR_CIV", 
+    "CUP_C_Skoda_Blue_CIV",     "CUP_C_Skoda_Green_CIV",     "CUP_C_Skoda_Red_CIV",     "CUP_C_Skoda_White_CIV", 
+    "CUP_C_S1203_CIV_CR",     "CUP_C_Datsun_Covered",     "CUP_C_Datsun_Plain",     "CUP_C_Datsun_Tubeframe", 
+    "CUP_C_Volha_CR_CIV",     "CUP_C_Golf4_CR_Civ",     "CUP_O_Hilux_unarmed_CR_CIV",     "CUP_O_Hilux_unarmed_CR_CIV_Red", 
+    "CUP_O_Hilux_unarmed_CR_CIV_Tan",     "CUP_O_Hilux_unarmed_CR_CIV_White",     "CUP_C_Ikarus_Chernarus",     "CUP_C_Bus_City_CRCIV", 
+    "CUP_C_SUV_CIV",     "CUP_C_Ural_Civ_03",     "CUP_C_Ural_Open_Civ_03",     "CUP_C_Lada_CIV", 
+    "CUP_C_Lada_Red_CIV",     "CUP_C_Lada_White_CIV"
 ];
 RB_CivilianVehiclePool_CUP_MiddleEast = [
-    "CUP_C_S1203_CIV", 
-    "CUP_C_S1203_Ambulance_CIV", 
-    "CUP_C_Volha_Gray_TKCIV", 
-    "CUP_C_Volha_Blue_TKCIV", 
-    "CUP_C_Volha_Limo_TKCIV", 
-    "CUP_O_Hilux_unarmed_TK_CIV", 
-    "CUP_O_Hilux_unarmed_TK_CIV_Red", 
-    "CUP_O_Hilux_unarmed_TK_CIV_Tan", 
-    "CUP_O_Hilux_unarmed_TK_CIV_White", 
-    "CUP_C_Ikarus_TKC", 
-    "CUP_C_Bus_City_TKCIV", 
-    "CUP_C_LR_Transport_CTK", 
-    "CUP_C_V3S_Open_TKC", 
-    "CUP_C_V3S_Covered_TKC", 
-    "CUP_C_SUV_TK", 
-    "CUP_C_UAZ_Unarmed_TK_CIV", 
-    "CUP_C_UAZ_Open_TK_CIV", 
-    "CUP_C_Lada_TK_CIV", 
-    "CUP_C_Lada_GreenTK_CIV", 
-    "CUP_C_Lada_TK2_CIV"
+    "CUP_C_S1203_CIV",     "CUP_C_S1203_Ambulance_CIV",     "CUP_C_Volha_Gray_TKCIV",     "CUP_C_Volha_Blue_TKCIV", 
+    "CUP_C_Volha_Limo_TKCIV",     "CUP_O_Hilux_unarmed_TK_CIV",     "CUP_O_Hilux_unarmed_TK_CIV_Red",     "CUP_O_Hilux_unarmed_TK_CIV_Tan", 
+    "CUP_O_Hilux_unarmed_TK_CIV_White",     "CUP_C_Ikarus_TKC",     "CUP_C_Bus_City_TKCIV",     "CUP_C_LR_Transport_CTK", 
+    "CUP_C_V3S_Open_TKC",     "CUP_C_V3S_Covered_TKC",     "CUP_C_SUV_TK",     "CUP_C_UAZ_Unarmed_TK_CIV", 
+    "CUP_C_UAZ_Open_TK_CIV",     "CUP_C_Lada_TK_CIV",     "CUP_C_Lada_GreenTK_CIV",     "CUP_C_Lada_TK2_CIV"
 ];
 
 RB_CivilianVehiclePool_RDS_West = [
@@ -293,18 +207,8 @@ RB_CivilianVehiclePool_RDS_West = [
     "RDS_JAWA353_Civ_01", "RDS_SUV_01_F","RDS_Van_01_transport_F", "RDS_Van_01_box_F"
 ];
 
-RB_CivilianVehiclePool_SOG = [
-    "vn_c_bicycle_01", 
-    "vn_c_bicycle_02", 
-    "vn_c_car_01_01", 
-    "vn_c_car_03_01", 
-    "vn_c_men_13", 
-    "vn_c_car_02_01", 
-    "vn_c_wheeled_m151_02", 
-    "vn_c_men_17", 
-    "vn_c_men_31", 
-    "vn_c_wheeled_m151_01", 
-    "vn_c_car_01_02", 
-    "vn_c_car_04_01"
+RB_CivilianVehiclePool_SOGPF = [
+    "vn_c_car_01_01", "vn_c_car_03_01", "vn_c_car_02_01", "vn_c_wheeled_m151_02", 
+    "vn_c_wheeled_m151_01", "vn_c_car_01_02", "vn_c_car_04_01"
 ];
 

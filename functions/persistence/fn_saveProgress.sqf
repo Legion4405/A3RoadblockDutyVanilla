@@ -5,7 +5,7 @@
 
 params ["_slot"];
 if (isNil "_slot") exitWith {
-    systemChat "❌ Save failed: No slot specified.";
+    systemChat "Save failed: No slot specified.";
 };
 
 private _slotNum = if (_slot isEqualType []) then { _slot select 0 } else { _slot };
@@ -69,7 +69,7 @@ saveProfileNamespace;
 
 // === Display summary
 private _lines = [
-    format ["💾 Saved to slot %1", _slotNum],
+    format ["Saved to slot %1", _slotNum],
     format ["• Score: %1", _score],
     format ["• Loadouts: %1", count _loadouts],
     format ["• Vehicles/turrets: %1 objects", count _logiData],

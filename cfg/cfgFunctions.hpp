@@ -37,6 +37,8 @@ class RB {
         class updateBannedTownsDiary {};
         class toggleRoadBlock {};
         class applyWeather {};
+        class generateFugitive {};
+        class updateFugitiveDiary {};
     };
     class Logistics {
         file = "functions\logistics";

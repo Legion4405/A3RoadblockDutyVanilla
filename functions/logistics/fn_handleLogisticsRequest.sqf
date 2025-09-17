@@ -11,7 +11,7 @@ private _categories = missionNamespace getVariable ["RB_LogisticsOptions", []];
 private _categoryData = _categories select { (_x select 0) isEqualTo _categoryName };
 if (_categoryData isEqualTo []) exitWith {
     private _msg = format [
-        "<t color='#ff0000'><t size='1.2'><t align='center'>❌ Category '%1' not found.</t></t>",
+        "<t color='#ff0000'><t size='1.2'><t align='center'>Category '%1' not found.</t></t>",
         _categoryName
     ];
     [_msg, 3] remoteExec ["ace_common_fnc_displayTextStructured", _player, false];
@@ -19,7 +19,7 @@ if (_categoryData isEqualTo []) exitWith {
 
 private _options = _categoryData#0#1;
 if (_index >= count _options) exitWith {
-    private _msg = "<t color='#ff0000'><t size='1.2'><t align='center'>❌ Invalid logistics request index.</t></t>";
+    private _msg = "<t color='#ff0000'><t size='1.2'><t align='center'>Invalid logistics request index.</t></t>";
     [_msg, 3] remoteExec ["ace_common_fnc_displayTextStructured", _player, false];
 };
 
@@ -38,7 +38,7 @@ private _lastTime = missionNamespace getVariable ["RB_LogisticsLastTime", 0];
 private _waitLeft = ceil ((_lastTime + 15) - time) max 0;
 if (_waitLeft > 0) exitWith {
     private _msg = format [
-        "<t color='#ffff00'><t size='1.2'>⚠️ Please wait %1 seconds before making another logistics request.</t>",
+        "<t color='#ffff00'><t size='1.2'>Please wait %1 seconds before making another logistics request.</t>",
         _waitLeft
     ];
     [_msg, 3] remoteExec ["ace_common_fnc_displayTextStructured", _player, false];
@@ -47,27 +47,27 @@ missionNamespace setVariable ["RB_LogisticsLastTime", time, true];
 
 // === Validate markers
 if (_start isEqualTo [0,0,0] || _end isEqualTo [0,0,0] || _drop isEqualTo [0,0,0]) exitWith {
-    systemChat "⚠️ Logistics markers not properly set.";
+    systemChat "Logistics markers not properly set.";
 };
 
 // === Check and deduct score
 private _score = RB_Terminal getVariable ["rb_score", 0];
 if (_score < _cost) exitWith {
     private _msg = format [
-        "<t color='#ff9900'><t size='1.2'><t align='center'>⚠️ Not enough points. %1 required.</t></t>",
+        "<t color='#ff9900'><t size='1.2'><t align='center'>Not enough points. %1 required.</t></t>",
         _cost
     ];
-    [_msg, 5] remoteExec ["ace_common_fnc_displayTextStructured", _player, false];
+    [_msg, 3] remoteExec ["ace_common_fnc_displayTextStructured", _player, false];
 };
 
 missionNamespace setVariable ["RB_LogisticsActive", true, true];
 RB_Terminal setVariable ["rb_score", _score - _cost, true];
 
 private _msg = format [
-    "<t color='#99ccff'><t size='1.2'><t align='center'>📦 Delivery '%1' requested. En route!</t></t>",
+    "<t color='#99ccff'><t size='1.2'><t align='center'>Delivery '%1' requested. En route!</t></t>",
     _label
 ];
-[_msg, 10] remoteExec ["ace_common_fnc_displayTextStructured", _player, false];
+[_msg, 3] remoteExec ["ace_common_fnc_displayTextStructured", _player, false];
 
 // === Determine if this is a vehicle or turret delivery
 private _isVehicle = (count _contents == 2) && { (_contents#0) isEqualTo "VEHICLE" };
@@ -145,7 +145,7 @@ _truck setVariable ["rb_logisticsCost", _cost];
         if (_isVehicle) then {
             // Truck is the delivery — leave it on map
             private _msg = format [
-                "<t color='#00ff00'><t size='1.2'><t align='center'>✅ Vehicle '%1' delivered.</t></t>",
+                "<t color='#00ff00'><t size='1.2'><t align='center'>Vehicle '%1' delivered.</t></t>",
                 _label
             ];
             [_msg, 3] remoteExec ["ace_common_fnc_displayTextStructured", 0];
@@ -179,7 +179,7 @@ _truck setVariable ["rb_logisticsCost", _cost];
                 [_obj] remoteExec ["RB_fnc_addVehicleSalvageActions", 0, true];
 
                 private _msg = format [
-                    "<t color='#00ff00'><t size='1.2'><t align='center'>✅ Turret '%1' delivered.</t></t>",
+                    "<t color='#00ff00'><t size='1.2'><t align='center'>Turret '%1' delivered.</t></t>",
                     _label
                 ];
                 [_msg, 3] remoteExec ["ace_common_fnc_displayTextStructured", 0];
@@ -197,7 +197,7 @@ _truck setVariable ["rb_logisticsCost", _cost];
                     [_arsenalBox, RB_ArsenalUnlocks, true] remoteExec ["ace_arsenal_fnc_addVirtualItems", 0, true];
 
                     private _msg = format [
-                        "<t color='#00ff00'><t size='1.2'><t align='center'>✅ %1 unlocked in arsenal!</t></t>",
+                        "<t color='#00ff00'><t size='1.2'><t align='center'> %1 unlocked in arsenal!</t></t>",
                         _label
                     ];
                     [_msg, 3] remoteExec ["ace_common_fnc_displayTextStructured", 0];
@@ -216,7 +216,7 @@ _truck setVariable ["rb_logisticsCost", _cost];
         RB_Terminal setVariable ["rb_score", _score + _cost, true];
 
         private _msg = format [
-            "<t color='#ff0000'><t size='1.2'><t align='center'>❌ Delivery '%1' failed. Points refunded.</t></t>",
+            "<t color='#ff0000'><t size='1.2'><t align='center'>Delivery '%1' failed. Points refunded.</t></t>",
             _label
         ];
         [_msg, 3] remoteExec ["ace_common_fnc_displayTextStructured", 0];

@@ -18,7 +18,7 @@ private _action = [
         params ["_target", "_player"];
         deleteVehicle _target;
 
-        private _msg = "<t color='#ff3333'><t size='1.2'><t align='center'>🗑️ Crate destroyed.</t></t>";
+        private _msg = "<t color='#ff3333'><t size='1.2'><t align='center'> Crate destroyed.</t></t>";
         [_msg, 8] remoteExec ["ace_common_fnc_displayTextStructured", 0];
     },
     { true }

@@ -40,7 +40,7 @@ RB_LogisticsOptions_RHS_USA = [
         ["M3 MAAWS Kit", ["rhs_weap_maaws", "rhs_optic_maaws", "rhs_mag_maaws_HE", "rhs_mag_maaws_HEDP", "rhs_mag_maaws_HEAT"], 30]
     ] ],
     [ "Gear", [
-        ["Gear Upgrade #1", _gearUpgrade1, 35],
+        ["Gear Upgrade #1", _gearUpgrade1, 40],
         ["Gear Upgrade #2", _gearUpgrade2, 65]
     ] ],
     [ "Attachments", [

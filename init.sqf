@@ -17,9 +17,13 @@ call compile preprocessFileLineNumbers "configs\playerFactions\contact_ldf.sqf";
 call compile preprocessFileLineNumbers "configs\playerFactions\ws_una.sqf";
 call compile preprocessFileLineNumbers "configs\playerFactions\rhs_usa.sqf";
 call compile preprocessFileLineNumbers "configs\playerFactions\3cb_british.sqf";
+call compile preprocessFileLineNumbers "configs\playerFactions\sogpf_us.sqf";
 
 call compile preprocessFileLineNumbers "configs\civilianFactions.sqf";
 call compile preprocessFileLineNumbers "configs\customFactions.sqf";
+
+east setFriend [resistance, 1];
+resistance setFriend [east, 1];
 
 // 2. If SERVER, read parameters, apply configs, and handle persistence
 if (isServer) then {
@@ -89,11 +93,11 @@ if (isServer) then {
         };
         case 4: {
             RB_LogisticsOptions       = +RB_LogisticsOptions_Contact_LDF;
-            RB_LogisticsVehicleClass  = "B_GEN_Van_02_vehicle_F";
+            RB_LogisticsVehicleClass  = "I_E_Truck_02_F";
         };
         case 5: {
             RB_LogisticsOptions       = +RB_LogisticsOptions_APEX_Gendarmerie;
-            RB_LogisticsVehicleClass  = "I_E_Truck_02_F";
+            RB_LogisticsVehicleClass  = "B_GEN_Van_02_transport_F";
         };
         case 6: {
             RB_LogisticsOptions       = +RB_LogisticsOptions_CDLC_UNA;
@@ -106,6 +110,10 @@ if (isServer) then {
         case 8: {
             RB_LogisticsOptions       = +RB_LogisticsOptions_3CB_BAF;
             RB_LogisticsVehicleClass  = "UK3CB_BAF_MAN_HX58_Transport_Green_MTP";
+        };
+        case 9: {
+            RB_LogisticsOptions       = +RB_LogisticsOptions_SOGPF_US;
+            RB_LogisticsVehicleClass  = "vn_b_wheeled_m54_02";
         };
         default {
             RB_LogisticsOptions       = +RB_LogisticsOptions_Vanilla_NATO;
@@ -128,6 +136,7 @@ if (isServer) then {
         case 8:  { RB_ActiveCivilianPool = +RB_CivilianPool_3CB_Africa; };
         case 9:  { RB_ActiveCivilianPool = +RB_CivilianPool_3CB_Chernarus; };
         case 10: { RB_ActiveCivilianPool = +RB_CivilianPool_3CB_ME; };
+        case 11: { RB_ActiveCivilianPool = +RB_CivilianPool_SOGPF; };
         default { RB_ActiveCivilianPool = +RB_CivilianPool_Vanilla; };
     };
     publicVariable "RB_ActiveCivilianPool";
@@ -140,7 +149,7 @@ if (isServer) then {
         case 3: { RB_CivilianVehiclePool = +RB_CivilianVehiclePool_CUP_West; };
         case 4: { RB_CivilianVehiclePool = +RB_CivilianVehiclePool_CUP_MiddleEast; };
         case 5: { RB_CivilianVehiclePool = +RB_CivilianVehiclePool_RDS_West; };
-        case 6: { RB_CivilianVehiclePool = +RB_CivilianVehiclePool_SOG; };
+        case 6: { RB_CivilianVehiclePool = +RB_CivilianVehiclePool_SOGPF; };
         default { RB_CivilianVehiclePool = +RB_CivilianVehiclePool_Vanilla; };
     };
     RB_ActiveVehiclePool = RB_CivilianVehiclePool;
@@ -157,6 +166,19 @@ if (isServer) then {
         case 6:  { RB_EnemyInfantryPool = +RB_EnemyInfantryPool_Vanilla_Spetsnaz; };
         case 7:  { RB_EnemyInfantryPool = +RB_EnemyInfantryPool_CDLC_WSTura; };
         case 8:  { RB_EnemyInfantryPool = +RB_EnemyInfantryPool_CDLC_WSSFIA; };
+        case 9:  { RB_EnemyInfantryPool = +RB_EnemyInfantryPool_RHSGREF_CHDKZ; };
+        case 10:  { RB_EnemyInfantryPool = +RB_EnemyInfantryPool_RHSGREF_NAPA; };
+        case 11:  { RB_EnemyInfantryPool = +RB_EnemyInfantryPool_SOGPF_VC; };
+        case 12:  { RB_EnemyInfantryPool = +RB_EnemyInfantryPool_3CB_TI; };
+        case 13:  { RB_EnemyInfantryPool = +RB_EnemyInfantryPool_3CB_MEI; };
+        case 14:  { RB_EnemyInfantryPool = +RB_EnemyInfantryPool_3CB_MEE; };
+        case 15:  { RB_EnemyInfantryPool = +RB_EnemyInfantryPool_3CB_MDF; };
+        case 16:  { RB_EnemyInfantryPool = +RB_EnemyInfantryPool_3CB_LSM; };
+        case 17:  { RB_EnemyInfantryPool = +RB_EnemyInfantryPool_3CB_LNM; };
+        case 18:  { RB_EnemyInfantryPool = +RB_EnemyInfantryPool_3CB_FIA; };
+        case 19:  { RB_EnemyInfantryPool = +RB_EnemyInfantryPool_3CB_ADM; };
+        case 20:  { RB_EnemyInfantryPool = +RB_EnemyInfantryPool_3CB_ADE; };
+        case 21:  { RB_EnemyInfantryPool = +RB_EnemyInfantryPool_3CB_ADCM; };
         default { RB_EnemyInfantryPool = +RB_EnemyInfantryPool_Vanilla_FIA; };
     };
     publicVariable "RB_EnemyInfantryPool";
@@ -166,9 +188,21 @@ if (isServer) then {
         case 0:  { RB_EnemyVehiclePool = +RB_EnemyVehiclePool_Custom; };
         case 1:  { RB_EnemyVehiclePool = +RB_EnemyVehiclePool_Vanilla; };
         case 2:  { RB_EnemyVehiclePool = +RB_EnemyVehiclePool_WS; };
-        case 3:  { RB_EnemyVehiclePool = +RB_EnemyVehiclePool_CUP; };
-        case 4:  { RB_EnemyVehiclePool = +RB_EnemyVehiclePool_3CB; };
-        case 5:  { RB_EnemyVehiclePool = +RB_EnemyVehiclePool_SOG; };
+        case 3:  { RB_EnemyVehiclePool = +RB_EnemyVehiclePool_CUP_TM; };
+        case 4:  { RB_EnemyVehiclePool = +RB_EnemyVehiclePool_CUP_CMORS; };
+        case 5:  { RB_EnemyVehiclePool = +RB_EnemyVehiclePool_SOGPF_VC; };
+        case 6:  { RB_EnemyVehiclePool = +RB_EnemyVehiclePool_RHSGREF_CHDKZ; };
+        case 7:  { RB_EnemyVehiclePool = +RB_EnemyVehiclePool_RHSGREF_NAPA; };
+        case 8:  { RB_EnemyVehiclePool = +RB_EnemyVehiclePool_3CB_TI; };
+        case 9:  { RB_EnemyVehiclePool = +RB_EnemyVehiclePool_3CB_MEI; };
+        case 10:  { RB_EnemyVehiclePool = +RB_EnemyVehiclePool_3CB_MEE; };
+        case 11:  { RB_EnemyVehiclePool = +RB_EnemyVehiclePool_3CB_MDF; };
+        case 12:  { RB_EnemyVehiclePool = +RB_EnemyVehiclePool_3CB_LSM; };
+        case 13:  { RB_EnemyVehiclePool = +RB_EnemyVehiclePool_3CB_LNM; };
+        case 14:  { RB_EnemyVehiclePool = +RB_EnemyVehiclePool_3CB_FIA; };
+        case 15:  { RB_EnemyVehiclePool = +RB_EnemyVehiclePool_3CB_ADM; };
+        case 16:  { RB_EnemyVehiclePool = +RB_EnemyVehiclePool_3CB_ADE; };
+        case 17:  { RB_EnemyVehiclePool = +RB_EnemyVehiclePool_3CB_ADCM; };
         default { RB_EnemyVehiclePool = +RB_EnemyVehiclePool_Vanilla; };
     };
     publicVariable "RB_EnemyVehiclePool";
@@ -215,6 +249,11 @@ if (isServer) then {
             // 3CB BAFambient
             RB_Ambient_Rotary_Selected = +RB_Ambient_Rotary_3CB_BAF;
             RB_Ambient_Fixed_Selected  = +RB_Ambient_Fixed_3CB_BAF;
+        };
+        case 8: {
+            // 3CB BAFambient
+            RB_Ambient_Rotary_Selected = +RB_Ambient_Rotary_SOGPF_US;
+            RB_Ambient_Fixed_Selected  = +RB_Ambient_Fixed_SOGPF_US;
         };
         default {
             RB_Ambient_Rotary_Selected = +RB_Ambient_Rotary_Custom;

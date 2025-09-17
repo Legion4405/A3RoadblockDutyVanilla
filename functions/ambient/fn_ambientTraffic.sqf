@@ -4,7 +4,7 @@
 */
 
 if (!isServer) exitWith {};
-
+sleep 5;
 // === Intensity parameter and spawn interval table
 private _intensity = ["RB_AmbientTrafficIntensity", 2] call BIS_fnc_getParamValue;
 if (_intensity == 0) exitWith {
@@ -13,10 +13,10 @@ if (_intensity == 0) exitWith {
 };
 private _spawnDelayRanges = [
     [999, 999],   // Disabled
-    [90, 120],    // Low
-    [60, 90],     // Medium
-    [30, 60],     // High
-    [10, 20]      // Very High
+    [600, 720],    // Low
+    [360, 480],     // Medium
+    [180, 360],     // High
+    [60, 180]      // Very High
 ];
 private _delayRange = _spawnDelayRanges select _intensity;
 

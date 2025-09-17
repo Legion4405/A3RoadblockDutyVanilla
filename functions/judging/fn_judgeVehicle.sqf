@@ -61,25 +61,26 @@ if (_plateMismatch) then {
 if (_nameMismatch) then {
     _illegal = true;
     _scoreDelta = _scoreDelta + (_scoringMap getOrDefault ["registration_mismatch", 5]);
-    _reasons pushBack (["registration_mismatch"] call _getReasonText + " (Name)");
+    _reasons pushBack ((["registration_mismatch"] call _getReasonText) + " (Name)");
 };
 if (_idMismatch) then {
     _illegal = true;
     _scoreDelta = _scoreDelta + (_scoringMap getOrDefault ["registration_mismatch", 5]);
-    _reasons pushBack (["registration_mismatch"] call _getReasonText + " (ID)");
+    _reasons pushBack ((["registration_mismatch"] call _getReasonText) + " (ID)");
 };
 if (_noOwner) then {
     _illegal = true;
     _scoreDelta = _scoreDelta + (_scoringMap getOrDefault ["registration_mismatch", 5]);
-    _reasons pushBack (["registration_mismatch"] call _getReasonText + " (No Registered Owner)");
+    _reasons pushBack ((["registration_mismatch"] call _getReasonText) + " (No Registered Owner)");
 };
+
 
 // --- Final status text
 if (_illegal) then {
-    _statusText = format ["❌ Illegal (%1)", _reasons joinString ", "];
+    _statusText = format ["Illegal (%1)", _reasons joinString ", "];
 } else {
-    _scoreDelta = _scoringMap getOrDefault ["vehicle_release", 3];
-    _statusText = "✅ Released (Clean Vehicle)";
+    _scoreDelta = _scoringMap getOrDefault ["vehicle_release", 5];
+    _statusText = "Released (Clean Vehicle)";
 };
 
 [_illegal, _reasons, _scoreDelta, _statusText]

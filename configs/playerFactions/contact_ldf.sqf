@@ -41,13 +41,13 @@ RB_LogisticsOptions_Contact_LDF = [
         ["MAAWS Mk4 Mod 1 Kit", ["launch_MRAWS_green_F", "launch_MRAWS_sand_F", "MRAWS_HE_F", "MRAWS_HEAT55_F", "MRAWS_HEAT_F"], 30]
     ] ],
     [ "Gear", [
-        ["Gear Upgrade #1", _gearUpgrade1, 20],
-        ["Gear Upgrade #2", _gearUpgrade2, 45]
+        ["Gear Upgrade #1", _gearUpgrade1, 40],
+        ["Gear Upgrade #2", _gearUpgrade2, 65]
     ] ],
     [ "Attachments", [
         ["Bipod Kit", ["bipod_01_F_blk", "bipod_01_F_khk"], 10],
         ["Rail Attachment Kit", ["ACE_DBAL_A3_Green", "ACE_DBAL_A3_Red", "acc_pointer_IR", "ACE_SPIR"], 15],
-        ["Suppressor Kit", ["muzzle_snds_B", "muzzle_snds_L", "muzzle_snds_M", "muzzle_snds_338_black", "muzzle_snds_338_green"], 75],
+        ["Suppressor Kit", ["muzzle_snds_B", "muzzle_snds_L", "muzzle_snds_M", "muzzle_snds_338_black", "muzzle_snds_338_green"], 50],
         ["CQB Scope Kit", ["optic_Yorris", "optic_Aco", "optic_Aco_smg", "optic_Holosight_blk_F", "optic_Holosight_smg_blk_F", "optic_ico_01_f", "optic_ico_01_black_f", "optic_ico_01_camo_f"], 25],
         ["Rifle Scope Kit", ["optic_MRCO", "optic_Hamr", "ACE_optic_MRCO_2D", "ACE_optic_Hamr_2D", "optic_Arco_blk_F", "optic_ERCO_blk_F", "optic_Hamr", "ACE_optic_Hamr_2D", "optic_Arco_lush_F", "optic_Hamr_snake_lxWS", "optic_ERCO_blk_F", "optic_ERCO_snd_F"], 50],
         ["Sniper Scope Kit", ["optic_DMS", "optic_SOS", "optic_LRPS", "ACE_optic_SOS_2D", "ACE_optic_LRPS_2D", "optic_KHS_blk", "optic_AMS", "optic_AMS_snd"], 75],

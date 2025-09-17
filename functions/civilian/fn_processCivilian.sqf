@@ -20,4 +20,4 @@ _civilian setSpeedMode "LIMITED";
 _civilian setBehaviour "CARELESS";
 _civilian doMove _dest;
 
-systemChat format ["Civilian %1 marked as processed.", name _civilian];
+// systemChat format ["Civilian %1 marked as processed.", name _civilian];

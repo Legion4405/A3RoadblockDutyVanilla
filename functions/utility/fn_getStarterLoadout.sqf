@@ -13,5 +13,6 @@ switch (_faction) do {
     case 6: { RB_StarterLoadout_CDLC_UNA };
     case 7: { RB_StarterLoadout_RHS_USA };
     case 8: { RB_StarterLoadout_3CB_BAF };
+    case 9: { RB_StarterLoadout_SOGPF_US };
     default { RB_StarterLoadout_NATO };
 };

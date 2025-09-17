@@ -11,7 +11,7 @@ overviewPicture = "images\loadscreen.paa";
 previewImage = "images\loadscreen.paa";
 previewFootage = 1;
 
-respawn = "BASE";                      // Respawn at custom position
+respawn = "BASE";             
 respawnDelay = 1;
 respawnOnStart = -1;
 respawnTemplates[] = { "MenuPosition", "Tickets" };
@@ -40,8 +40,8 @@ class CfgDebriefing {
         title = "Mission Failed";
         subtitle = "All personnel lost and no respawn points remained";
         description = "The checkpoint has been overrun due to a lack of available reinforcements and operational failure. Your team ran out of resources.";
-        pictureBackground = ""; // Optional: set a background image
-        picture = "b_inf";      // Optional: icon shown beside text (e.g., b_inf, KIA, etc.)
-        pictureColor[] = {0.6, 0.1, 0.2, 1}; // Optional color (red tone for failure)
+        pictureBackground = "";
+        picture = "b_inf";
+        pictureColor[] = {0.6, 0.1, 0.2, 1};
     };
 };

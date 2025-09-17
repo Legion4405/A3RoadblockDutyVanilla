@@ -1,8 +1,9 @@
 /*
-    RB_fnc_judgeCivilian
-    params ["_civ"];
+    File: fn_judgeCivilian.sqf
+    Params: [_civ]
     Returns: [arrestable(bool), [reasons (display)], scoreDelta, statusText]
 */
+
 params ["_civ"];
 private _scoringTable = missionNamespace getVariable ["RB_ScoringTable", []];
 private _scoringMap   = missionNamespace getVariable ["RB_ScoringTableMap", createHashMap];
@@ -78,14 +79,34 @@ if (_origin in _bannedTowns) then {
     _scoreDelta = _scoreDelta + (_scoringMap getOrDefault ["banned_origin", 8]);
 };
 
-// --- 5: Innocent fallback
+// --- 5: Fugitive handling (arrest or penalty)
+private _isFugitive = _civ getVariable ["rb_isFugitive", false];
+
+// Fugitive is *arrested* (detained via interaction)
+if (_arrestable && _isFugitive) then {
+    _reasons pushBack (["fugitive_arrested"] call _getReasonText);
+    _scoreDelta = _scoreDelta + (_scoringMap getOrDefault ["fugitive_arrested", 20]);
+    // Generate a new fugitive for the next cycle
+    [] call RB_fnc_generateFugitive;
+};
+
+// --- 6: Innocent fallback OR wrongful fugitive release
 if (_reasons isEqualTo []) then {
-    _scoreDelta = _scoringMap getOrDefault ["arrest_innocent", -5];
-    _statusText = "✔️ Innocent Civilian";
+    if (_isFugitive) then {
+        // Wrongful fugitive release!
+        _scoreDelta = _scoringMap getOrDefault ["fugitive_released", -25];
+        _reasons = [(["fugitive_released"] call _getReasonText)];
+        _statusText = "" + (["fugitive_released"] call _getReasonText);
+        [] call RB_fnc_generateFugitive;
+    } else {
+        _scoreDelta = _scoringMap getOrDefault ["arrest_innocent", -5];
+        _statusText = "Innocent Civilian";
+    };
     _arrestable = false;
 } else {
-    _statusText = "❌ Arrested: " + (_reasons joinString ", ");
+    _statusText = "Arrested: " + (_reasons joinString ", ");
     _arrestable = true;
 };
+
 
 [_arrestable, _reasons, _scoreDelta, _statusText]

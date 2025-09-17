@@ -35,7 +35,7 @@ private _salvageAction = [
         private _oldScore = RB_Terminal getVariable ["rb_score", 0];
         RB_Terminal setVariable ["rb_score", _oldScore + 5, true];
 
-        private _msg = "<t color='#00ff00'><t size='1.2'><t align='center'>✅ Vehicle salvaged. +5 points</t></t>";
+        private _msg = "<t color='#00ff00'><t size='1.2'><t align='center'>Vehicle salvaged. +5 points</t></t>";
         [_msg, 5] remoteExec ["ace_common_fnc_displayTextStructured", 0];
     },
     { true }

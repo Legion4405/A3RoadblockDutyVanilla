@@ -27,8 +27,8 @@ RB_LogisticsOptions_APEX_Gendarmerie = [
     [
         "Gear",
         [
-            ["Gear Upgrade #1", ["U_B_GEN_Commander_F","V_PlateCarrier1_blk","ACE_Vector", "ACE_microDAGR", "B_AssaultPack_blk","B_FieldPack_blk","H_PASGT_basic_black_F"], 75],
-            ["Gear Upgrade #2", ["V_PlateCarrier2_blk","H_HelmetSpecB_blk","H_HelmetB_black","B_Carryall_blk","B_TacticalPack_blk","ACE_NVG_Wide","ACE_NVG_Wide_WP","ACE_MX2A","ACE_NVG_Wide_WP","ACE_MX2A"], 175]
+            ["Gear Upgrade #1", ["U_B_GEN_Commander_F","V_PlateCarrier1_blk","ACE_Vector", "ACE_microDAGR", "B_AssaultPack_blk","B_FieldPack_blk","H_PASGT_basic_black_F"], 40],
+            ["Gear Upgrade #2", ["V_PlateCarrier2_blk","H_HelmetSpecB_blk","H_HelmetB_black","B_Carryall_blk","B_TacticalPack_blk","ACE_NVG_Wide","ACE_NVG_Wide_WP","ACE_MX2A","ACE_NVG_Wide_WP","ACE_MX2A"], 65]
         ]
     ],
     [
@@ -36,7 +36,7 @@ RB_LogisticsOptions_APEX_Gendarmerie = [
         [
             ["Bipod Kit", ["bipod_01_F_blk"], 10],
             ["Rail Attachment Kit", ["ACE_DBAL_A3_Green", "ACE_DBAL_A3_Red", "acc_pointer_IR", "ACE_SPIR"], 15],
-            ["Suppressor Kit", ["muzzle_snds_B", "muzzle_snds_L", "muzzle_snds_M"], 75],
+            ["Suppressor Kit", ["muzzle_snds_B", "muzzle_snds_L", "muzzle_snds_M"], 50],
             ["CQB Scope Kit", ["optic_Yorris", "optic_Aco", "optic_Aco_smg", "optic_Holosight_blk_F", "optic_Holosight_smg_blk_F"], 25],
             ["Rifle Scope Kit", ["optic_MRCO", "optic_Hamr", "ACE_optic_MRCO_2D", "ACE_optic_Hamr_2D", "optic_Arco_blk_F", "optic_ERCO_blk_F","optic_Hamr", "ACE_optic_Hamr_2D", "optic_Hamr_sand_lxWS", "optic_Hamr_snake_lxWS", "optic_ERCO_blk_F", "optic_ERCO_snd_F"], 50],
             ["Sniper Scope Kit", ["optic_DMS", "optic_SOS", "optic_LRPS", "ACE_optic_SOS_2D", "ACE_optic_LRPS_2D", "optic_KHS_blk", "optic_AMS"], 75],

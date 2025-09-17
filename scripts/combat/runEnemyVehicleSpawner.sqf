@@ -8,11 +8,11 @@ if (!isServer) exitWith {};
 
 private _intensity = ["RB_EnemyVehicleFrequency", 1] call BIS_fnc_getParamValue;
 private _delayRange = switch (_intensity) do {
-    case 0: { [600, 960] };
-    case 1: { [480, 900] };
-    case 2: { [360, 600] };
-    case 3: { [240, 480] };
-    default { [480, 900] };
+    case 0: { [600, 1140] };
+    case 1: { [840, 1140] };
+    case 2: { [600, 840] };
+    case 3: { [420, 720] };
+    default { [840, 900] };
 };
 
 // === Main loop
@@ -53,7 +53,7 @@ while { true } do {
 
     // === VARIANT SELECTION ===
     // 0 = standard enemy vehicle; 1 = disguised enemy in civilian vehicle
-    private _variant = if ((random 1) < 0.125) then { 1 } else { 0 };  // 30% for disguised variant
+    private _variant = if ((random 1) < 0.22) then { 1 } else { 0 };  // 30% for disguised variant
 
     switch (_variant) do {
         case 0: {   // --- Standard enemy vehicle (original)
@@ -70,6 +70,8 @@ while { true } do {
             [_veh] remoteExec ["RB_fnc_addVehicleSalvageActions", 0, true];
 
             private _crewGroup = createGroup east;
+            sleep 0.5;
+            _crewGroup addVehicle _veh;
             private _seatRoles  = fullCrew [_veh, "", true];
             private _totalSeats = count _seatRoles;
             private _hasDriver  = (_totalSeats > 0);
@@ -96,6 +98,12 @@ while { true } do {
                 private _unit = _crewGroup createUnit [_passClass, _spawnPos, [], 0, "NONE"];
                 if (!isNull _unit) then { _unit moveInAny _veh; };
             };
+
+            _veh enableAI "MOVE";
+            _veh enableAI "PATH";
+            _veh enableAI "ALL";
+            { _x enableAI "MOVE"; _x enableAI "ALL"; } forEach crew _veh;
+
 
             sleep 0.5;
             _crewGroup setBehaviour "COMBAT";
@@ -165,11 +173,18 @@ while { true } do {
                 if (!isNull _unit) then { _unit moveInAny _veh; };
             };
 
+            _veh enableAI "MOVE";
+            _veh enableAI "PATH";
+            _veh enableAI "ALL";
+            { _x enableAI "MOVE"; _x enableAI "ALL"; } forEach crew _veh;
+
+
             sleep 0.5;
             _crewGroup setBehaviour "SAFE";
             _crewGroup setSpeedMode "LIMITED";
             _crewGroup addVehicle _veh;
-
+            { [_x] joinSilent _crewGroup; } forEach crew _veh;
+            sleep 0.25;
             // --- Direct waypoint to RB_HoldPoint, speed LIMITED, radius 40
             private _wp = _crewGroup addWaypoint [_holdPos, 0];
             _wp setWaypointType "GETOUT";  // Failsafe

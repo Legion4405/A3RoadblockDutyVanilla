@@ -1,8 +1,30 @@
+/*
+    Assigns identity, possible fugitive status, contraband, and misc items to a civilian.
+    Call: [_civ] call RB_fnc_assignIdentityAndContraband;
+*/
 params ["_civ"];
 
-// Assign identity
-sleep 0.1;
+// === FUGITIVE ASSIGNMENT (Step 2)
+private _fugitiveName   = missionNamespace getVariable ["RB_CurrentFugitive", "UNKNOWN"];
+private _fugitiveActive = missionNamespace getVariable ["RB_FugitiveActive", false];
+private _isFugitive = false;
+
 private _name = name _civ;
+
+// Only assign fugitive if not already active, name valid, and chance triggers
+if (!_fugitiveActive && _fugitiveName != "UNKNOWN" && {random 1 < 0.1}) then {
+    _name = _fugitiveName;
+    _civ setName _fugitiveName;                   // <-- This sets the engine's visible name (over the head, in interactions, etc.)
+    missionNamespace setVariable ["RB_FugitiveActive", true, true];
+    _civ setVariable ["rb_isFugitive", true, true];
+    _isFugitive = true;
+} else {
+    _civ setVariable ["rb_isFugitive", false, true];
+};
+
+
+// === Standard civilian data assignment
+sleep 0.1;
 private _origin = selectRandom nearestLocations [getPos _civ, ["NameCityCapital", "NameCity", "NameVillage"], 5000];
 private _originName = if (!isNull _origin) then { text _origin } else { "Unknown" };
 private _dob = selectRandom [
@@ -16,6 +38,7 @@ private _prefix = "ID";
 private _idCode = _prefix + "-";
 for "_i" from 1 to 7 do { _idCode = _idCode + str (floor (random 10)); };
 
+// Assign final identity (uses _name, which could be the fugitive)
 _civ setVariable ["civ_identity", [_name, _originName, _dob, _idCode], true];
 
 // === Contraband (default 30%)

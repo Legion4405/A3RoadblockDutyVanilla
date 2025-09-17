@@ -34,7 +34,7 @@ private _scoreAction = [
         private _color = if (_score > 0) then {"#00ff00"} else { if (_score < 0) then {"#ff0000"} else {"#ffffff"} };
         private _text = format [
             "<t size='1.5' font='PuristaBold' align='center' color='#ffffff'>Checkpoint Interface</t><br/><br/>" +
-            "<t size='1.15' font='PuristaBold' color='#ffffff'>📊 Current Score:</t> " +
+            "<t size='1.15' font='PuristaBold' color='#ffffff'>Current Score:</t> " +
             "<t size='1.4' font='PuristaBold' color='%1'>%2</t><br/><br/>" +
             "<t size='1.1' font='PuristaMedium' color='#ffffff'>Scoring Rules:</t><br/>" +
             "<t size='1.05' font='PuristaLight' color='#dddddd'>" +
@@ -121,5 +121,5 @@ private _menus = [
 
 
 
-// ✅ Recommended call (as you note):
+// Recommended call (as you note):
 // [_terminal] remoteExec ["RB_fnc_addTerminalActions", 0, true];

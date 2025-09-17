@@ -29,7 +29,7 @@ private _action = [
         // Broadcast lamp toggle to all clients
         [RB_GeneratorState] remoteExec ["RB_fnc_updateLamps", 0];
 
-        hint format ["🔌 Generator is now %1", if (RB_GeneratorState) then {"ON"} else {"OFF"}];
+        hint format ["Generator is now %1", if (RB_GeneratorState) then {"ON"} else {"OFF"}];
     },
     { true }
 ] call ace_interact_menu_fnc_createAction;

@@ -16,7 +16,7 @@ private _mortarSite = getMarkerPos "RB_MortarSite";
 
 while { true } do {
 // === Delay between mortar events (5-15 min)
-    private _delay = 300 + random 900;
+    private _delay = 420 + random 900;
     sleep _delay;
 
     if (({isPlayer _x} count allPlayers) == 0) then { continue; };

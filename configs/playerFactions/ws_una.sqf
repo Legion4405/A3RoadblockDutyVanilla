@@ -23,7 +23,7 @@ RB_LogisticsOptions_CDLC_UNA = [
             ["Vector R4 Kit", ["arifle_Velko_lxWS", "35Rnd_556x45_Velko_tracer_green_lxWS"], 10],
             ["Vector R5 Carbine Kit", ["arifle_VelkoR5_lxWS", "35Rnd_556x45_Velko_tracer_green_lxWS"], 10],
             ["FN FAL 50.00 Kit", ["arifle_SLR_V_lxWS", "arifle_SLR_D_lxWS", "arifle_SLR_lxWS", "arifle_SLR_Para_lxWS", "20Rnd_762x51_slr_desert_lxWS", "20Rnd_762x51_slr_lxWS", "20Rnd_762x51_slr_tracer_green_lxWS", "20Rnd_762x51_slr_desert_tracer_green_lxWS"], 20],
-            ["FN FAL 50.00 GL Kit", ["arifle_SLR_V_GL_lxWS", "arifle_SLR_GL_lxWS", "1Rnd_40mm_HE_lxWS", "1Rnd_50mm_Smoke_lxWS", "1Rnd_58mm_AT_lxWS"], 20],
+            ["FN FAL 50.00 GL Kit", ["arifle_SLR_V_GL_lxWS", "arifle_SLR_GL_lxWS", "20Rnd_762x51_slr_desert_lxWS", "20Rnd_762x51_slr_lxWS", "20Rnd_762x51_slr_tracer_green_lxWS", "20Rnd_762x51_slr_desert_tracer_green_lxWS", "1Rnd_40mm_HE_lxWS", "1Rnd_50mm_Smoke_lxWS", "1Rnd_58mm_AT_lxWS"], 20],
             ["XMS Kit", ["arifle_XMS_lxWS", "arifle_XMS_Gray_lxWS", "arifle_XMS_Sand_lxWS", "arifle_XMS_M_lxWS", "arifle_XMS_M_Gray_lxWS", "arifle_XMS_M_Sand_lxWS", "ACE_30Rnd_556x45_Stanag_Mk262_mag", "30Rnd_556x45_Stanag_Tracer_Red", "30Rnd_556x45_Stanag_Sand_Tracer_Red"], 20],
             ["Vector R5 Carbine GL Kit", ["arifle_VelkoR5_GL_lxWS", "35Rnd_556x45_Velko_tracer_green_lxWS", "1Rnd_Pellet_Grenade_shell_lxWS", "1Rnd_HE_Grenade_shell","ACE_40mm_Pike","ACE_40mm_Flare_white","ACE_40mm_Flare_green","ACE_40mm_Flare_red","ACE_40mm_Flare_ir", "1Rnd_SmokeBlue_Grenade_shell", "1Rnd_SmokeGreen_Grenade_shell", "1Rnd_SmokeOrange_Grenade_shell", "1Rnd_SmokePurple_Grenade_shell", "1Rnd_SmokeRed_Grenade_shell", "1Rnd_Smoke_Grenade_shell", "1Rnd_SmokeYellow_Grenade_shell", "ACE_HuntIR_M203"], 35],
             ["XMS GL Kit", ["arifle_XMS_GL_lxWS", "arifle_XMS_GL_Gray_lxWS", "arifle_XMS_GL_Sand_lxWS", "1Rnd_Pellet_Grenade_shell_lxWS", "1Rnd_HE_Grenade_shell","ACE_40mm_Pike","ACE_40mm_Flare_white","ACE_40mm_Flare_green","ACE_40mm_Flare_red","ACE_40mm_Flare_ir", "1Rnd_SmokeBlue_Grenade_shell", "1Rnd_SmokeGreen_Grenade_shell", "1Rnd_SmokeOrange_Grenade_shell", "1Rnd_SmokePurple_Grenade_shell", "1Rnd_SmokeRed_Grenade_shell", "1Rnd_Smoke_Grenade_shell", "1Rnd_SmokeYellow_Grenade_shell", "ACE_HuntIR_M203", "ACE_30Rnd_556x45_Stanag_Mk262_mag", "30Rnd_556x45_Stanag_Tracer_Red", "30Rnd_556x45_Stanag_Sand_Tracer_Red"], 35],
@@ -36,8 +36,8 @@ RB_LogisticsOptions_CDLC_UNA = [
     [
         "Gear",
         [
-            ["Gear Upgrade #1", ["lxWS_H_ssh40_un","U_lxWS_UN_Camo3","ACE_Vector", "ACE_microDAGR", "B_AssaultPack_cbr","B_AssaultPack_desert_lxWS"], 75],
-            ["Gear Upgrade #2", ["V_lxWS_UN_Vest_F","lxWS_H_PASGT_goggles_UN_F","lxWS_H_PASGT_basic_UN_F","B_Kitbag_desert_lxWS","B_Carryall_desert_lxWS","ACE_NVG_Wide","ACE_NVG_Wide_WP","ACE_MX2A","ItemMotionSensor_lxWS","ACE_NVG_Wide_WP","ACE_MX2A"], 175]
+            ["Gear Upgrade #1", ["lxWS_H_ssh40_un","U_lxWS_UN_Camo3","ACE_Vector", "ACE_microDAGR", "B_AssaultPack_cbr","B_AssaultPack_desert_lxWS"], 40],
+            ["Gear Upgrade #2", ["V_lxWS_UN_Vest_F","lxWS_H_PASGT_goggles_UN_F","lxWS_H_PASGT_basic_UN_F","B_Kitbag_desert_lxWS","B_Carryall_desert_lxWS","ACE_NVG_Wide","ACE_NVG_Wide_WP","ACE_MX2A","ItemMotionSensor_lxWS","ACE_NVG_Wide_WP","ACE_MX2A"], 65]
         ]
     ],
     [

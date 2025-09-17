@@ -12,7 +12,7 @@ class EditorData
 	};
 	class ItemIDProvider
 	{
-		nextID=419;
+		nextID=430;
 	};
 	class MarkerIDProvider
 	{
@@ -20,10 +20,10 @@ class EditorData
 	};
 	class Camera
 	{
-		pos[]={3812.519,144.11555,4168.5654};
-		dir[]={0.020060655,-0.83256984,-0.55355769};
-		up[]={0.030152164,0.55391997,-0.83202475};
-		aside[]={-0.99934566,-7.4505806e-09,-0.036215797};
+		pos[]={3815.3911,101.47146,4093.0391};
+		dir[]={-0.070618697,-0.85841215,0.50812805};
+		up[]={-0.11816531,0.51296026,0.85024202};
+		aside[]={0.99050248,1.5694241e-07,0.13765863};
 	};
 };
 binarizationWanted=0;
@@ -291,6 +291,8 @@ class Mission
 {
 	class Intel
 	{
+		resistanceWest=0;
+		resistanceEast=1;
 		timeOfChanges=1800.0002;
 		startWeather=0.30000001;
 		startFog=0.095838703;
@@ -344,8 +346,8 @@ class Mission
 					dataType="Object";
 					class PositionInfo
 					{
-						position[]={3806.9951,57.667229,4113.5825};
-						angles[]={6.2647886,1.6783785,0.0023920804};
+						position[]={3806.9951,57.667236,4113.583};
+						angles[]={6.2647896,1.6783785,0.0023911009};
 					};
 					side="West";
 					flags=6;
@@ -354,6 +356,7 @@ class Mission
 						name="p_1";
 						description="Guard";
 						isPlayer=1;
+						isPlayable=1;
 						class Inventory
 						{
 							class binocular
@@ -1422,8 +1425,8 @@ class Mission
 			dataType="Logic";
 			class PositionInfo
 			{
-				position[]={3805.4514,57.552097,4107.0845};
-				angles[]={6.2663875,0,0.0023920804};
+				position[]={3805.4509,57.55209,4107.084};
+				angles[]={6.2663951,0,0.0023911009};
 			};
 			id=6;
 			type="ModuleCurator_F";
@@ -1544,17 +1547,18 @@ class Mission
 			dataType="Object";
 			class PositionInfo
 			{
-				position[]={3808.2754,59.175041,4132.8813};
-				angles[]={6.2665725,0.3593697,0.010122578};
+				position[]={3808.2751,59.174934,4132.8813};
+				angles[]={6.2665696,0.35936329,0.010122909};
 			};
 			side="Empty";
-			flags=4;
 			class Attributes
 			{
 				name="RB_Terminal";
+				disableSimulation=1;
 			};
 			id=18;
 			type="Land_MultiScreenComputer_01_olive_F";
+			atlOffset=0.88700104;
 			class CustomAttributes
 			{
 				class Attribute0
@@ -1857,7 +1861,7 @@ class Mission
 		class Item20
 		{
 			dataType="Marker";
-			position[]={3806.2119,57.042805,4078.9841};
+			position[]={3807.0461,57.172806,4085.1699};
 			name="RB_LogisticsEnd";
 			markerType="ELLIPSE";
 			type="";
@@ -1879,23 +1883,25 @@ class Mission
 		class Item22
 		{
 			dataType="Marker";
-			position[]={3739.8547,57.850037,3923.7986};
+			position[]={3674.3779,30.860966,3424.4731};
 			name="RB_LogisticsStart";
 			markerType="ELLIPSE";
 			type="";
 			a=2;
 			b=2;
+			angle=304.18115;
 			id=41;
 		};
 		class Item23
 		{
 			dataType="Marker";
-			position[]={3746.6851,57.84,3935.967};
+			position[]={3667.4827,32.065792,3434.7571};
 			name="RB_LogisticsStartDir";
 			markerType="ELLIPSE";
 			type="";
 			a=2;
 			b=2;
+			angle=304.18115;
 			id=42;
 		};
 		class Item24
@@ -4921,8 +4927,8 @@ class Mission
 			dataType="Object";
 			class PositionInfo
 			{
-				position[]={3802.7058,58.512474,4111.5132};
-				angles[]={6.2663875,1.6892693,0.0023920804};
+				position[]={3802.7058,58.512463,4111.5127};
+				angles[]={6.2663951,1.6892693,0.0023911009};
 			};
 			side="Empty";
 			flags=4;
@@ -4944,7 +4950,7 @@ class Mission
 						class data
 						{
 							singleType="STRING";
-							value="[[[[""launch_NLAW_F"",""arifle_MX_F"",""arifle_MX_SW_F""],[1,2,1]],[[""30Rnd_65x39_caseless_mag"",""16Rnd_9x21_Mag"",""30Rnd_45ACP_Mag_SMG_01"",""20Rnd_762x51_Mag"",""100Rnd_65x39_caseless_mag"",""1Rnd_HE_Grenade_shell"",""3Rnd_HE_Grenade_shell"",""1Rnd_Smoke_Grenade_shell"",""1Rnd_SmokeGreen_Grenade_shell"",""Chemlight_green"",""NLAW_F"",""Laserbatteries"",""HandGrenade"",""MiniGrenade"",""SmokeShell"",""SmokeShellGreen"",""UGL_FlareWhite_F"",""UGL_FlareGreen_F"",""ACE_SpareBarrel"",""ACE_30Rnd_65x47_Scenar_mag"",""ACE_30Rnd_65_Creedmor_mag"",""ACE_10Rnd_762x51_M118LR_Mag"",""ACE_20Rnd_762x51_M118LR_Mag"",""ACE_10Rnd_762x51_Mk316_Mod_0_Mag"",""ACE_20Rnd_762x51_Mk316_Mod_0_Mag"",""ACE_10Rnd_762x51_Mk319_Mod_0_Mag"",""ACE_20Rnd_762x51_Mk319_Mod_0_Mag"",""ACE_20Rnd_762x51_Mag_Tracer"",""ACE_20Rnd_762x51_Mag_Tracer_Dim""],[24,6,6,6,6,3,1,2,2,6,3,2,6,6,2,2,2,2,2,4,4,4,4,4,4,4,4,4,4]],[[""Laserdesignator"",""FirstAidKit"",""acc_flashlight"",""bipod_01_F_blk"",""ACE_Chemlight_Shield"",""ACE_EarPlugs"",""ACE_EHP""],[1,10,2,1,12,12,12]],[[""B_Kitbag_mcamo""],[2]]],false]";
+							value="[[[[],[]],[[],[]],[[""ACE_Banana""],[32]],[[],[]]],false]";
 						};
 					};
 				};

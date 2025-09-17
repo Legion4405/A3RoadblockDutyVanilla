@@ -24,13 +24,13 @@ private _persistMenu = [
     {},
     { true }
 ] call ace_interact_menu_fnc_createAction;
+
 [_object, ["ACE_MainActions", "RB_Terminal_Admin"], _persistMenu] call _addAction;
 
 // === Slot Submenus and Actions ===
 for "_i" from 1 to 3 do {
-    private _slotID = format ["RB_Admin_Slot_%1", _i];
+    private _slotID   = format ["RB_Admin_Slot_%1", _i];
     private _slotLabel = format ["Slot %1", _i];
-    private _slotVar = format ["RB_SaveSlot%1", _i];
 
     // Add submenu for Slot
     private _slotMenu = [
@@ -40,6 +40,7 @@ for "_i" from 1 to 3 do {
         {},
         { true }
     ] call ace_interact_menu_fnc_createAction;
+
     [_object, ["ACE_MainActions", "RB_Terminal_Admin", "RB_Admin_Persistence"], _slotMenu] call _addAction;
 
     // === Save Action ===
@@ -48,14 +49,15 @@ for "_i" from 1 to 3 do {
         format ["Save Slot %1", _i],
         "ui\icons\icon_save.paa",
         {
-            params ["_target", "_player"];
-            [_this select 2] remoteExecCall ["RB_fnc_saveProgress", 0, false];
-            //hint format ["💾 Saved to Slot %1", _this select 2];
+            params ["_target", "_player", "_params"];
+            private _slot = _params select 0;
+            [_slot] remoteExecCall ["RB_fnc_saveProgress", 0, false];
         },
         { true },
         {},
         [_i]
     ] call ace_interact_menu_fnc_createAction;
+
     [_object, ["ACE_MainActions", "RB_Terminal_Admin", "RB_Admin_Persistence", _slotID], _saveAct] call _addAction;
 
     // === Load Action (only if data exists) ===
@@ -64,17 +66,25 @@ for "_i" from 1 to 3 do {
         format ["Load Slot %1", _i],
         "",
         {
-            params ["_target", "_player"];
-            [_this select 2] remoteExecCall ["RB_fnc_loadProgress", 0, false];
-            //hint format ["📦 Loaded Slot %1", _this select 2];
+            params ["_target", "_player", "_params"];
+            private _slot = _params select 0;
+            [_slot] remoteExecCall ["RB_fnc_loadProgress", 0, false];
         },
-        { true },
+        {
+            // Enable only when slot has something saved
+            params ["_target", "_player", "_params"];
+            private _slot = _params select 0;
+            private _varName = format ["RB_SaveSlot%1", _slot];
+            !isNil { profileNamespace getVariable _varName } &&
+            { count (profileNamespace getVariable [_varName, []]) > 0 }
+        },
         {},
         [_i]
     ] call ace_interact_menu_fnc_createAction;
+
     [_object, ["ACE_MainActions", "RB_Terminal_Admin", "RB_Admin_Persistence", _slotID], _loadAct] call _addAction;
 
-    // === Reset Submenu under Slot
+    // === Reset Submenu under Slot ===
     private _resetMenuID = format ["RB_Admin_ResetMenu_%1", _i];
     private _resetMenu = [
         _resetMenuID,
@@ -83,23 +93,31 @@ for "_i" from 1 to 3 do {
         {},
         { true }
     ] call ace_interact_menu_fnc_createAction;
+
     [_object, ["ACE_MainActions", "RB_Terminal_Admin", "RB_Admin_Persistence", _slotID], _resetMenu] call _addAction;
 
-    // === Confirm Reset Action
+    // === Confirm Reset Action ===
     private _resetAction = [
         format ["RB_Admin_Reset_%1", _i],
         "Confirm Reset",
         "",
         {
-            params ["_target", "_player"];
-            private _varName = format ["RB_SaveSlot%1", _this select 2];
-            profileNamespace setVariable [_varName, [], true];
+            params ["_target", "_player", "_params"];
+            private _slot = _params select 0;
+            private _varName = format ["RB_SaveSlot%1", _slot];
+
+            // For namespaces, setVariable uses 2 args. Remove the slot (nil) or clear to [].
+            // Using nil removes it so the Load button will disable via the condition above.
+            profileNamespace setVariable [_varName, nil];
             saveProfileNamespace;
-            //hint format ["🗑️ Cleared Slot %1", _this select 2];
+
+            // Optional feedback:
+            // systemChat format ["RB: Cleared persistence Slot %1.", _slot];
         },
         { true },
         {},
         [_i]
     ] call ace_interact_menu_fnc_createAction;
+
     [_object, ["ACE_MainActions", "RB_Terminal_Admin", "RB_Admin_Persistence", _slotID, _resetMenuID], _resetAction] call _addAction;
 };

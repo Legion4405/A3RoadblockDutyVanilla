@@ -35,9 +35,9 @@ private _actionStart = [
     "ui\icons\icon_startpro.paa",
     {
         private _entity = missionNamespace getVariable ["RB_CurrentEntity", objNull];
-        if (isNull _entity) exitWith { hint "❌ No entity is waiting."; };
+        if (isNull _entity) exitWith { hint "No entity is waiting."; };
         if (!(_entity getVariable ["readyForProcessing", false])) exitWith { hint "❌ Entity not ready for processing."; };
-        if (side group _entity == east) exitWith { hint "⚠️ Cannot process enemies."; };
+        if (side group _entity == east) exitWith { hint "Cannot process enemies."; };
         private _checkpointPos = getMarkerPos "RB_Checkpoint";
         private _holdpointPos = getMarkerPos "RB_HoldPoint";
 
@@ -78,7 +78,7 @@ private _actionStart = [
         if (_regOwner == "Unknown") then { _violationsList pushBack "No Registered Owner"; };
 
         private _violationsText = if (_violationsList isEqualTo []) then {"None"} else {_violationsList joinString ", "};
-        //hint format ["🚨 Vehicle Illegal Reasons:\n%1", _violationsText];
+        //hint format ["Vehicle Illegal Reasons:\n%1", _violationsText];
         //[_entity] remoteExec ["RB_fnc_addVehicleActions", 2, true];
         //[_entity] call RB_fnc_addVehicleActions;
         [_entity] remoteExec ["RB_fnc_addVehicleActions", 0, true];

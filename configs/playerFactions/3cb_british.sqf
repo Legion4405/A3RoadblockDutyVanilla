@@ -31,13 +31,13 @@ RB_LogisticsOptions_3CB_BAF = [
         ["ILAW Kit", ["UK3CB_BAF_AT4_CS_AP_Launcher", "UK3CB_BAF_AT4_CS_AT_Launcher"], 10]
     ] ],
     [ "Gear", [
-        ["Gear Upgrade #1", _gearUpgrade1, 20],
-        ["Gear Upgrade #2", _gearUpgrade2, 40]
+        ["Gear Upgrade #1", _gearUpgrade1, 40],
+        ["Gear Upgrade #2", _gearUpgrade2, 65]
     ] ],
     [ "Attachments", [
         ["Bipod Kit", ["UK3CB_underbarrel_acc_bipod", "UK3CB_underbarrel_acc_afg", "UK3CB_underbarrel_acc_afg_d", "UK3CB_underbarrel_acc_afg_g", "UK3CB_underbarrel_acc_afg_t", "UK3CB_underbarrel_acc_grippod", "UK3CB_underbarrel_acc_grippod_d", "UK3CB_underbarrel_acc_grippod_g", "UK3CB_underbarrel_acc_grippod_t", "UK3CB_underbarrel_acc_fgrip", "UK3CB_underbarrel_acc_fgrip_bipod"], 10],
         ["Rail Attachment Kit", ["ACE_DBAL_A3_Green", "ACE_DBAL_A3_Red", "acc_pointer_IR", "ACE_SPIR", "UK3CB_BAF_LLM_Flashlight_Black", "UK3CB_BAF_LLM_Flashlight_Tan", "UK3CB_BAF_LLM_IR_Black", "UK3CB_BAF_LLM_IR_Tan"], 15],
-        ["Suppressor Kit", ["UK3CB_BAF_Silencer_L110", "UK3CB_BAF_Silencer_L115A3", "UK3CB_BAF_Silencer_L85", "UK3CB_BAF_Bayonet_L3A1", "UK3CB_BAF_Silencer_L115A3"], 75],
+        ["Suppressor Kit", ["UK3CB_BAF_Silencer_L110", "UK3CB_BAF_Silencer_L115A3", "UK3CB_BAF_Silencer_L85", "UK3CB_BAF_Bayonet_L3A1", "UK3CB_BAF_Silencer_L115A3"], 50],
         ["CQB Scope Kit", ["RKSL_optic_EOT552", "RKSL_optic_EOT552_C", "RKSL_optic_EOT552X", "RKSL_optic_EOT552X_C", "optic_Holosight_smg_blk_F"], 25],
         ["Rifle Scope Kit", ["UK3CB_BAF_Kite", "UK3CB_BAF_MaxiKite", "UK3CB_BAF_SpecterLDS", "UK3CB_BAF_SUIT", "UK3CB_BAF_SUSAT", "UK3CB_BAF_TA31F", "UK3CB_BAF_TA31F_Hornbill", "UK3CB_BAF_TA648", "UK3CB_BAF_TA648_308", "RKSL_optic_LDS", "RKSL_optic_LDS_C"], 50],
         ["Sniper Scope Kit", ["RKSL_optic_PMII_312", "RKSL_optic_PMII_312_des", "RKSL_optic_PMII_312_sunshade", "RKSL_optic_PMII_312_sunshade_des", "ACE_optic_LRPS_2D", "RKSL_optic_PMII_312_sunshade_wdl", "RKSL_optic_PMII_312_wdl", "RKSL_optic_PMII_525", "RKSL_optic_PMII_525_des", "RKSL_optic_PMII_525_wdl"], 75]

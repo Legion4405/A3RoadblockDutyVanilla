@@ -12,6 +12,8 @@ RB_SpawnerHandle = [] execVM "scripts\runCheckpointSpawner.sqf";
 // Handle banned towns and respawn logic 
 [] spawn {
     [] call RB_fnc_updateBannedTowns; // Updates RB_BannedTowns variable
+    [] call RB_fnc_generateFugitive;
+
     [
         missionNamespace getVariable ["RB_BannedTowns", []]
     ] remoteExec ["RB_fnc_updateBannedTownsDiary", 0, true];

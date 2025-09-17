@@ -38,7 +38,7 @@ private _timeScaleMenu = [
         {
             params ["_target", "_player", "_args"];
             [_args#0] remoteExec ["RB_fnc_setTimeMultiplier", 2];
-            hint format ["⏱️ Time acceleration set to: %1x", _args#0];
+            hint format ["⏱Time acceleration set to: %1x", _args#0];
         },
         { true },
         {},
@@ -69,7 +69,7 @@ private _setTimeMenu = [
         {
             params ["_target", "_player", "_args"];
             [_args#0] remoteExec ["RB_fnc_setTimeOfDay", 2];
-            hint format ["🕒 Time set to %1:00", _args#0];
+            hint format ["Time set to %1:00", _args#0];
         },
         { true },
         {},
@@ -98,7 +98,7 @@ private _weatherMenu = [
         {
             params ["_target", "_player", "_args"];
             [_args#0] remoteExec ["RB_fnc_setWeatherPreset", 2];
-            hint format ["☁️ Weather changed to: %1", _args#0];
+            hint format ["Weather changed to: %1", _args#0];
         },
         { true },
         {},
@@ -144,7 +144,7 @@ private _reset = [
     "ui\icons\icon_search.paa",
     {
         [] spawn {
-            systemChat "🔄 Resetting checkpoint...";
+            systemChat "Resetting checkpoint...";
             diag_log "[RB] Starting checkpoint reset";
 
             missionNamespace setVariable ["RB_CurrentEntity", nil, true];
@@ -154,7 +154,7 @@ private _reset = [
             if (!isNil "RB_SpawnerHandle") then {
                 terminate RB_SpawnerHandle;
                 RB_SpawnerHandle = nil;
-                systemChat "⚠️ Terminated old spawner thread.";
+                systemChat "Terminated old spawner thread.";
                 diag_log "[RB] Terminated old RB_SpawnerHandle thread";
             };
 
@@ -183,7 +183,7 @@ private _reset = [
                 };
             } forEach vehicles;
 
-            systemChat "⏳ Cleanup complete. Restarting spawner in 2 seconds...";
+            systemChat "Cleanup complete. Restarting spawner in 2 seconds...";
             diag_log "[RB] Cleanup complete. Delaying before spawner restart.";
 
             sleep 2;
@@ -194,7 +194,7 @@ private _reset = [
 
             //RB_SpawnerHandle = [] execVM "scripts\runCheckpointSpawner.sqf";
             ["scripts\runCheckpointSpawner.sqf"] remoteExec ["BIS_fnc_execVM", 0, true];
-            systemChat "✅ Checkpoint reset complete. Spawner restarted.";
+            systemChat "Checkpoint reset complete. Spawner restarted.";
             diag_log "[RB] Spawner restarted successfully via reset terminal.";
         };
     },

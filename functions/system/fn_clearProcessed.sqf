@@ -57,7 +57,7 @@ if (!isNull _veh && {count _civs == 0}) exitWith {
 
 if (!isNull _veh) then {
     _veh setVariable ["rb_alreadyCleared", true, true];
-
+    _veh setDamage 0;
     private _remainingCivs = +_civs;
     private _crew = crew _veh;
     private _driver = driver _veh;
@@ -212,7 +212,7 @@ if (!isNull _veh) then {
                 _resultList pushBack format [
                     "%1: %2<br/><t color='#aaaaaa'>%3</t>",
                     name _x,
-                    if (_scoreDelta > 0) then {"✅ +3 (Innocent Released)"} else {"❌ -8 (Wrongful Release)"},
+                    if (_scoreDelta > 0) then {"+5 (Innocent Released)"} else {"-15 (Wrongful Release)"},
                     _civReasonStr
                 ];
 
@@ -246,8 +246,20 @@ if (!isNull _veh) then {
             } else {
                 _scoringMap getOrDefault ["correct_release", 3]
             };
-            _x setVariable ["rb_scoreGiven", true, true];
 
+            // --- Fugitive: override to always penalize, always show
+            if (_x getVariable ["rb_isFugitive", false]) then {
+                _scoreDelta = _scoringMap getOrDefault ["fugitive_released", -25];
+                _civReasons = [(["fugitive_released"] call {
+                    params ["_key"];
+                    private _entry = missionNamespace getVariable ["RB_ScoringTable", []] select { _x#0 == _key };
+                    if (count _entry > 0) then { (_entry select 0)#2 } else { _key };
+                })];
+                _x setVariable ["rb_isFugitive", false, true];
+                [] call RB_fnc_generateFugitive;
+            };
+
+            _x setVariable ["rb_scoreGiven", true, true];
             private _score = RB_Terminal getVariable ["rb_score", 0];
             RB_Terminal setVariable ["rb_score", _score + _scoreDelta, true];
 
@@ -259,7 +271,7 @@ if (!isNull _veh) then {
                 "<t size='1.25' font='PuristaBold' color='%1'>Civilian Released</t><br/>%2: %3<br/><t color='#aaaaaa'>%4</t><br/><br/><t size='1' font='PuristaMedium' color='#cccccc'>Total Score: %5</t>",
                 if (_scoreDelta > 0) then {"#00ff00"} else {"#ff0000"},
                 name _x,
-                if (_scoreDelta > 0) then {"✅ +3 (Innocent Released)"} else {"❌ -8 (Wrongful Release)"},
+                if (_scoreDelta > 0) then {"✅ +3 (Innocent Released)"} else {"❌ -25 (Fugitive Released)"},
                 _civReasonStr,
                 _score + _scoreDelta
             ];

@@ -47,16 +47,17 @@ private _actionPlate = [
     "ui\icons\icon_plate.paa",
     {
         params ["_target"];
-        private _reg = _target getVariable ["veh_registration", ["Unknown", "UNKNOWN", "XXXXXXX"]];
+        private _plate = getPlateNumber _target; // Get the real license plate
         private _msg = format [
             "<t size='1.4' font='PuristaBold' align='center'>License Plate</t><br/><br/>" +
             "Plate Number: <t color='#00ffff'>%1</t>",
-            _reg#2
+            _plate
         ];
-        [_msg, 6] call ace_common_fnc_displayTextStructured;
+        [_msg, 3] call ace_common_fnc_displayTextStructured;
     },
     { alive _target }
 ] call ace_interact_menu_fnc_createAction;
+
 
 // === Action: Search Vehicle
 private _actionSearch = [
@@ -109,12 +110,12 @@ private _actionImpound = [
             
             if (_bombDefused || _hadBomb) then {
                 _scoreChange = _scoringMap getOrDefault ["impound_bomb_defused", 20];
-                _reasonLines pushBack "✅ Defused bomb and impounded";
+                _reasonLines pushBack "Defused bomb and impounded";
                 _color = "#00ff00";
             } else {
                 if (_violations isNotEqualTo []) then {
                     _scoreChange = 5;
-                    _reasonLines pushBack format ["✅ Impounded for: %1", _violations joinString ", "];
+                    _reasonLines pushBack format ["Impounded for: %1", _violations joinString ", "];
                     _color = "#00ff00";
                 } else {
                     _scoreChange = -5;
@@ -173,7 +174,7 @@ private _actionProcess = [
         private _markerPos = getMarkerPos "RB_VehProcessPoint";
         private _dirPos = getMarkerPos "RB_VehProcessPointDir";
         if (_markerPos isEqualTo [0,0,0] || _dirPos isEqualTo [0,0,0]) exitWith {
-            systemChat "❌ Processing markers missing.";
+            systemChat "Processing markers missing.";
         };
 
         private _safePos = ASLToATL [_markerPos#0, _markerPos#1, getTerrainHeightASL _markerPos];
@@ -181,7 +182,7 @@ private _actionProcess = [
         _target setDir (_safePos getDir _dirPos);
 
         _target setVariable ["rb_vehicleProcessed", true, true];
-        systemChat format ["✅ %1 sent to processing point.", typeOf _target];
+        // systemChat format ["%1 sent to processing point.", typeOf _target];
     },
     { alive _target && { _target getVariable ["rb_isCivilianVehicle", false] } && { count crew _target == 0 } }
 ] call ace_interact_menu_fnc_createAction;
@@ -223,9 +224,9 @@ private _actionDefuse = [
             else { _scoringMap getOrDefault ["defuse_no_bomb", -10] };
 
         if (_bombRemoved) then {
-            _reasonLines pushBack "✅ Bomb successfully defused";
+            _reasonLines pushBack "Bomb successfully defused";
         } else {
-            _reasonLines pushBack "❌ No bomb found in vehicle";
+            _reasonLines pushBack "No bomb found in vehicle";
         };
 
         private _score = RB_Terminal getVariable ["rb_score", 0];

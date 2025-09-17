@@ -27,8 +27,11 @@ RB_ScoringTable = [
     ["correct_release",       5, "Correct Release"],
     ["wrong_release",        -15, "Wrongful Release"],
     ["correct_vehicle_release", 5, "Correct Vehicle Release"],
+    ["vehicle_release", 5, "Correct Vehicle Release"],
     ["wrong_vehicle_release", -10, "Wrongful Vehicle Release"],
-    ["registration_mismatch",  5, "Registration Mismatch"]
+    ["registration_mismatch",  5, "Registration Mismatch"],
+    ["fugitive_arrested",    10, "Fugitive Arrested"],
+    ["fugitive_released",   -20, "Fugitive Released"]
 ];
 
 RB_ScoringTableMap = createHashMapFromArray RB_ScoringTable;

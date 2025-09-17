@@ -17,11 +17,13 @@ private _crewCount = 1 + floor random 3;
 private _crew = [];
 
 // === Create civilians
+private _grp = createGroup civilian;
+_grp addVehicle _vehicle;
+
 for "_i" from 0 to (_crewCount - 1) do {
     private _classPool = missionNamespace getVariable ["RB_ActiveCivilianPool", ["C_man_1"]];
     private _class = selectRandom _classPool;
 
-    private _grp = createGroup civilian;
     private _civ = _grp createUnit [_class, _position, [], 0, "NONE"];
     _civ setVariable ["rb_isCivilian", true, true];
     _civ setVariable ["rb_vehicle", _vehicle, true];
@@ -45,6 +47,16 @@ for "_i" from 1 to ((count _crew) - 1) do {
     (_crew#_i) moveInAny _vehicle;
     (_crew#_i) setBehaviour "CARELESS";
 };
+
+_vehicle enableAI "MOVE";
+_vehicle enableAI "PATH";
+_vehicle enableAI "ALL";
+{ _x enableAI "MOVE"; _x enableAI "ALL"; } forEach crew _vehicle;
+
+sleep 0.25;  // Give time for AI to initialize
+
+_grp addVehicle _vehicle; // Re-assign just in case (harmless if already assigned)
+
 
 // === Vehicle contraband/items
 private _illegalPool = missionNamespace getVariable ["RB_ActiveContraband", []];

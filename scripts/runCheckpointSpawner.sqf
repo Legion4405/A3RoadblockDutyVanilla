@@ -27,7 +27,7 @@ while {true} do {
     missionNamespace setVariable ["RB_SpawnerRunning", true, true];
 
     private _civilianChance = missionNamespace getVariable ["RB_CivilianChance", 0.0];
-    private _timeoutSeconds = 240;
+    private _timeoutSeconds = 360;
     private _holdPos = getMarkerPos "RB_HoldPoint";
 
     if (_holdPos isEqualTo [0,0,0]) exitWith {
@@ -145,11 +145,15 @@ while {true} do {
         if (isNull _vehGrp || {_vehGrp == grpNull}) then {
             _vehGrp = createGroup civilian;
             [_driver] joinSilent _vehGrp;
+            [_crew] joinSilent _vehGrp;
+            [veh] addVehicle _vehGrp;
         };
 
         // Remove existing waypoints
         { deleteWaypoint [_vehGrp, _forEachIndex] } forEach waypoints _vehGrp;
-
+        sleep 0.25;
+        _vehGrp addVehicle _veh;
+        sleep 2;
         // Add waypoint to RB_HoldPoint
         private _wp = _vehGrp addWaypoint [_holdPos, 0];
         _wp setWaypointType "MOVE";
@@ -213,7 +217,7 @@ while {true} do {
                 // Cleanup after 240 idle
                 [_entity] spawn {
                     params ["_veh"];
-                    sleep 240;
+                    sleep 360;
                     if (!isNull _veh && {!(_veh getVariable ["rb_isProcessed", false])}) then {
                         private _civs = _veh getVariable ["rb_linkedCivilians", []];
                         {if (alive _x) then {deleteVehicle _x}} forEach (crew _veh);
