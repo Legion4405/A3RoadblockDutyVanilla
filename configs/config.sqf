@@ -74,30 +74,31 @@ RB_FakeNames = [
     "Mohamed Sylla", "Yara Haddad", "Stefanos Antoniou",
 
     // Western European (25)
-    "James Whitaker", "Sophie Müller", "Charles Lambert", "Amelia Brown", "Maxime Dubois",
-    "Lucas Schmidt", "Laura Rossi", "William Clark", "Chloé Martin", "George Evans",
-    "Emma Johansson", "Benjamin Hall", "Oliver Wilson", "Charlotte Dubois", "Thomas Hughes",
-    "Liam Murphy", "Grace Campbell", "Sebastian Richter", "Eva Schneider", "Julian Weber",
-    "Isabelle Lefevre", "Alexander Fischer", "Marie Bernard", "Henry Walker", "Louise Keller",
+    "James Whitaker", "Charles Lambert", "Maxime Dubois",
+    "Lucas Schmidt", "William Clark", "George Evans",
+    "Benjamin Hall", "Oliver Wilson", "Thomas Hughes",
+    "Liam Murphy", "Sebastian Richter", "Julian Weber",
+    "Alexander Fischer", "Henry Walker",
 
     // Eastern European (25)
-    "Ivan Petrov", "Anya Sokolov", "Marek Novak", "Katarina Horvat", "Aleksander Ivanov",
-    "Magda Kowalska", "Zoltan Szabo", "Nina Popescu", "Bojan Jankovic", "Milena Draganova",
-    "Pavel Volkov", "Natalia Mikhailova", "Radek Blazek", "Daria Ivanova", "Viktor Orlov",
-    "Elena Markovic", "Stefan Dragomir", "Oleg Sidorov", "Jelena Petrovic", "Tomasz Nowak",
-    "Marta Varga", "Kristina Iliev", "Roman Kuznetsov", "Lukasz Wisniewski", "Ilona Bodnar",
+    "Ivan Petrov", "Andrei Sokolov", "Marek Novak", "Karlo Horvat", "Aleksander Ivanov",
+    "Mateusz Kowalski", "Zoltan Szabo", "Nicolae Popescu", "Bojan Jankovic", "Milan Draganov",
+    "Pavel Volkov", "Nikolai Mikhailov", "Radek Blazek", "Dmitri Ivanov", "Viktor Orlov",
+    "Emil Markovic", "Stefan Dragomir", "Oleg Sidorov", "Jovan Petrovic", "Tomasz Nowak",
+    "Márton Varga", "Kristian Iliev", "Roman Kuznetsov", "Lukasz Wisniewski", "István Bodnar",
 
     // African (20)
-    "Kwame Boateng", "Amina N'Diaye", "Joseph Okoro", "Fatou Bamba", "Samuel Abebe",
-    "Chinwe Nwosu", "Thabo Mokoena", "Zainab Keita", "Oumar Traore", "Linda Kamau",
-    "Emmanuel Mba", "Siphiwe Dlamini", "Amadou Diallo", "Binta Cisse", "Tinashe Chirwa",
-    "Kofi Mensah", "Hadiza Bello", "Paul Mugisha", "Aissatou Diallo", "Blessing Ncube",
+    "Kwame Boateng", "Amadou N'Diaye", "Joseph Okoro", "Fode Bamba", "Samuel Abebe",
+    "Chinedu Nwosu", "Thabo Mokoena", "Ibrahim Keita", "Oumar Traore", "Daniel Kamau",
+    "Emmanuel Mba", "Siphiwe Dlamini", "Amadou Diallo", "Boubacar Cisse", "Tinashe Chirwa",
+    "Kofi Mensah", "Haruna Bello", "Paul Mugisha", "Abdoulaye Diallo", "Bheki Ncube",
 
     // Asian (20)
-    "Li Wei", "Aiko Tanaka", "Arjun Singh", "Siti Aminah", "Nguyen Van Nam",
-    "Mei Chen", "Ravi Patel", "Kim Min-Jun", "Mai Lan", "Hiroshi Yamamoto",
-    "Akash Sharma", "Yu Wang", "Narae Park", "Nurul Huda", "Thanh Le",
-    "Sachiko Sato", "Phuong Nguyen", "Sunil Raj", "Linh Tran", "Yuki Nakamura",
+    "Li Wei", "Akio Tanaka", "Arjun Singh", "Ahmad Amin", "Nguyen Van Nam",
+    "Ming Chen", "Ravi Patel", "Kim Min-Jun", "Minh Lam", "Hiroshi Yamamoto",
+    "Akash Sharma", "Yu Wang", "Minjae Park", "Nuruddin Huda", "Thanh Le",
+    "Satoshi Sato", "Quang Nguyen", "Sunil Raj", "Duc Tran", "Yusuke Nakamura",
+
 
     "Agent No-Name",      "John Doe",       "Jane Roe",        "Mystery Man",      "Smith Smithson",
     "Sergeant Banana",    "Doctor Mysterio","Alexei the Fifth","Privateer X",      "Unregistered",
@@ -110,8 +111,6 @@ RB_FakeNames = [
     "Rando Calrissian",   "Not A Spy",      "Joe Mama",        "Bobson Dugnutt",   "Donkey Kong",
     "Sergeant Pepper",    "Borat Sagdiyev", "Hal 9000",        "Arthur Dent",      "Blaze McCool"
 ];
-
-
 
 
 
