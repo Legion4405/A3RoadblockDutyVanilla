@@ -12,7 +12,7 @@ class EditorData
 	};
 	class ItemIDProvider
 	{
-		nextID=430;
+		nextID=436;
 	};
 	class MarkerIDProvider
 	{
@@ -20,10 +20,10 @@ class EditorData
 	};
 	class Camera
 	{
-		pos[]={3815.3911,101.47146,4093.0391};
-		dir[]={-0.070618697,-0.85841215,0.50812805};
-		up[]={-0.11816531,0.51296026,0.85024202};
-		aside[]={0.99050248,1.5694241e-07,0.13765863};
+		pos[]={3818.095,76.805611,4121.1255};
+		dir[]={-0.49677363,-0.86774957,-0.016455721};
+		up[]={-0.86727566,0.49699929,-0.028727202};
+		aside[]={-0.033105422,1.064247e-06,0.99947119};
 	};
 };
 binarizationWanted=0;
@@ -58,7 +58,8 @@ addons[]=
 	"A3_Weapons_F_Ammoboxes",
 	"ace_cargo",
 	"ace_logistics_wirecutter",
-	"ace_concertina_wire"
+	"ace_concertina_wire",
+	"A3_Structures_F_Civ_InfoBoards"
 };
 class AddonsMetaData
 {
@@ -232,6 +233,7 @@ randomSeed=6528432;
 class ScenarioData
 {
 	disabledAI=1;
+	joinUnassigned=0;
 	respawn=3;
 };
 class CustomAttributes
@@ -333,7 +335,7 @@ class Mission
 	};
 	class Entities
 	{
-		items=194;
+		items=196;
 		class Item0
 		{
 			dataType="Group";
@@ -7303,6 +7305,101 @@ class Mission
 					};
 				};
 				nAttributes=1;
+			};
+		};
+		class Item194
+		{
+			dataType="Object";
+			class PositionInfo
+			{
+				position[]={3802.5481,58.779984,4124.9199};
+				angles[]={0,5.5903244,0};
+			};
+			side="Empty";
+			flags=4;
+			class Attributes
+			{
+				disableSimulation=1;
+			};
+			id=434;
+			type="Land_InfoStand_V1_F";
+			atlOffset=0.00017547607;
+			class CustomAttributes
+			{
+				class Attribute0
+				{
+					property="ObjectTextureCustom0";
+					expression="_this setObjectTextureGlobal [0,_value]";
+					class Value
+					{
+						class data
+						{
+							singleType="STRING";
+							value="images\jailright.paa";
+						};
+					};
+				};
+				class Attribute1
+				{
+					property="allowDamage";
+					expression="_this allowdamage _value;";
+					class Value
+					{
+						class data
+						{
+							singleType="BOOL";
+							value=0;
+						};
+					};
+				};
+				nAttributes=2;
+			};
+		};
+		class Item195
+		{
+			dataType="Object";
+			class PositionInfo
+			{
+				position[]={3805.7439,58.760715,4124.6338};
+				angles[]={-0,4.8176327,0};
+			};
+			side="Empty";
+			class Attributes
+			{
+				disableSimulation=1;
+			};
+			id=435;
+			type="Land_InfoStand_V1_F";
+			atlOffset=0.31400299;
+			class CustomAttributes
+			{
+				class Attribute0
+				{
+					property="ObjectTextureCustom0";
+					expression="_this setObjectTextureGlobal [0,_value]";
+					class Value
+					{
+						class data
+						{
+							singleType="STRING";
+							value="images\jailup.paa";
+						};
+					};
+				};
+				class Attribute1
+				{
+					property="allowDamage";
+					expression="_this allowdamage _value;";
+					class Value
+					{
+						class data
+						{
+							singleType="BOOL";
+							value=0;
+						};
+					};
+				};
+				nAttributes=2;
 			};
 		};
 	};
