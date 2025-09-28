@@ -60,6 +60,7 @@ class RB {
         file = "functions\persistence";
         class loadProgress {};
         class saveProgress {};
+        class resetSaveSlot {};
     };
     class Judging {
         file = "functions\judging";

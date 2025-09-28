@@ -1,6 +1,7 @@
 /*
     File: fn_addPersistenceActions.sqf
-    Description: Adds "Persistence" actions with Slot 1–3 structure including Save, Load, and Reset under Admin Tools.
+    Description: Adds "Persistence" actions with Slot 1–3 structure under Admin Tools.
+                 Only Save and Reset are exposed. Loading is handled by mission parameters.
 */
 
 params ["_object"];
@@ -16,7 +17,7 @@ private _addAction = {
 private _isAdmin = (serverCommandAvailable "#kick") || {!isNull (getAssignedCuratorLogic player)};
 if (!_isAdmin) exitWith {};
 
-// === Add “Persistence” Main Menu under Admin Tools ===
+// === “Persistence” Main Menu under Admin Tools ===
 private _persistMenu = [
     "RB_Admin_Persistence",
     "Persistence",
@@ -27,12 +28,12 @@ private _persistMenu = [
 
 [_object, ["ACE_MainActions", "RB_Terminal_Admin"], _persistMenu] call _addAction;
 
-// === Slot Submenus and Actions ===
+// === Slot Submenus and Actions (Save + Reset only) ===
 for "_i" from 1 to 3 do {
-    private _slotID   = format ["RB_Admin_Slot_%1", _i];
+    private _slotID    = format ["RB_Admin_Slot_%1", _i];
     private _slotLabel = format ["Slot %1", _i];
 
-    // Add submenu for Slot
+    // Slot submenu
     private _slotMenu = [
         _slotID,
         _slotLabel,
@@ -43,7 +44,7 @@ for "_i" from 1 to 3 do {
 
     [_object, ["ACE_MainActions", "RB_Terminal_Admin", "RB_Admin_Persistence"], _slotMenu] call _addAction;
 
-    // === Save Action ===
+    // --- Save (server) ---
     private _saveAct = [
         format ["RB_Admin_Save_%1", _i],
         format ["Save Slot %1", _i],
@@ -51,7 +52,7 @@ for "_i" from 1 to 3 do {
         {
             params ["_target", "_player", "_params"];
             private _slot = _params select 0;
-            [_slot] remoteExecCall ["RB_fnc_saveProgress", 0, false];
+            [_slot] remoteExecCall ["RB_fnc_saveProgress", 2]; // server executes save
         },
         { true },
         {},
@@ -60,31 +61,7 @@ for "_i" from 1 to 3 do {
 
     [_object, ["ACE_MainActions", "RB_Terminal_Admin", "RB_Admin_Persistence", _slotID], _saveAct] call _addAction;
 
-    // === Load Action (only if data exists) ===
-    private _loadAct = [
-        format ["RB_Admin_Load_%1", _i],
-        format ["Load Slot %1", _i],
-        "",
-        {
-            params ["_target", "_player", "_params"];
-            private _slot = _params select 0;
-            [_slot] remoteExecCall ["RB_fnc_loadProgress", 0, false];
-        },
-        {
-            // Enable only when slot has something saved
-            params ["_target", "_player", "_params"];
-            private _slot = _params select 0;
-            private _varName = format ["RB_SaveSlot%1", _slot];
-            !isNil { profileNamespace getVariable _varName } &&
-            { count (profileNamespace getVariable [_varName, []]) > 0 }
-        },
-        {},
-        [_i]
-    ] call ace_interact_menu_fnc_createAction;
-
-    [_object, ["ACE_MainActions", "RB_Terminal_Admin", "RB_Admin_Persistence", _slotID], _loadAct] call _addAction;
-
-    // === Reset Submenu under Slot ===
+    // --- Reset submenu ---
     private _resetMenuID = format ["RB_Admin_ResetMenu_%1", _i];
     private _resetMenu = [
         _resetMenuID,
@@ -96,7 +73,7 @@ for "_i" from 1 to 3 do {
 
     [_object, ["ACE_MainActions", "RB_Terminal_Admin", "RB_Admin_Persistence", _slotID], _resetMenu] call _addAction;
 
-    // === Confirm Reset Action ===
+    // --- Confirm Reset (server). Keeps legacy by default but BLOCKS auto-import for this map. ---
     private _resetAction = [
         format ["RB_Admin_Reset_%1", _i],
         "Confirm Reset",
@@ -104,15 +81,8 @@ for "_i" from 1 to 3 do {
         {
             params ["_target", "_player", "_params"];
             private _slot = _params select 0;
-            private _varName = format ["RB_SaveSlot%1", _slot];
-
-            // For namespaces, setVariable uses 2 args. Remove the slot (nil) or clear to [].
-            // Using nil removes it so the Load button will disable via the condition above.
-            profileNamespace setVariable [_varName, nil];
-            saveProfileNamespace;
-
-            // Optional feedback:
-            // systemChat format ["RB: Cleared persistence Slot %1.", _slot];
+            // Args: slot, alsoClearLegacy=false, blockFutureAutoImport=true
+            [_slot, false, true] remoteExecCall ["RB_fnc_resetSaveSlot", 2];
         },
         { true },
         {},

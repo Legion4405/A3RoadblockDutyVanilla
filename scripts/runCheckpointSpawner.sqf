@@ -10,11 +10,11 @@ private _intensity = ["RB_Intensity", 1] call BIS_fnc_getParamValue;
 while {true} do {
     // === Determine spawn delay based on intensity
     private _delay = switch (_intensity) do {
-        case 0: { 180 + random 120 };
-        case 1: { 90 + random 60 };
-        case 2: { 45 + random 30 };
-        case 3: { 5 + random 5 };
-        default { 120 };
+        case 0: { 360 + random 120 };
+        case 1: { 240 + random 60 };
+        case 2: { 180 + random 30 };
+        case 3: { 90 + random 5 };
+        default { 210 };
     };
     sleep _delay;
 
