@@ -1,87 +1,91 @@
-player createDiarySubject ["RB_Roadblock_Tutorial", "How to Play"];
+// File: scripts\system\initTutorial.sqf
+// Adds the 'How to Play' tutorial diary category for players.
 
-  player createDiaryRecord["RB_Roadblock_Tutorial", ["Arrestable Offenses",
- "Different kinds of violations may require different actions to resolve.
+if !(player diarySubjectExists "RB_Roadblock_Tutorial") then {
+    player createDiarySubject ["RB_Roadblock_Tutorial", "How to Play"];
+};
+
+player createDiaryRecord["RB_Roadblock_Tutorial", ["Arrestable Offenses",
+ "A lawful arrest or impound requires evidence of a violation. Arresting innocent civilians will result in heavy point penalties.
  <br/><br/>
-
-• Vehicle/Driver ID, ID Number, or License Plate Mismatch:<br/>
-Impound of the vehicle.<br/><br/>
-
-• Vehicle Contraband:<br/>
-Impound of the vehicle.<br/>
-Driver Arrest.<br/><br/>
-
-• Vehicle Bomb:<br/>
-Impound of the vehicle.<br/>
-Passengers Arrest.<br/>
-Driver Arrest.<br/><br/>
-
-• Banned Origin:<br/>
-Arrest.<br/><br/>
-
-• Contraband on Person:<br/>
-Arrest.<br/><br/>
-
-
+ <font color='#ff0000' size='14'>Valid Reasons for Arrest/Impound:</font>
+ <br/><br/>
+• <font color='#00ffff'>Deception:</font> Lying about origin/destination or contextually impossible stories (e.g. Beach trip in a storm).<br/>
+• <font color='#00ffff'>Travel Permits:</font> Missing permit, Expired date, or Route Mismatch.<br/>
+• <font color='#00ffff'>Identification:</font> Most Wanted Fugitive or Banned Home Town.<br/>
+• <font color='#00ffff'>Paperwork:</font> ID Number or License Plate Mismatch.<br/>
+• <font color='#00ffff'>Contraband:</font> Illegal items found on person or in vehicle.<br/>
+• <font color='#00ffff'>Explosives:</font> Presence of a Vehicle Bomb (Defuse first!).<br/>
+• <font color='#00ffff'>Hostility:</font> Neutralizing suspects who open fire on the checkpoint.
  "]];
 
-  player createDiaryRecord["RB_Roadblock_Tutorial", ["Processing a Civilian",
- "Just like vehicles, each and every civilian should get processed also. Failing to do so properly, will result in points deduction.
+player createDiaryRecord["RB_Roadblock_Tutorial", ["Deduction & Verification",
+ "The checkpoint is more than just a paperwork check. You must use logic to catch smart criminals.
  <br/><br/>
-If any reason has been found to arrest a civilian, they should be taken into the building, through the first door on the right. You can do this by using zipcuffs, and escorting them through the ACE interactions.<br/><br/>
-
-• Check Identification:<br/> 
-Shows you the name, date of birth, place of origin, and ID Number of the civilian.<br/><br/>
-
-• Search Civilian:<br/> 
-Shows you the items the civilian carries on their person.<br/><br/>
-
-• Mark as Processed:
-If a civilian is deemed to have no violations, you can mark them as processed, which will pass it through inspection, and wait for the 'Clear Processed' through the terminal for it to be sent on their way.
+<font color='#ccff00' size='14'>1. The Spoken Story</font><br/>
+Question the driver and passengers. Their stories should be consistent. Listen for 'Slip-ups' where a nervous suspect accidentally mentions a banned town before correcting themselves.
+<br/><br/>
+<font color='#ccff00' size='14'>2. Context Awareness</font><br/>
+Does their purpose make sense?
+<br/>• Is it 2 AM and they claim to be going to the beach?
+<br/>• Is it pouring rain and they are 'sightseeing'?
+<br/>• Are they in a sports car but claim to be 'delivering heavy machinery'?
+<br/>If the context is impossible, they are lying.
+<br/><br/>
+<font color='#ccff00' size='14'>3. Physical Evidence</font><br/>
+A true story is backed by physical items.
+<br/>• <font color='#00ffff'>Delivery:</font> Check for cargo, toolkits, or supply crates in the trunk.
+<br/>• <font color='#00ffff'>Medical:</font> Check for first aid kits or medical gear.
+<br/>• <font color='#00ffff'>Beach/Shopping:</font> Check for food, water, or accessories.
+<br/>If a driver claims to be on a delivery but the vehicle is empty, it is a lie.
  "]];
 
-  player createDiaryRecord["RB_Roadblock_Tutorial", ["Processing a Vehicle",
- "Every vehicle that passes through the roadblock will have to get thoroughly checked, to avoid being penalized.
+player createDiaryRecord["RB_Roadblock_Tutorial", ["Processing a Civilian",
+ "Every civilian passing through must be processed. Use the ACE Interaction menu for the following:
  <br/><br/>
- To start the processing of vehicles, a vehicle has to wait in front of the roadblock. This gives the 'Start Processing' option at the terminal.<br/>
- Selecting this option, will open the boomgate, and the vehicle enters the roadblock. From this point on, you gain access to the 'Vehicle Interactions'<br/><br/>
+• <font color='#00ffff'>Question Subject:</font><br/>
+Asks the civilian for their Origin, Destination, and Purpose. Compare this to their documents!<br/><br/>
 
-• Check Registration:<br/> 
-Shows you the person the vehicle is registered to, the ID of the person the vehicle is registered to, and the license plate the vehicle is registered with.<br/><br/>
+• <font color='#00ffff'>Check Identification:</font><br/> 
+Shows the name, DOB, and Home Town. Check if the Home Town is on the 'Restricted Areas' list (Marker on map).<br/><br/>
 
-• Check License:<br/> 
- Some mods and vehicles do not have a license plate shown on the model, this shows the license plate that the vehicle has, not registered with.<br/><br/>
+• <font color='#00ffff'>Check Travel Permit:</font><br/> 
+Shows authorized route and expiry date. Compare the date to the 'Current Date' marker in the top-left of your map.<br/><br/>
 
-• Search Vehicle:<br/> 
-Shows the contents of the vehicle, up to you to discern whether they are legal or illegal!<br/><br/>
+• <font color='#00ffff'>Search Civilian:</font><br/> 
+Conduct a pat-down for contraband or evidence items.<br/><br/>
 
-• Order Out:<br/> 
- Forces all occupants of the vehicle to exit the vehicle.<br/><br/>
+• <font color='#00ffff'>Mark as Processed:</font><br/>
+If the civilian is clear, mark them as processed. They will wait for the roadblock to be cleared via the terminal.
+ "]];
 
-• Defuse Bomb:<br/> 
-Players can use the mine detector issued to them to check vehicles for explosive devices. If they use the 'Defuse' option whilst there is no bomb in the vehicle, they will receive a points deduction.<br/><br/>
+player createDiaryRecord["RB_Roadblock_Tutorial", ["Processing a Vehicle",
+ "To start processing, a vehicle must be waiting at the gate. Use 'Start Processing' at the terminal to begin.
+ <br/><br/>
+• <font color='#00ffff'>Question Driver:</font><br/>
+Talk to the driver while they are still inside. Quickest way to spot a contradiction.<br/><br/>
 
- • Impound Vehicle:<br/> 
-Will become visible after all civilians have been ordered out. If a vehicle has registration, license plate issues, or contraband. Impounding the vehicle will result in a positive score.<br/>
-Be aware, if a vehicle has a bomb inside, and gets impounded, there will be a points deduction if the bomb has not been defused prior.<br/><br/> 
+• <font color='#00ffff'>Check Registration:</font><br/> 
+Shows the registered owner, ID, and plate. Mismatches are grounds for impound.<br/><br/>
 
-• Mark as Processed:<br/> 
-If a vehicle is deemed to have no violations, you can mark it as processed, which will pass it through inspection, and wait for the 'Clear Processed' through the terminal for it to be sent on it's way.
+• <font color='#00ffff'>Search Vehicle:</font><br/> 
+Inspect the inventory. Look for contraband or evidence that supports their story.<br/><br/>
+
+• <font color='#00ffff'>Defuse Bomb:</font><br/> 
+Use a mine detector to check for IEDs. Only defuse if a bomb is present, or you will be penalized for 'False Alarm'.<br/><br/>
+
+• <font color='#00ffff'>Impound Vehicle:</font><br/> 
+Visible once all occupants are out. Use for vehicles with registration issues, contraband, or bombs.<br/><br/> 
+
+• <font color='#00ffff'>Mark as Processed:</font><br/> 
+If the vehicle is clean, mark it for release.
  "]];
  
 player createDiaryRecord["RB_Roadblock_Tutorial", ["The Terminal",
- "With the terminal you can control the roadblock, here's what you can do with it.
+ "The central hub for roadblock operations.
  <br/><br/>
-• Check Score: <br/>
-Allows you to check the score, every action will either add or deduct points to the global total.
-  <br/><br/>
-• Roadblock Management: <br/>
-Within here you can allow vehicles to come into the roadblock, or leave when finished processing. Also, this sub-menu allows you to close the roadblock pausing spawning of enemies, and civilians wanting to access the checkpoint.
-Do note: 'Clear Roadblock' has to be used, before being able to 'Start Processing' again.
- <br/><br/>
-• Logistics: <br/>
-Allows you to spend points in exchange for better gear, weapons, or attachments.
- <br/><br/>
-• Admin Tools: <br/>
-Allows the admin/host to change the time, speed, weather, reset the checkpoint, and most importantly, pick one of three save slots to save progress with.
+• <font color='#00ffff'>Check Score:</font> Monitor your operational points. Total score determines success or failure.<br/><br/>
+• <font color='#00ffff'>Roadblock Management:</font> Open the gate, clear processed traffic, or close the roadblock to pause civilian/insurgent spawning.<br/><br/>
+• <font color='#00ffff'>Logistics:</font> Spend points to unlock new weapons, gear, attachments, and static emplacements.<br/><br/>
+• <font color='#00ffff'>Admin Tools:</font> Change mission specs, time, weather, and manage the three Save Slots.
  "]];

@@ -1,6 +1,7 @@
 /*
     File: fn_ambientTraffic.sqf
     Description: Spawns ambient civilian vehicles from RB_CivilianVehiclePool along marker routes.
+    Refactored to allow multiple vehicles per route (Traffic Flow).
 */
 
 if (!isServer) exitWith {};
@@ -11,13 +12,17 @@ if (_intensity == 0) exitWith {
     systemChat "[RB] Ambient traffic disabled by mission parameter.";
     return;
 };
-private _spawnDelayRanges = [
-    [999, 999],   // Disabled
-    [600, 720],    // Low
-    [360, 480],     // Medium
-    [180, 360],     // High
-    [60, 180]      // Very High
-];
+
+// Wait for config
+if (isNil "RB_AmbientTrafficTimers") then {
+    private _timeout = time + 5;
+    waitUntil { (!isNil "RB_AmbientTrafficTimers") || (time > _timeout) };
+};
+
+private _spawnDelayRanges = missionNamespace getVariable ["RB_AmbientTrafficTimers", [
+    [999, 999], [480, 600], [240, 360], [120, 240], [45, 90]
+]];
+
 private _delayRange = _spawnDelayRanges select _intensity;
 
 // === Build route list using sentinel marker check
@@ -59,7 +64,7 @@ if (_routes isEqualTo []) exitWith {
             private _veh = createVehicle [_vehClass, _startPos, [], 0, "NONE"];
             _veh setDir _spawnDir;
             _veh setVehicleLock "UNLOCKED";
-            _veh allowDamage false;
+            _veh allowDamage false; // Invincible ambient traffic
 
             // Create driver as group/unit for reliable vehicle AI
             private _grp = createGroup civilian;
@@ -77,17 +82,24 @@ if (_routes isEqualTo []) exitWith {
             _wp setWaypointBehaviour "CARELESS";
             _wp setWaypointSpeed "LIMITED";
 
-            // Watchdog for timeout, death, or arrival
-            private _startTime = time;
-            waitUntil {
-                sleep 5;
-                !alive _veh || !alive _driver || (_veh distance _endPos < 20) || (time - _startTime > 240)
+            // === Monitor Forked (Allows multiple cars on route) ===
+            [_veh, _driver, _grp, _endPos] spawn {
+                params ["_veh", "_driver", "_grp", "_endPos"];
+                private _startTime = time;
+                
+                // Wait for arrival or timeout
+                waitUntil {
+                    sleep 5;
+                    !alive _veh || !alive _driver || (_veh distance _endPos < 20) || (time - _startTime > 300)
+                };
+                
+                // Cleanup
+                if (!isNull _veh) then { deleteVehicle _veh; };
+                if (!isNull _driver) then { deleteVehicle _driver; };
+                if (!isNull _grp) then { deleteGroup _grp; };
             };
-            deleteVehicle _veh;
-            deleteVehicle _driver;
-            deleteGroup _grp;
 
-            // Respawn cooldown (varies per intensity)
+            // Wait for next spawn interval
             private _waitTime = (_delay select 0) + random ((_delay select 1) - (_delay select 0));
             sleep _waitTime;
         };

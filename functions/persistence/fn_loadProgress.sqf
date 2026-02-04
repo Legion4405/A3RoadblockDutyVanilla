@@ -97,16 +97,89 @@ private _cleanup = (vehicles + allMissionObjects "StaticWeapon") select { _x get
 { deleteVehicle _x } forEach _cleanup;
 
 {
-  private _class=_x#0; private _pos=_x#1; private _dir=_x#2;
+  private _class=_x#0; private _pos=_x#1; private _dirOrVec=_x#2;
   if (_class isEqualType []) then { if (count _class>0) then {_class=_class select 0} else {continue}; };
   if !(_class isEqualType "") then { continue };
   _class = toString ((toArray _class) select { _x != 34 });
   if (_class=="" || {!isClass (configFile >> "CfgVehicles" >> _class)}) then { continue };
   private _obj = createVehicle [_class, [0,0,0], [], 0, "NONE"];
-  _obj setDir _dir; _obj setPosATL _pos;
+  _obj setPosATL _pos;
+  if (_dirOrVec isEqualType []) then { _obj setVectorDirAndUp _dirOrVec; } else { _obj setDir _dirOrVec; };
+  
   clearWeaponCargoGlobal _obj; clearMagazineCargoGlobal _obj; clearItemCargoGlobal _obj; clearBackpackCargoGlobal _obj;
   _obj setVariable ["rb_isPersistentLogi", true, true];
+  
+  // Optimization: Populate tracking array
+  if (isNil "RB_LogisticsObjects") then { RB_LogisticsObjects = []; };
+  RB_LogisticsObjects pushBack _obj;
+
+  // Re-track fortifications
+  if (!(_obj isKindOf "AllVehicles")) then {
+      if (isNil "RB_PersistentFortifications") then { RB_PersistentFortifications = []; };
+      RB_PersistentFortifications pushBack _obj;
+      
+      // Restore "Remove" functionality
+      [_obj] call RB_fnc_addFortifyRemoveAction;
+  };
 } forEach _logiData;
+
+// load persistent squads
+private _persistentGroups = [_data, "persistentSquads", []] call _kvGet;
+private _restoredSquads = 0;
+private _allSpawnedGroups = [];
+
+{
+    private _groupID = _x select 0;
+    private _sideID  = _x select 1; 
+    private _units   = _x select 2;
+    
+    if !(_sideID isEqualType west) then { _sideID = west; }; 
+
+    private _grp = createGroup [_sideID, true];
+    _grp setGroupIdGlobal [_groupID];
+    
+    {
+        private _cls = _x select 0;
+        private _pos = _x select 1;
+        private _dir = _x select 2;
+        private _ld  = _x select 3;
+        
+        if (isClass (configFile >> "CfgVehicles" >> _cls)) then {
+            private _u = _grp createUnit [_cls, _pos, [], 0, "NONE"];
+            _u setDir _dir;
+            _u setPosATL _pos;
+            _u setUnitLoadout _ld;
+            _u setVariable ["rb_isPersistentLogi", true, true];
+        };
+    } forEach _units;
+
+    if (count units _grp > 0) then {
+        _grp selectLeader (units _grp select 0);
+        _restoredSquads = _restoredSquads + 1;
+
+        // HC Assignment (Inside Loop, using user's working syntax)
+        private _commander = objNull;
+        { if (_x getVariable ["RB_IsCommander", false]) exitWith { _commander = _x; }; } forEach allPlayers;
+        if (isNull _commander && !isNil "p_1") then { _commander = p_1; };
+
+        if (!isNull _commander) then {
+            _grp setGroupOwner (owner _commander);
+            [
+                [_grp],
+                {
+                    params ["_newGrp"];
+                    // Wait for Commander Interface to be ready (Critical for init timing)
+                    waitUntil { sleep 1; !isNil {player getVariable "BIS_HC_scope"} };
+                    sleep 1; 
+                    player hcSetGroup [_newGrp];
+                }
+            ] remoteExec ["BIS_fnc_spawn", _commander];
+            sleep 1; // Throttle assignment to prevent engine script crash
+        };
+    } else {
+        deleteGroup _grp;
+    };
+} forEach _persistentGroups;
 
 // re-apply ACE arsenal
 [] spawn {
@@ -120,6 +193,7 @@ private _lines2 = [
   format ["Loaded (map '%1', slot %2)", _mapKey, _slotNum],
   format ["• Score: %1", _score],
   format ["• Loadouts restored: %1", count _loadouts],
+  format ["• Squads restored: %1", _restoredSquads],
   format ["• Vehicles/turrets: %1", count _logiData],
   format ["• Arsenal unlocks: %1 items", count RB_ArsenalUnlocks],
   format ["• Logistics Faction: %1", RB_LogisticsFaction]

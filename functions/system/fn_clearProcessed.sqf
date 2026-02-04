@@ -30,7 +30,7 @@ private _veh = if (count _vehList > 0) then { _vehList select 0 } else { objNull
 // === If vehicle exists but no civs, process vehicle immediately
 if (!isNull _veh && {count _civs == 0}) exitWith {
     _veh setVariable ["rb_alreadyCleared", true, true];
-    private _vehResult  = [_veh] call RB_fnc_judgeVehicle;
+    private _vehResult  = [_veh, false] call RB_fnc_judgeVehicle;
     private _vehDelta   = _vehResult select 2;
     private _vehStatus  = _vehResult select 3;
     private _vehReasons = _vehResult select 1;
@@ -121,6 +121,22 @@ if (!isNull _veh) then {
         _wp setWaypointCompletionRadius 10;
         _vehGroup setCurrentWaypoint _wp;
         _veh setVariable ["rb_sentToExit", true, true];
+        
+        // Repair lights before turning them on
+        private _hitPoints = getAllHitPointsDamage _veh;
+        if (_hitPoints isNotEqualTo []) then {
+            private _names = _hitPoints select 0;
+            {
+                if ((toLower _x) find "light" > -1) then {
+                    _veh setHitPointDamage [_x, 0];
+                };
+            } forEach _names;
+        };
+
+        // Turn lights back on when leaving
+        _veh engineOn true;
+        _veh setPilotLight true;
+        _veh action ["lightOn", _veh];
     }
 } else {
     // === On-foot civs: walk to exit
@@ -176,7 +192,7 @@ if (!isNull _veh) then {
             private _veh = _x;
             if (!alive _veh) then { continue };
             private _crew = crew _veh;
-            private _vehResult  = [_veh] call RB_fnc_judgeVehicle;
+            private _vehResult  = [_veh, false] call RB_fnc_judgeVehicle;
             private _vehDelta   = _vehResult select 2;
             private _vehStatus  = _vehResult select 3;
             private _vehReasons = _vehResult select 1;
@@ -232,7 +248,7 @@ if (!isNull _veh) then {
                 _newScore
             ];
             [_resultText, 15] remoteExec ["ace_common_fnc_displayTextStructured", 0];
-            deleteVehicle _veh;
+    deleteVehicle _veh;
         } forEach _vehList;
 
         // === Score and delete foot civs

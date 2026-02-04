@@ -1,16 +1,17 @@
 class RB {
     class Civilian {
         file = "functions\civilian";
+        class validateCivilian {};
         class checkCivilianID {};
         class assignIdentityAndContraband {};
         class addCivilianActions {};
         class searchCivilian {};
-        class evaluateDetainedCivilian {};
         class spawnCivilianVehicle {};
         class isCivilianIllegal {};
         class debugIllegalReason {};
         class tryTurnHostile {};
         class processCivilian {};
+        class interrogateCivilian {};
     };
     class Vehicles {
         file = "functions\vehicle";
@@ -21,6 +22,10 @@ class RB {
     };
     class System {
         file = "functions\system";
+        class initializeMission {};
+        class initializeFactions {};
+        class system_trafficLoop {};
+        class system_enemyAttackLoop {};
         class addTerminalActions {};
         class clearProcessed {};
         class onCivilianKilled {};
@@ -39,6 +44,9 @@ class RB {
         class applyWeather {};
         class generateFugitive {};
         class updateFugitiveDiary {};
+        class debugForceSpawn {};
+        class monitorArrival {};
+        class toggleDiagnostics {};
     };
     class Logistics {
         file = "functions\logistics";
@@ -48,13 +56,18 @@ class RB {
     class Combat {
         file = "functions\combat";
         class spawnEnemyAttack {};
+        class spawnEnemyVehicle {};
+        class spawnMortarBarrage {};
     };
     class Utility {
         file = "functions\utility";
+        class showNotification {};
         class addGeneratorActions {};
         class updateLamps {};
         class getStarterLoadout {};
         class moveVehicleSmooth {};
+        class addFortifyRemoveAction {};
+        class updateMapDate {};
     };
     class Persistence {
         file = "functions\persistence";
@@ -66,5 +79,6 @@ class RB {
         file = "functions\judging";
         class judgeCivilian {};
         class judgeVehicle {};
+        class processZoneTrigger {};
     };
 };

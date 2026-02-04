@@ -142,8 +142,8 @@ _vehicle setVariable ["cached_veh_regOwner", str _realName, true];
 // === Cache crew list for later checks
 _vehicle setVariable ["rb_vehicleCrew", _crew, true];
 
-// === Bomb (10% chance, disables on clear as before)
-if (random 1 < 0.1) then {
+// === Bomb (5% chance, disables on clear as before)
+if (random 1 < 0.05) then {
     private _bomb = createVehicle ["DemoCharge_F", getPos _vehicle, [], 0, "NONE"];
     _bomb attachTo [_vehicle, [0, 0, 0]];
     _bomb hideObjectGlobal true;
@@ -158,5 +158,15 @@ if (random 1 < 0.1) then {
     _vehicle setVariable ["rb_hasBomb", false, true];
     _vehicle setVariable ["rb_bombDefused", false, true];
 };
+
+// === Pre-Cache Vehicle Data on Civilians (Safety against early vehicle deletion)
+{
+    private _civ = _x;
+    _civ setVariable ["rb_vehicle", _vehicle, true]; // Ensure link is set
+    _civ setVariable ["rb_vehicleBombHad", _vehicle getVariable ["rb_hadBomb", false], true];
+    _civ setVariable ["rb_vehicleBombDefused", _vehicle getVariable ["rb_bombDefused", false], true];
+    _civ setVariable ["rb_vehicleContraband", _vehicle getVariable ["veh_contraband", []], true];
+    _civ setVariable ["rb_vehicleWasDriver", (driver _vehicle == _civ), true];
+} forEach _crew;
 
 _vehicle

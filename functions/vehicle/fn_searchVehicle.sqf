@@ -26,4 +26,4 @@ if (_items isEqualTo []) then {
 };
 
 // === Display to player
-[_msg, 8] call ace_common_fnc_displayTextStructured;
+[_msg, 8] call RB_fnc_showNotification;

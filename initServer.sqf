@@ -1,6 +1,6 @@
 
-RB_SpawnerHandle = [] execVM "scripts\runCheckpointSpawner.sqf";
-    [] execVM "scripts\combat\runEnemyAttackSpawner.sqf";
+RB_SpawnerHandle = [] spawn RB_fnc_system_trafficLoop;
+    [] spawn RB_fnc_system_enemyAttackLoop;
     [] execVM "scripts\combat\runEnemyVehicleSpawner.sqf";
     [] execVM "scripts\effects\ambientMortars.sqf";
     [] execVM "scripts\manageRespawns.sqf";

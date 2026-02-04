@@ -12,18 +12,18 @@ class EditorData
 	};
 	class ItemIDProvider
 	{
-		nextID=436;
+		nextID=453;
 	};
 	class MarkerIDProvider
 	{
-		nextID=3;
+		nextID=4;
 	};
 	class Camera
 	{
-		pos[]={3818.5476,174.02597,4139.0562};
-		dir[]={-0.18569706,-0.87542391,-0.44626182};
-		up[]={-0.33632281,0.48335588,-0.80824125};
-		aside[]={-0.92325699,0,0.38418281};
+		pos[]={3829.8047,102.36176,4122.8057};
+		dir[]={-0.33863208,-0.93977511,0.046651945};
+		up[]={-0.93099278,0.34177202,0.12825881};
+		aside[]={0.13647953,1.2025703e-07,0.99065417};
 	};
 };
 binarizationWanted=0;
@@ -38,6 +38,7 @@ addons[]=
 	"ace_medical_treatment",
 	"ace_maptools",
 	"A3_Modules_F_Curator_Curator",
+	"ef_curator",
 	"A3_Structures_F_Enoch_Military_Barracks",
 	"A3_Props_F_Enoch_Military_Equipment",
 	"A3_Structures_F_Bootcamp_Items_Electronics",
@@ -57,15 +58,18 @@ addons[]=
 	"A3_Structures_F_Tank_Military_RepairDepot",
 	"A3_Weapons_F_Ammoboxes",
 	"ace_cargo",
+	"emr_main",
 	"ace_logistics_wirecutter",
 	"ace_concertina_wire",
-	"A3_Structures_F_Civ_InfoBoards"
+	"A3_Structures_F_Civ_InfoBoards",
+	"ace_fortify",
+	"A3_Modules_F_Hc"
 };
 class AddonsMetaData
 {
 	class List
 	{
-		items=22;
+		items=25;
 		class Item0
 		{
 			className="A3_Characters_F";
@@ -124,99 +128,120 @@ class AddonsMetaData
 		};
 		class Item8
 		{
+			className="EF_Curator";
+			name="Expeditionary Forces - Zeus";
+			author="Tiny Gecko Studios";
+			url="https://www.arma3.com";
+		};
+		class Item9
+		{
 			className="A3_Structures_F_Enoch_Military";
 			name="Arma 3 Contact Platform - Military Buildings and Structures";
 			author="Bohemia Interactive";
 			url="https://www.arma3.com";
 		};
-		class Item9
+		class Item10
 		{
 			className="A3_Props_F_Enoch";
 			name="Arma 3 Contact Platform - Decorative and Mission Objects";
 			author="Bohemia Interactive";
 			url="https://www.arma3.com";
 		};
-		class Item10
+		class Item11
 		{
 			className="A3_Structures_F_Bootcamp";
 			name="Arma 3 Bootcamp Update - Buildings and Structures";
 			author="Bohemia Interactive";
 			url="https://www.arma3.com";
 		};
-		class Item11
+		class Item12
 		{
 			className="A3_Ui_F";
 			name="Arma 3 - User Interface";
 			author="Bohemia Interactive";
 			url="https://www.arma3.com";
 		};
-		class Item12
+		class Item13
 		{
 			className="A3_Structures_F";
 			name="Arma 3 - Buildings and Structures";
 			author="Bohemia Interactive";
 			url="https://www.arma3.com";
 		};
-		class Item13
+		class Item14
 		{
 			className="A3_Structures_F_Mil";
 			name="Arma 3 - Military Buildings and Structures";
 			author="Bohemia Interactive";
 			url="https://www.arma3.com";
 		};
-		class Item14
+		class Item15
 		{
 			className="A3_Modules_F";
 			name="Arma 3 Alpha - Scripted Modules";
 			author="Bohemia Interactive";
 			url="https://www.arma3.com";
 		};
-		class Item15
+		class Item16
 		{
 			className="A3_Structures_F_EPA";
 			name="Arma 3 Survive Episode - Buildings and Structures";
 			author="Bohemia Interactive";
 			url="https://www.arma3.com";
 		};
-		class Item16
+		class Item17
 		{
 			className="A3_Signs_F";
 			name="Arma 3 - Signs";
 			author="Bohemia Interactive";
 			url="https://www.arma3.com";
 		};
-		class Item17
+		class Item18
 		{
 			className="A3_Structures_F_Ind";
 			name="Arma 3 - Industrial Structures";
 			author="Bohemia Interactive";
 			url="https://www.arma3.com";
 		};
-		class Item18
+		class Item19
 		{
 			className="A3_Structures_F_Tank";
 			name="Arma 3 Tank - Buildings and Structures";
 			author="Bohemia Interactive";
 			url="https://www.arma3.com";
 		};
-		class Item19
+		class Item20
 		{
 			className="ace_cargo";
 			name="ACE3 - Cargo";
 			author="ACE-Team";
 			url="https://ace3.acemod.org/";
 		};
-		class Item20
+		class Item21
+		{
+			className="emr_main";
+			name="Enhanced Movement Rework";
+			author="Simplex Team";
+			url="https://github.com/SceptreOfficial/Enhanced-Movement-Rework";
+		};
+		class Item22
 		{
 			className="ace_logistics_wirecutter";
 			name="ACE3 - Logistics Wire Cutter";
 			author="ACE-Team";
 			url="https://ace3.acemod.org/";
 		};
-		class Item21
+		class Item23
 		{
 			className="ace_concertina_wire";
 			name="ACE3 - Concertina Wire";
+			author="ACE-Team";
+			url="https://ace3.acemod.org/";
+		};
+		class Item24
+		{
+			className="ace_fortify";
+			name="ACE3 - Fortify";
 			author="ACE-Team";
 			url="https://ace3.acemod.org/";
 		};
@@ -242,19 +267,6 @@ class CustomAttributes
 	{
 		name="Multiplayer";
 		class Attribute0
-		{
-			property="ENH_saveLoadout";
-			expression="if (!isMultiplayer || !_value || is3DEN || !hasInterface) exitWith {};        0 spawn        {            waitUntil {sleep 1; !isNull player};            player setVariable ['ENH_savedLoadout', getUnitloadout player];            player addMPEventHandler ['MPRespawn',            {                params ['_unit'];                private _loadout = _unit getVariable ['ENH_savedLoadout', []];                if (_loadout isNotEqualTo []) then {_unit setUnitLoadout _loadout};            }];        };";
-			class Value
-			{
-				class data
-				{
-					singleType="BOOL";
-					value=1;
-				};
-			};
-		};
-		class Attribute1
 		{
 			property="RespawnTemplates";
 			expression="true";
@@ -283,6 +295,19 @@ class CustomAttributes
 							};
 						};
 					};
+				};
+			};
+		};
+		class Attribute1
+		{
+			property="ENH_saveLoadout";
+			expression="if (!isMultiplayer || !_value || is3DEN || !hasInterface) exitWith {};        0 spawn        {            waitUntil {sleep 1; !isNull player};            player setVariable ['ENH_savedLoadout', getUnitloadout player];            player addMPEventHandler ['MPRespawn',            {                params ['_unit'];                private _loadout = _unit getVariable ['ENH_savedLoadout', []];                if (_loadout isNotEqualTo []) then {_unit setUnitLoadout _loadout};            }];        };";
+			class Value
+			{
+				class data
+				{
+					singleType="BOOL";
+					value=1;
 				};
 			};
 		};
@@ -335,7 +360,7 @@ class Mission
 	};
 	class Entities
 	{
-		items=196;
+		items=199;
 		class Item0
 		{
 			dataType="Group";
@@ -355,8 +380,9 @@ class Mission
 					flags=6;
 					class Attributes
 					{
+						init="this setVariable [""RB_IsCommander"", true, true];";
 						name="p_1";
-						description="Guard";
+						description="Guard Commander";
 						isPlayer=1;
 						isPlayable=1;
 						class Inventory
@@ -1497,7 +1523,7 @@ class Mission
 			class Attributes
 			{
 				name="RB_DetentionZone";
-				onActivation="{  " \n "    if (isNull _x || {!alive _x}) exitWith {};  " \n " " \n "    if (!(_x getVariable [""rb_processed"", false])) then {  " \n "        _x setVariable [""rb_processed"", true, true];  " \n " " \n "        private _result     = [_x] call RB_fnc_judgeCivilian;  " \n "        private _arrestable = _result select 0;  " \n "        private _reasons    = _result select 1;  " \n "        private _scoreDelta = _result select 2;  " \n "        private _statusText = _result select 3;  " \n " " \n "        if (_arrestable || _scoreDelta != 0) then {  " \n "            private _score    = RB_Terminal getVariable [""rb_score"", 0];  " \n "            private _newScore = _score + _scoreDelta;  " \n "            RB_Terminal setVariable [""rb_score"", _newScore, true];  " \n " " \n "            private _color      = if (_scoreDelta > 0) then {""#00ff00""} else {""#ff0000""};  " \n "            private _reasonText = if (count _reasons > 0) then {  " \n "                (""<br/>• "" + (_reasons joinString ""<br/>• ""))  " \n "            } else {  " \n "                ""None""  " \n "            };  " \n " " \n "            private _msg = format [  " \n "                ""<t size='1.25' font='PuristaBold' color='%1'>%2</t><br/>"" +  " \n "                ""<t color='#ffffff'>Name:</t> %3<br/>"" +  " \n "                ""<t color='#ffffff'>Score Change:</t> <t color='%1'>%4</t><br/>"" +  " \n "                ""<t color='#ffffff'>Reason(s):</t> %5<br/><br/>"" +  " \n "                ""<t size='1' color='#cccccc'>New Total Score: %6</t>"",  " \n "                _color,  " \n "                _statusText,  " \n "                name _x,  " \n "                if (_scoreDelta > 0) then { format[""+%1"", _scoreDelta] } else { str _scoreDelta },  " \n "                _reasonText,  " \n "                _newScore  " \n "            ];  " \n " " \n "            [_msg, 6] remoteExec [""ace_common_fnc_displayTextStructured"", 0];  " \n "        };  " \n " " \n "        deleteVehicle _x;  " \n "    };  " \n "} forEach thisList; " \n "";
+				onActivation="[thisList] call RB_fnc_processZoneTrigger;";
 				sizeA=0.98000002;
 				sizeB=3.8889999;
 				sizeC=2.322;
@@ -1681,6 +1707,7 @@ class Mission
 			name="RB_ExitPoint";
 			markerType="ELLIPSE";
 			type="";
+			alpha=0;
 			a=5;
 			b=5;
 			id=29;
@@ -1693,6 +1720,7 @@ class Mission
 			name="RB_ProcessPoint";
 			markerType="ELLIPSE";
 			type="";
+			alpha=0;
 			a=2;
 			b=2;
 			id=30;
@@ -1704,6 +1732,7 @@ class Mission
 			name="RB_VehProcessPoint";
 			markerType="ELLIPSE";
 			type="";
+			alpha=0;
 			a=2;
 			b=2;
 			id=31;
@@ -1716,6 +1745,7 @@ class Mission
 			name="RB_VehProcessPointDir";
 			markerType="ELLIPSE";
 			type="";
+			alpha=0;
 			a=2;
 			b=2;
 			id=32;
@@ -1867,6 +1897,7 @@ class Mission
 			name="RB_LogisticsEnd";
 			markerType="ELLIPSE";
 			type="";
+			alpha=0;
 			a=2;
 			b=2;
 			id=39;
@@ -1878,6 +1909,7 @@ class Mission
 			name="RB_LogisticsDrop";
 			markerType="ELLIPSE";
 			type="";
+			alpha=0;
 			a=2;
 			b=2;
 			id=40;
@@ -1889,6 +1921,7 @@ class Mission
 			name="RB_LogisticsStart";
 			markerType="ELLIPSE";
 			type="";
+			alpha=0;
 			a=2;
 			b=2;
 			angle=304.18115;
@@ -1901,6 +1934,7 @@ class Mission
 			name="RB_LogisticsStartDir";
 			markerType="ELLIPSE";
 			type="";
+			alpha=0;
 			a=2;
 			b=2;
 			angle=304.18115;
@@ -1913,6 +1947,7 @@ class Mission
 			name="RB_VehSpawn_1";
 			markerType="ELLIPSE";
 			type="";
+			alpha=0;
 			a=2;
 			b=2;
 			id=43;
@@ -1925,6 +1960,7 @@ class Mission
 			name="RB_VehSpawnDir_1";
 			markerType="ELLIPSE";
 			type="";
+			alpha=0;
 			a=2;
 			b=2;
 			id=44;
@@ -1936,6 +1972,7 @@ class Mission
 			name="RB_FootSpawn";
 			markerType="ELLIPSE";
 			type="";
+			alpha=0;
 			a=2;
 			b=2;
 			id=45;
@@ -1948,6 +1985,7 @@ class Mission
 			name="RB_HoldPoint";
 			markerType="ELLIPSE";
 			type="";
+			alpha=0;
 			a=2;
 			b=2;
 			angle=13.948146;
@@ -1960,6 +1998,7 @@ class Mission
 			name="RB_Checkpoint";
 			markerType="ELLIPSE";
 			type="";
+			alpha=0;
 			a=2;
 			b=2;
 			angle=9.2339973;
@@ -2009,6 +2048,7 @@ class Mission
 			text="Roadblock";
 			markerType="ELLIPSE";
 			type="";
+			alpha=0;
 			a=2;
 			b=2;
 			id=82;
@@ -2021,6 +2061,7 @@ class Mission
 			name="RB_MortarSite";
 			markerType="ELLIPSE";
 			type="";
+			alpha=0;
 			angle=196.57854;
 			id=86;
 		};
@@ -2031,6 +2072,7 @@ class Mission
 			name="RB_EnemySpawn_1";
 			markerType="ELLIPSE";
 			type="";
+			alpha=0;
 			a=4;
 			b=4;
 			angle=9.2339973;
@@ -2044,6 +2086,7 @@ class Mission
 			name="RB_EnemySpawn_2";
 			markerType="ELLIPSE";
 			type="";
+			alpha=0;
 			a=4;
 			b=4;
 			angle=9.2339973;
@@ -2056,6 +2099,7 @@ class Mission
 			name="RB_EnemySpawn_3";
 			markerType="ELLIPSE";
 			type="";
+			alpha=0;
 			a=4;
 			b=4;
 			angle=9.2339973;
@@ -2068,6 +2112,7 @@ class Mission
 			name="RB_EnemySpawn_4";
 			markerType="ELLIPSE";
 			type="";
+			alpha=0;
 			a=4;
 			b=4;
 			angle=9.2339973;
@@ -2080,6 +2125,7 @@ class Mission
 			name="RB_EnemySpawn_5";
 			markerType="ELLIPSE";
 			type="";
+			alpha=0;
 			a=4;
 			b=4;
 			angle=9.2339973;
@@ -2092,6 +2138,7 @@ class Mission
 			name="RB_EnemySpawn_6";
 			markerType="ELLIPSE";
 			type="";
+			alpha=0;
 			a=4;
 			b=4;
 			angle=9.2339973;
@@ -7028,6 +7075,7 @@ class Mission
 			name="RB_AmbientVehicleStart_1";
 			markerType="ELLIPSE";
 			type="";
+			alpha=0;
 			a=2;
 			b=2;
 			id=388;
@@ -7039,6 +7087,7 @@ class Mission
 			name="RB_AmbientVehicleStartDir_1";
 			markerType="ELLIPSE";
 			type="";
+			alpha=0;
 			a=2;
 			b=2;
 			id=389;
@@ -7050,6 +7099,7 @@ class Mission
 			name="RB_AmbientVehicleEnd_1";
 			markerType="ELLIPSE";
 			type="";
+			alpha=0;
 			a=2;
 			b=2;
 			angle=220.82095;
@@ -7063,6 +7113,7 @@ class Mission
 			name="RB_AmbientVehicleEndDir_1";
 			markerType="ELLIPSE";
 			type="";
+			alpha=0;
 			a=2;
 			b=2;
 			angle=220.82095;
@@ -7076,6 +7127,7 @@ class Mission
 			name="RB_VehSpawnDir_2";
 			markerType="ELLIPSE";
 			type="";
+			alpha=0;
 			a=2;
 			b=2;
 			angle=89.009453;
@@ -7088,6 +7140,7 @@ class Mission
 			name="RB_VehSpawn_2";
 			markerType="ELLIPSE";
 			type="";
+			alpha=0;
 			a=2;
 			b=2;
 			angle=200.38506;
@@ -7101,6 +7154,7 @@ class Mission
 			name="RB_AmbientVehicleStart_2";
 			markerType="ELLIPSE";
 			type="";
+			alpha=0;
 			a=2;
 			b=2;
 			angle=232.77448;
@@ -7113,6 +7167,7 @@ class Mission
 			name="RB_AmbientVehicleStartDir_2";
 			markerType="ELLIPSE";
 			type="";
+			alpha=0;
 			a=2;
 			b=2;
 			angle=232.77448;
@@ -7125,6 +7180,7 @@ class Mission
 			name="RB_AmbientVehicleEnd_2";
 			markerType="ELLIPSE";
 			type="";
+			alpha=0;
 			a=2;
 			b=2;
 			angle=1.4179571;
@@ -7138,6 +7194,7 @@ class Mission
 			name="RB_AmbientVehicleEndDir_2";
 			markerType="ELLIPSE";
 			type="";
+			alpha=0;
 			a=2;
 			b=2;
 			angle=1.4179876;
@@ -7194,6 +7251,7 @@ class Mission
 			name="RB_EnemySpawn_7";
 			markerType="ELLIPSE";
 			type="";
+			alpha=0;
 			a=4;
 			b=4;
 			angle=9.2339973;
@@ -7207,6 +7265,7 @@ class Mission
 			name="RB_EnemySpawn_8";
 			markerType="ELLIPSE";
 			type="";
+			alpha=0;
 			a=4;
 			b=4;
 			angle=9.2339973;
@@ -7220,6 +7279,7 @@ class Mission
 			name="RB_EnemySpawn_9";
 			markerType="ELLIPSE";
 			type="";
+			alpha=0;
 			a=4;
 			b=4;
 			angle=9.2339973;
@@ -7233,6 +7293,7 @@ class Mission
 			name="RB_EnemySpawn_10";
 			markerType="ELLIPSE";
 			type="";
+			alpha=0;
 			a=4;
 			b=4;
 			angle=9.2339973;
@@ -7400,6 +7461,134 @@ class Mission
 					};
 				};
 				nAttributes=2;
+			};
+		};
+		class Item196
+		{
+			dataType="Logic";
+			class PositionInfo
+			{
+				position[]={3804.7141,57.441055,4100.5801};
+				angles[]={6.2663951,0,0.0023911009};
+			};
+			id=440;
+			type="acex_fortify_setupModule";
+			class CustomAttributes
+			{
+				class Attribute0
+				{
+					property="ace_fortify_setupModule_Budget";
+					expression="_this setVariable ['Budget',_value,true];";
+					class Value
+					{
+						class data
+						{
+							singleType="SCALAR";
+							value=-1;
+						};
+					};
+				};
+				class Attribute1
+				{
+					property="ace_fortify_setupModule_AddToolItem";
+					expression="_this setVariable ['AddToolItem',_value,true];";
+					class Value
+					{
+						class data
+						{
+							singleType="BOOL";
+							value=1;
+						};
+					};
+				};
+				class Attribute2
+				{
+					property="ace_fortify_setupModule_Preset";
+					expression="_this setVariable ['Preset',_value,true];";
+					class Value
+					{
+						class data
+						{
+							singleType="STRING";
+							value="bigCombo";
+						};
+					};
+				};
+				class Attribute3
+				{
+					property="ace_fortify_setupModule_Side";
+					expression="_this setVariable ['Side',_value,true];";
+					class Value
+					{
+						class data
+						{
+							singleType="SCALAR";
+							value=1;
+						};
+					};
+				};
+				nAttributes=4;
+			};
+		};
+		class Item197
+		{
+			dataType="Logic";
+			class PositionInfo
+			{
+				position[]={3807.5952,57.597641,4109.4888};
+			};
+			id=445;
+			type="HighCommand";
+			atlOffset=3.8146973e-06;
+		};
+		class Item198
+		{
+			dataType="Marker";
+			position[]={3946.7759,65.096146,4522.8267};
+			name="RB_VehWP_1";
+			markerType="ELLIPSE";
+			type="";
+			alpha=0;
+			a=2;
+			b=2;
+			id=452;
+			class CustomAttributes
+			{
+				class Attribute0
+				{
+					property="ENH_markerShape";
+					expression="if (_value != 'NONE' && isServer) then {_this setMarkerShape _value}";
+					class Value
+					{
+						class data
+						{
+							singleType="STRING";
+							value="NONE";
+						};
+					};
+				};
+				nAttributes=1;
+			};
+		};
+	};
+	class Connections
+	{
+		class LinkIDProvider
+		{
+			nextID=1;
+		};
+		class Links
+		{
+			items=1;
+			class Item0
+			{
+				linkID=0;
+				item0=445;
+				item1=404;
+				class CustomData
+				{
+					type="Sync";
+				};
 			};
 		};
 	};

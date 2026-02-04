@@ -5,6 +5,14 @@ RB_Ambient_Rotary_UNA = ["B_UN_Heli_Transport_02_lxWS"];
 RB_Ambient_Fixed_UNA  = ["B_Plane_CAS_01_dynamicLoadout_F", "B_Plane_Fighter_01_F"];
 
 RB_LogisticsOptions_CDLC_UNA = [
+        [ "Reinforcements", [
+        // Format: [Label, [Units], TransportVehicle, Cost]
+        ["Rifleman (Unarmed)", ["B_UN_Soldier_unarmed_lxWS"], "B_UN_Offroad_lxWS", 15],
+        ["Rifleman", ["B_UN_Soldier_lxWS"], "B_UN_Offroad_lxWS", 30],
+        ["Sentry (2)", ["B_UN_Soldier_TL_lxWS", "B_UN_Soldier_lxWS"], "B_UN_MRAP_01_lxWS", 50],
+        ["Fire Team (4)",   ["B_UN_Soldier_TL_lxWS", "B_UN_Soldier_GL_lxWS", "B_UN_soldier_AR_lxWS", "B_UN_medic_lxWS"], "EF_B_MRAP_01_MJTF_Des", 75],
+        ["Squad (10)",       ["B_UN_Soldier_TL_lxWS", "B_UN_Soldier_GL_lxWS", "B_UN_soldier_LAT2_lxWS", "B_UN_officer_lxWS", "B_UN_HeavyGunner_lxWS", "B_UN_medic_lxWS","B_UN_Soldier_TL_lxWS", "B_UN_soldier_LAT2_lxWS", "B_UN_Soldier_GL_lxWS", "B_UN_soldier_AR_lxWS"], "B_UN_Truck_01_covered_lxWS", 200]
+    ] ],
     [
         "Ammo",
         [
@@ -50,6 +58,12 @@ RB_LogisticsOptions_CDLC_UNA = [
             ["Rifle Scope Kit", ["ACE_optic_Arco_2D", "optic_Arco_blk_F", "optic_Arco", "optic_Arco_AK_blk_F", "optic_MRCO", "ACE_optic_MRCO_2D","optic_Hamr", "ACE_optic_Hamr_2D", "optic_Hamr_sand_lxWS", "optic_Hamr_snake_lxWS", "optic_ERCO_blk_F", "optic_ERCO_snd_F"], 50],
             ["Sniper Scope Kit", ["optic_DMS", "optic_DMS_snake_lxWS", "optic_KHS_tan", "optic_KHS_blk", "optic_SOS", "ACE_optic_SOS_2D", "ACE_optic_LRPS_2D", "optic_LRPS", "optic_AMS", "optic_AMS_snd"], 75],
             ["Special Scopes Kit", ["optic_Nightstalker", "optic_NVS", "optic_tws", "optic_tws_mg", "optic_r1_low_sand_lxWS"], 250]
+        ]
+    ],
+    [
+        "Expolsives",
+        [
+            ["Mines Kit", ["ClaymoreDirectionalMine_Remote_Mag", "SLAMDirectionalMine_Wire_Mag", "APERSTripMine_Wire_Mag", "ACE_FlareTripMine_Mag","ACE_FlareTripMine_Mag_Green", "ACE_FlareTripMine_Mag_Red","APERSMine_Range_Mag","ACE_APERSMine_ToePopper_Mag","APERSMineDispenser_Mag"], 100]
         ]
     ],
     [

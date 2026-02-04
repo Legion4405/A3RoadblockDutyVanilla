@@ -1,17 +1,19 @@
-// For starterloadout, copy/export ACE Arsenal, and make sure it's unwrapped properly. Two [[ at the start of the arrays, and ends with []; (The final one is a patch, so if you save a patch, the last [] will have a string inside.
 RB_StarterLoadout_Contact_LDF = [["SMG_03C_black","","","",["50Rnd_570x28_SMG_03",50],[],""],[],["ACE_VMM3","","","",[],[],""],["U_I_E_Uniform_01_F",[["ACE_EarPlugs",1],["ACE_CableTie",10],["ACE_elasticBandage",10],["ACE_packingBandage",10],["ACE_morphine",2],["ACE_epinephrine",2],["ACE_salineIV_500",2],["ACE_splint",2],["ACE_tourniquet",2],["ACE_MapTools",1],["ACE_bloodIV_250",1]]],["V_TacVest_oli",[["ACE_Sunflower_Seeds",1],["ACE_personalAidKit",1],["ACE_bloodIV_250",1],["ACE_bloodIV_500",1],["HandGrenade",2,1],["SmokeShell",1,1],["SmokeShellGreen",1,1],["50Rnd_570x28_SMG_03",4,50]]],[],"H_MilCap_eaf","",["Binocular","","","",[],[],""],["ItemMap","ItemGPS","ItemRadio","ItemCompass","ItemWatch","ACE_NVGoggles_INDEP_WP"]],[];
 RB_Ambient_Rotary_Contact_LDF = ["I_E_Heli_light_03_dynamicLoadout_F", "B_Heli_Light_01_F"];
 RB_Ambient_Fixed_Contact_LDF  = ["I_Plane_Fighter_04_F", "I_Plane_Fighter_03_dynamicLoadout_F"];
 
-// You can add as many categories as you like, it should work. Vehicles, and Turrets have VEHICLE and TURRET in their arrays, the script reads this and spawns the turrets/vehicles properly. Anything else will be unlockled in the arsenal.
-// "Ammo" is the sub-category in Logistic Menu, then ["DisplayName", ["Item1", "Item2", "Etc.."], Point Cost],
-// === Gear Upgrade Arrays ===
 private _gearUpgrade1 = ["V_PlateCarrier1_wdl", "U_I_E_Uniform_01_officer_F", "U_I_E_Uniform_01_shortsleeve_F", "U_I_E_Uniform_01_sweater_F", "U_I_E_Uniform_01_tanktop_F", "U_I_L_Uniform_01_deserter_F", "V_CarrierRigKBT_01_light_Olive_F", "V_CarrierRigKBT_01_light_EAF_F", "H_HelmetHBK_headset_F", "H_HelmetHBK_F", "B_AssaultPack_rgr", "B_AssaultPack_khk", "B_AssaultPack_eaf_F", "ACE_NVG_Gen4_Green_WP", "ACE_Vector"];
 private _gearUpgrade2 = _gearUpgrade1 + ["V_CarrierRigKBT_01_heavy_EAF_F", "V_CarrierRigKBT_01_heavy_Olive_F", "H_HelmetHBK_chops_F", "H_HelmetHBK_ear_F", "B_Carryall_eaf_F", "B_Carryall_green_F", "B_Carryall_oli", "B_Kitbag_rgr", "B_Kitbag_sgg", "ACE_NVG_Wide_WP", "ACE_MX2A"];
 
-
-// === Logistics Options Horizontal Layout ===
 RB_LogisticsOptions_Contact_LDF = [
+    [ "Reinforcements", [
+        // Format: [Label, [Units], TransportVehicle, Cost]
+        ["Rifleman (Unarmed)", ["I_E_Soldier_unarmed_F"], "I_E_Offroad_01_covered_F", 15],
+        ["Rifleman", ["I_E_Soldier_F"], "I_E_Offroad_01_covered_F", 30],
+        ["Sentry (2)", ["I_E_Soldier_TL_F", "I_E_Soldier_F"], "I_E_Offroad_01_covered_F", 50],
+        ["Fire Team (4)",   ["I_E_Soldier_TL_F", "I_E_Soldier_GL_F", "I_E_Soldier_AR_F", "I_E_Medic_F"], "I_E_Offroad_01_comms_F", 75],
+        ["Squad (10)",       ["I_E_Soldier_TL_F", "I_E_Soldier_GL_F", "I_E_Soldier_AR_F", "I_E_soldier_M_F", "I_E_Soldier_SL_F", "I_E_Medic_F","I_E_Soldier_TL_F", "I_E_Soldier_GL_F", "I_E_Soldier_LAT2_F", "I_E_Soldier_AR_F"], "I_E_Van_02_transport_F", 200]
+    ] ],
     [ "Ammo", [
         ["5.56mm 150rnd Mags", ["150Rnd_556x45_Drum_Green_Mag_F", "150Rnd_556x45_Drum_Mag_F", "150Rnd_556x45_Drum_Sand_Mag_F", "150Rnd_556x45_Drum_Green_Mag_Tracer_F", "150Rnd_556x45_Drum_Mag_Tracer_F","150Rnd_556x45_Drum_Sand_Mag_Tracer_F"], 30],
         ["7.62mm 20rnd Mags", ["20Rnd_762x51_Mag", "ACE_20Rnd_762x51_Mag_Tracer_Dim", "ACE_20Rnd_762x51_M118LR_Mag", "ACE_20Rnd_762x51_M993_AP_Mag", "ACE_20Rnd_762x51_Mk316_Mod_0_Mag", "ACE_20Rnd_762x51_Mk319_Mod_0_Mag", "ACE_20Rnd_762x51_Mag_SD", "ACE_20Rnd_762x51_Mag_Tracer"], 15]
@@ -52,6 +54,9 @@ RB_LogisticsOptions_Contact_LDF = [
         ["Rifle Scope Kit", ["optic_MRCO", "optic_Hamr", "ACE_optic_MRCO_2D", "ACE_optic_Hamr_2D", "optic_Arco_blk_F", "optic_ERCO_blk_F", "optic_Hamr", "ACE_optic_Hamr_2D", "optic_Arco_lush_F", "optic_Hamr_snake_lxWS", "optic_ERCO_blk_F", "optic_ERCO_snd_F"], 50],
         ["Sniper Scope Kit", ["optic_DMS", "optic_SOS", "optic_LRPS", "ACE_optic_SOS_2D", "ACE_optic_LRPS_2D", "optic_KHS_blk", "optic_AMS", "optic_AMS_snd"], 75],
         ["Special Scopes Kit", ["optic_Nightstalker", "optic_NVS", "optic_tws", "optic_tws_mg"], 250]
+    ] ],
+        [ "Explosives", [
+        ["Mines Kit", ["ClaymoreDirectionalMine_Remote_Mag", "SLAMDirectionalMine_Wire_Mag", "APERSTripMine_Wire_Mag", "ACE_FlareTripMine_Mag","ACE_FlareTripMine_Mag_Green", "ACE_FlareTripMine_Mag_Red","APERSMine_Range_Mag","ACE_APERSMine_ToePopper_Mag","APERSMineDispenser_Mag"], 100]
     ] ],
     [ "Turrets", [
         ["M2 HMG .50 (Low)", ["TURRET", "B_G_HMG_02_F"], 15],

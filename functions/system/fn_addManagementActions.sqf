@@ -22,7 +22,7 @@ private _actionClear = [
     "Clear Processed",
     "ui\icons\icon_clearpro.paa",
     {
-        [] remoteExec ["RB_fnc_clearProcessed", [0,2], true];
+        [] remoteExec ["RB_fnc_clearProcessed", 2];
     },
     { true }
 ] call ace_interact_menu_fnc_createAction;
@@ -61,6 +61,7 @@ private _actionStart = [
         };
         _entity setVariable ["rb_interactionEnabled", true, true];
         _entity setVariable ["readyForProcessing", false, true];
+        _entity setVariable ["rb_processingStarted", true, true]; // Triggers bomb timer if applicable
         _entity setVariable ["rb_isProcessed", true, true];
 
         // === Debug: Show illegal conditions
@@ -85,13 +86,10 @@ private _actionStart = [
 
 
         missionNamespace setVariable ["rb_processingInProgress", true, true];
+        _entity setVariable ["rb_processingInProgress", true, true];
         missionNamespace setVariable ["RB_CurrentEntity", nil, true];
         missionNamespace setVariable ["RB_SpawnerRunning", false, true];
-
-
-        // runCheckpointSpawner.sqf on the SERVER only
-        [] remoteExec ["runCheckpointSpawner.sqf", 2];
-    },
+},
     {
         private _e = missionNamespace getVariable ["RB_CurrentEntity", objNull];
         if (isNull _e) exitWith { false };

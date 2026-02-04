@@ -1,18 +1,10 @@
 /*
     File: fn_judgeVehicle.sqf
-    Params: [_vehicle]
+    Params: [_vehicle, _isImpound (bool)]
     Returns: [illegal(bool), [reasons (display)], scoreDelta, statusText]
 */
-params ["_vehicle"];
-private _scoringTable = missionNamespace getVariable ["RB_ScoringTable", []];
-private _scoringMap   = missionNamespace getVariable ["RB_ScoringTableMap", createHashMap];
-
-// --- Helper to get display reason string by key
-private _getReasonText = {
-    params ["_key"];
-    private _entry = _scoringTable select { _x#0 == _key };
-    if (count _entry > 0) then { (_entry select 0)#2 } else { _key };
-};
+params ["_vehicle", ["_isImpound", false]];
+private _scoringMap = missionNamespace getVariable ["RB_ScoringTableMap", createHashMap];
 
 private _reasons    = [];
 private _illegal    = false;
@@ -20,31 +12,28 @@ private _scoreDelta = 0;
 private _statusText = "";
 
 // Bomb logic: active or defused
-private _hadBomb      = _vehicle getVariable ["rb_hadBomb", false];         // This variable must be set ONCE a bomb is present, never unset!
-private _hasBomb      = _vehicle getVariable ["rb_hasBomb", false];         // True if bomb is still in vehicle
-private _bombDefused  = _vehicle getVariable ["rb_bombDefused", false];     // True if bomb has been defused
+private _hadBomb      = _vehicle getVariable ["rb_hadBomb", false];
+private _hasBomb      = _vehicle getVariable ["rb_hasBomb", false];
+private _bombDefused  = _vehicle getVariable ["rb_bombDefused", false];
 
-// --- 1. Active bomb = penalty
+// --- 1. Active bomb
 if (_hasBomb) then {
     _illegal = true;
-    _scoreDelta = _scoreDelta + (_scoringMap getOrDefault ["vehicle_bomb", 25]);
-    _reasons pushBack (["vehicle_bomb"] call _getReasonText);
+    // Penalty is same for Release (Wrongful Release) or Impound (Correct Impound), logic below handles sign
+    _reasons pushBack "Vehicle Bomb";
 };
 
-// --- 2. If the vehicle ever had a bomb, but it's now defused
+// --- 2. Defused bomb
 if (_hadBomb && _bombDefused) then {
     _illegal = true;
-    _scoreDelta = _scoreDelta + (_scoringMap getOrDefault ["vehicle_bomb_defused", -10]);
-    _reasons pushBack (["vehicle_bomb_defused"] call _getReasonText);
+    _reasons pushBack "Vehicle Bomb (Defused)";
 };
 
 // --- 3. Contraband
 private _contraband = _vehicle getVariable ["veh_contraband", []];
-private _hasContraband = (_contraband isNotEqualTo []);
-if (_hasContraband) then {
+if (_contraband isNotEqualTo []) then {
     _illegal = true;
-    _scoreDelta = _scoreDelta + (_scoringMap getOrDefault ["vehicle_contraband", 10]);
-    _reasons pushBack (["vehicle_contraband"] call _getReasonText);
+    _reasons pushBack "Vehicle Contraband";
 };
 
 // --- 4. Registration mismatches
@@ -55,32 +44,73 @@ private _noOwner       = (_vehicle getVariable ["cached_veh_regOwner", ""] == "U
 
 if (_plateMismatch) then {
     _illegal = true;
-    _scoreDelta = _scoreDelta + (_scoringMap getOrDefault ["plate_mismatch", 5]);
-    _reasons pushBack (["plate_mismatch"] call _getReasonText);
+    _reasons pushBack "License Plate Mismatch";
 };
 if (_nameMismatch) then {
     _illegal = true;
-    _scoreDelta = _scoreDelta + (_scoringMap getOrDefault ["registration_mismatch", 5]);
-    _reasons pushBack ((["registration_mismatch"] call _getReasonText) + " (Name)");
+    _reasons pushBack "Registration Name Mismatch";
 };
 if (_idMismatch) then {
     _illegal = true;
-    _scoreDelta = _scoreDelta + (_scoringMap getOrDefault ["registration_mismatch", 5]);
-    _reasons pushBack ((["registration_mismatch"] call _getReasonText) + " (ID)");
+    _reasons pushBack "Registration ID Mismatch";
 };
 if (_noOwner) then {
     _illegal = true;
-    _scoreDelta = _scoreDelta + (_scoringMap getOrDefault ["registration_mismatch", 5]);
-    _reasons pushBack ((["registration_mismatch"] call _getReasonText) + " (No Registered Owner)");
+    _reasons pushBack "No Registered Owner";
 };
 
+// ==========================================
+// SCORING LOGIC (Impound vs Release)
+// ==========================================
 
-// --- Final status text
-if (_illegal) then {
-    _statusText = format ["Illegal (%1)", _reasons joinString ", "];
+if (_isImpound) then {
+    // === IMPOUND EVENT ===
+    if (_illegal) then {
+        // Correct Impound
+        // Special case: Active Bomb not defused
+        if (_hasBomb && !_bombDefused) then {
+             _scoreDelta = _scoringMap getOrDefault ["impound_bomb_notdefused", -15];
+             _reasons pushBack "Bomb NOT defused";
+        } else {
+             // Sum up standard penalties as rewards
+             // If multiple reasons, we just give a flat "Correct Impound" score or sum them?
+             // config.sqf has specific scores.
+             
+             // Bomb Defused Reward
+             if (_hadBomb && _bombDefused) then {
+                 _scoreDelta = _scoreDelta + (_scoringMap getOrDefault ["vehicle_bomb_defused", 5]);
+             };
+             
+             // Contraband Reward
+             if (_contraband isNotEqualTo []) then {
+                 _scoreDelta = _scoreDelta + (_scoringMap getOrDefault ["vehicle_contraband", 10]);
+             };
+             
+             // Mismatch Reward
+             if (_plateMismatch) then { _scoreDelta = _scoreDelta + (_scoringMap getOrDefault ["plate_mismatch", 5]); };
+             if (_nameMismatch) then { _scoreDelta = _scoreDelta + (_scoringMap getOrDefault ["registration_mismatch", 5]); };
+             if (_idMismatch) then { _scoreDelta = _scoreDelta + (_scoringMap getOrDefault ["registration_mismatch", 5]); };
+             if (_noOwner) then { _scoreDelta = _scoreDelta + (_scoringMap getOrDefault ["registration_mismatch", 5]); };
+        };
+        
+        _statusText = format ["Impounded: %1", _reasons joinString ", "];
+    } else {
+        // Wrongful Impound (Clean Vehicle)
+        _scoreDelta = _scoringMap getOrDefault ["wrong_impound", -15];
+        _statusText = "Wrongful Impound (Clean Vehicle)";
+    };
+
 } else {
-    _scoreDelta = _scoringMap getOrDefault ["vehicle_release", 5];
-    _statusText = "Released (Clean Vehicle)";
+    // === RELEASE EVENT (Check for missed violations) ===
+    if (_illegal) then {
+        // Wrongful Release (Missed violations)
+        _scoreDelta = _scoringMap getOrDefault ["wrong_vehicle_release", -10];
+        _statusText = format ["Wrongful Release: %1", _reasons joinString ", "];
+    } else {
+        // Correct Release (Clean Vehicle)
+        _scoreDelta = _scoringMap getOrDefault ["correct_vehicle_release", 5];
+        _statusText = "Vehicle Released (Clean)";
+    };
 };
 
 [_illegal, _reasons, _scoreDelta, _statusText]

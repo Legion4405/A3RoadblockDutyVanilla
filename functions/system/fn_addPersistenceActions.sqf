@@ -13,8 +13,8 @@ private _addAction = {
     [_obj, 0, _path, _action] call ace_interact_menu_fnc_addActionToObject;
 };
 
-// Only visible to logged-in admin or Zeus
-private _isAdmin = (serverCommandAvailable "#kick") || {!isNull (getAssignedCuratorLogic player)};
+// Only visible to logged-in admin or Zeus, or in Singleplayer
+private _isAdmin = (serverCommandAvailable "#kick") || {!isNull (getAssignedCuratorLogic player)} || (!isMultiplayer);
 if (!_isAdmin) exitWith {};
 
 // === “Persistence” Main Menu under Admin Tools ===

@@ -26,4 +26,4 @@ private _text = format [
 ];
 
 // === Show to checking player only
-[_text, 7] call ace_common_fnc_displayTextStructured;
+[_text, 7] call RB_fnc_showNotification;

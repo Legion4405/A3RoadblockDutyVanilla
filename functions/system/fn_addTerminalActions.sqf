@@ -75,6 +75,10 @@ private _menus = [
 // === Logistics Menu (Dynamic, New Array Format)
 {
     private _category     = _x select 0;
+    
+    // Restriction: Only Commander can see Reinforcements
+    if (_category == "Reinforcements" && {!(player getVariable ["RB_IsCommander", false])}) then { continue; };
+
     private _optionsArray = _x select 1;
 
     private _categoryID = format ["RB_Logistics_%1", _category];
@@ -91,7 +95,7 @@ private _menus = [
     {
         private _index = _forEachIndex;
         private _label = _x select 0;
-        private _cost  = _x select 2;
+        private _cost  = _x select (count _x - 1); // Last element is always cost
 
         private _action = [
             format ["RB_Log_Request_%1_%2", _category, _index],

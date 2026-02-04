@@ -58,6 +58,22 @@ private _actionPlate = [
     { alive _target }
 ] call ace_interact_menu_fnc_createAction;
 
+// === Action: Question Driver
+private _actionQuestion = [
+    "RB_Veh_QuestionDriver",
+    "Question Driver",
+    "\A3\ui_f\data\igui\cfg\simpletasks\types\meet_ca.paa",
+    {
+        params ["_target"];
+        private _driver = driver _target;
+        if (!isNull _driver && {alive _driver}) then {
+            [_driver] call RB_fnc_interrogateCivilian;
+        } else {
+            ["No driver present or driver is dead.", 5] call RB_fnc_showNotification;
+        };
+    },
+    { alive _target && { !isNull (driver _target) } }
+] call ace_interact_menu_fnc_createAction;
 
 // === Action: Search Vehicle
 private _actionSearch = [
@@ -79,73 +95,45 @@ private _actionImpound = [
     {
         params ["_target"];
 
-        private _scoringMap = missionNamespace getVariable ["RB_ScoringTableMap", createHashMap];
-
-        // Remove bomb object if present (always clean up)
+        // Remove bomb object if present (always clean up visual)
         {
-            if ((attachedTo _x) isEqualTo _target) then {
-                deleteVehicle _x;
-            };
+            if ((attachedTo _x) isEqualTo _target) then { deleteVehicle _x; };
         } forEach (nearestObjects [_target, ["DemoCharge_F"], 5]);
 
-        private _hasBomb      = _target getVariable ["rb_hasBomb", false];
-        private _hadBomb      = _target getVariable ["rb_hadBomb", false];
-        private _bombDefused  = _target getVariable ["rb_bombDefused", false];
+        // Call Judge (Impound Mode = true)
+        private _judge = [_target, true] call RB_fnc_judgeVehicle;
+        private _illegal    = _judge select 0;
+        private _reasons    = _judge select 1;
+        private _scoreDelta = _judge select 2;
+        private _statusText = _judge select 3;
 
-        private _scoreChange = 0;
-        private _reasonLines = [];
-        private _color = "#ff0000";
-
-        if (_hasBomb && !_bombDefused) then {
-            _scoreChange = _scoringMap getOrDefault ["impound_bomb_notdefused", -25];
-            _reasonLines pushBack "❌ Bomb NOT defused before impounding";
-            _color = "#ff0000";
-        } else {
-            private _violations = [];
-            if (_target getVariable ["cached_veh_plateMismatch", false]) then { _violations pushBack "Plate Mismatch"; };
-            if (_target getVariable ["cached_veh_regNameMismatch", false]) then { _violations pushBack "Name Mismatch"; };
-            if (_target getVariable ["cached_veh_regIDMismatch", false]) then { _violations pushBack "ID Mismatch"; };
-            if ((_target getVariable ["cached_veh_contraband", []]) isNotEqualTo []) then { _violations pushBack "Contraband"; };
-            if ((_target getVariable ["cached_veh_regOwner", "Unknown"]) == "Unknown") then { _violations pushBack "No Registered Owner"; };
-            
-            if (_bombDefused || _hadBomb) then {
-                _scoreChange = _scoringMap getOrDefault ["impound_bomb_defused", 20];
-                _reasonLines pushBack "Defused bomb and impounded";
-                _color = "#00ff00";
-            } else {
-                if (_violations isNotEqualTo []) then {
-                    _scoreChange = 5;
-                    _reasonLines pushBack format ["Impounded for: %1", _violations joinString ", "];
-                    _color = "#00ff00";
-                } else {
-                    _scoreChange = -5;
-                    _reasonLines pushBack "❌ No violations found";
-                    _color = "#ff0000";
-                };
-            };
-        };
-
+        // Apply Score
         private _score = RB_Terminal getVariable ["rb_score", 0];
-        private _newScore = _score + _scoreChange;
+        private _newScore = _score + _scoreDelta;
+        RB_Terminal setVariable ["rb_score", _newScore, true];
 
-        private _reasonText = if (_reasonLines isNotEqualTo []) then {
-            ("<br/>• " + (_reasonLines joinString "<br/>• "))
+        // Format Message
+        private _color = if (_scoreDelta >= 0) then { "#00ff00" } else { "#ff0000" };
+        private _reasonText = if (_reasons isNotEqualTo []) then {
+            ("<br/>• " + (_reasons joinString "<br/>• "))
         } else {
             "None"
         };
-
+        
         private _result = format [
             "<t size='1.25' font='PuristaBold' color='%1'>Vehicle Impounded</t><br/>" +
-            "<t color='#ffffff'>Reason(s):</t> %2<br/>" +
-            "Score Change: <t size='1.15' font='PuristaBold' color='%1'>%3</t><br/><br/>" +
-            "<t size='1' color='#cccccc'>New Total Score: %4</t>",
+            "%2<br/>" +
+            "<t color='#ffffff'>Reason(s):</t> %3<br/>" +
+            "Score Change: <t size='1.15' font='PuristaBold' color='%1'>%4</t><br/><br/>" +
+            "<t size='1' color='#cccccc'>New Total Score: %5</t>",
             _color,
+            _statusText,
             _reasonText,
-            if (_scoreChange > 0) then { "+" + str _scoreChange } else { str _scoreChange },
+            if (_scoreDelta > 0) then { "+" + str _scoreDelta } else { str _scoreDelta },
             _newScore
         ];
+        
         [_result, 12] remoteExec ["ace_common_fnc_displayTextStructured", 0];
-
         deleteVehicle _target;
     },
     { alive _target && { crew _target isEqualTo [] } }
@@ -265,6 +253,7 @@ private _actionDefuse = [
 } forEach [
     _actionReg,
     _actionPlate,
+    _actionQuestion,
     _actionSearch,
     _actionImpound,
     _actionOrderOut,

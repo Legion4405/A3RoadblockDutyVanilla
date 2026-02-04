@@ -12,6 +12,14 @@ private _gearUpgrade3 = _gearUpgrade2 + ["V_PlateCarrierSpec_wdl", "V_PlateCarri
 
 // === Logistics Options Horizontal Layout ===
 RB_LogisticsOptions_Contact_NATO = [
+    [ "Reinforcements", [
+        // Format: [Label, [Units], TransportVehicle, Cost]
+        ["Rifleman (Unarmed)", ["B_W_Soldier_unarmed_F"], "B_MRAP_01_F", 15],
+        ["Rifleman", ["B_W_Soldier_F"], "B_MRAP_01_F", 30],
+        ["Sentry (2)", ["B_W_Soldier_TL_F", "B_W_Soldier_F"], "B_MRAP_01_F", 50],
+        ["Fire Team (4)",   ["B_W_Soldier_GL_F", "B_W_Soldier_TL_F", "B_W_Soldier_AR_F", "B_W_Medic_F"], "B_MRAP_01_F", 75],
+        ["Squad (10)",       ["B_W_Soldier_SL_F", "B_W_Medic_F", "B_W_Soldier_TL_F", "B_W_Soldier_GL_F", "B_W_soldier_M_F", "B_W_Soldier_AR_F","B_W_Soldier_TL_F", "B_W_Soldier_GL_F", "B_W_Soldier_AR_F", "B_W_Soldier_LAT2_F"], "B_Truck_01_covered_F", 200]
+    ] ],
     [ "Ammo", [
         ["5.56mm 150rnd Mags", ["150Rnd_556x45_Drum_Green_Mag_F", "150Rnd_556x45_Drum_Mag_F", "150Rnd_556x45_Drum_Sand_Mag_F", "150Rnd_556x45_Drum_Green_Mag_Tracer_F", "150Rnd_556x45_Drum_Mag_Tracer_F","150Rnd_556x45_Drum_Sand_Mag_Tracer_F"], 30],
         ["6.5mm 100rnd Mags", ["100Rnd_65x39_caseless_black_mag", "100Rnd_65x39_caseless_khaki_mag", "100Rnd_65x39_caseless_black_mag_tracer", "100Rnd_65x39_caseless_khaki_mag_tracer"], 30],
@@ -19,22 +27,22 @@ RB_LogisticsOptions_Contact_NATO = [
     ] ],
     [ "Weapons", [
         ["MX Rifle Kit", ["arifle_MX_khk_F"], 20],
-        ["MX GL Rifle Kit", ["arifle_MX_GL_khk_F", "1Rnd_HE_Grenade_shell", "ACE_40mm_Pike", "UGL_FlareGreen_F", "UGL_FlareRed_F", "UGL_FlareWhite_F", "ACE_HuntIR_M203", "1Rnd_SmokeBlue_Grenade_shell", "1Rnd_SmokeGreen_Grenade_shell", "1Rnd_SmokeOrange_Grenade_shell", "1Rnd_SmokePurple_Grenade_shell", "1Rnd_SmokeRed_Grenade_shell", "1Rnd_Smoke_Grenade_shell", "1Rnd_SmokeYellow_Grenade_shell"], 20],
-        ["MX LSW Rifle Kit", ["arifle_MX_SW_khk_F", "bipod_01_F_khk"], 20],
-        ["MXM Rifle Kit", ["arifle_MXM_khk_F", "bipod_01_F_khk"], 20],
-        ["Stoner 99 LMG Kit", ["LMG_Mk200_black_F", "200Rnd_65x39_cased_Box", "ACE_200Rnd_65x39_cased_Box_Tracer_Dim", "200Rnd_65x39_cased_Box_Tracer_Red", "bipod_01_F_blk"], 20],
-        ["LWMMG MMG Kit", ["MMG_02_black_F", "130Rnd_338_Mag", "bipod_01_F_blk"], 20],
-        ["Mk14 Mod 1 EBR Kit", ["srifle_EBR_F", "ACE_10Rnd_762x51_M118LR_Mag", "ACE_10Rnd_762x51_M993_AP_Mag", "ACE_10Rnd_762x51_Mk316_Mod_0_Mag", "ACE_10Rnd_762x51_Mk319_Mod_0_Mag", "ACE_10Rnd_762x51_Mag_Tracer", "ACE_10Rnd_762x51_Mag_SD"], 20],
-        ["Noreen ULR DMR Kit", ["srifle_DMR_02_F", "ACE_10Rnd_762x67_Berger_Hybrid_OTM_Mag", "ACE_10Rnd_762x67_Mk248_Mod_0_Mag", "ACE_10Rnd_762x67_Mk248_Mod_1_Mag", "10Rnd_338_Mag", "ACE_10Rnd_338_300gr_HPBT_Mag", "ACE_10Rnd_338_API526_Mag", "bipod_01_F_blk"], 20],
-        ["M200 Intervention Kit", ["srifle_LRR_F", "7Rnd_408_Mag", "ACE_7Rnd_408_305gr_Mag"], 20],
-        ["GM6 Lynx Kit", ["srifle_GM6_F", "5Rnd_127x108_APDS_Mag", "5Rnd_127x108_Mag", "ACE_5Rnd_127x99_Mag", "ACE_5Rnd_127x99_AMAX_Mag", "ACE_5Rnd_127x99_API_Mag"], 20]
+        ["MX GL Rifle Kit", ["arifle_MX_GL_khk_F", "1Rnd_HE_Grenade_shell", "ACE_40mm_Pike", "UGL_FlareGreen_F", "UGL_FlareRed_F", "UGL_FlareWhite_F", "ACE_HuntIR_M203", "1Rnd_SmokeBlue_Grenade_shell", "1Rnd_SmokeGreen_Grenade_shell", "1Rnd_SmokeOrange_Grenade_shell", "1Rnd_SmokePurple_Grenade_shell", "1Rnd_SmokeRed_Grenade_shell", "1Rnd_Smoke_Grenade_shell", "1Rnd_SmokeYellow_Grenade_shell"], 45],
+        ["MX LSW Rifle Kit", ["arifle_MX_SW_khk_F", "bipod_01_F_khk"], 45],
+        ["MXM Rifle Kit", ["arifle_MXM_khk_F", "bipod_01_F_khk"], 50],
+        ["Stoner 99 LMG Kit", ["LMG_Mk200_black_F", "200Rnd_65x39_cased_Box", "ACE_200Rnd_65x39_cased_Box_Tracer_Dim", "200Rnd_65x39_cased_Box_Tracer_Red", "bipod_01_F_blk"], 75],
+        ["LWMMG MMG Kit", ["MMG_02_black_F", "130Rnd_338_Mag", "bipod_01_F_blk"], 85],
+        ["Mk14 Mod 1 EBR Kit", ["srifle_EBR_F", "ACE_10Rnd_762x51_M118LR_Mag", "ACE_10Rnd_762x51_M993_AP_Mag", "ACE_10Rnd_762x51_Mk316_Mod_0_Mag", "ACE_10Rnd_762x51_Mk319_Mod_0_Mag", "ACE_10Rnd_762x51_Mag_Tracer", "ACE_10Rnd_762x51_Mag_SD"], 100],
+        ["Noreen ULR DMR Kit", ["srifle_DMR_02_F", "ACE_10Rnd_762x67_Berger_Hybrid_OTM_Mag", "ACE_10Rnd_762x67_Mk248_Mod_0_Mag", "ACE_10Rnd_762x67_Mk248_Mod_1_Mag", "10Rnd_338_Mag", "ACE_10Rnd_338_300gr_HPBT_Mag", "ACE_10Rnd_338_API526_Mag", "bipod_01_F_blk"], 125],
+        ["M200 Intervention Kit", ["srifle_LRR_F", "7Rnd_408_Mag", "ACE_7Rnd_408_305gr_Mag"], 150],
+        ["GM6 Lynx Kit", ["srifle_GM6_F", "5Rnd_127x108_APDS_Mag", "5Rnd_127x108_Mag", "ACE_5Rnd_127x99_Mag", "ACE_5Rnd_127x99_AMAX_Mag", "ACE_5Rnd_127x99_API_Mag"], 175]
     ] ],
     [ "CTRG Weapons", [
-        ['HK416A5 11" Kit', ["arifle_SPAR_01_blk_F", "arifle_SPAR_01_khk_F", "30Rnd_556x45_Stanag_Tracer_Red", "30Rnd_556x45_Stanag_Sand_Tracer_Red", "ACE_30Rnd_556x45_Stanag_M995_AP_mag", "ACE_30Rnd_556x45_Stanag_Mk262_mag", "ACE_30Rnd_556x45_Stanag_Mk318_mag", "ACE_30Rnd_556x45_Stanag_Tracer_Dim"], 20],
-        ['HK416A5 11" GL Kit', ["arifle_SPAR_01_GL_blk_F", "arifle_SPAR_01_GL_khk_F", "30Rnd_556x45_Stanag_Tracer_Red", "30Rnd_556x45_Stanag_Sand_Tracer_Red", "ACE_30Rnd_556x45_Stanag_M995_AP_mag", "ACE_30Rnd_556x45_Stanag_Mk262_mag", "ACE_30Rnd_556x45_Stanag_Mk318_mag", "ACE_30Rnd_556x45_Stanag_Tracer_Dim", "1Rnd_HE_Grenade_shell", "ACE_40mm_Pike", "UGL_FlareGreen_F", "UGL_FlareRed_F", "UGL_FlareWhite_F", "ACE_HuntIR_M203", "1Rnd_SmokeBlue_Grenade_shell", "1Rnd_SmokeGreen_Grenade_shell", "1Rnd_SmokeOrange_Grenade_shell", "1Rnd_SmokePurple_Grenade_shell", "1Rnd_SmokeRed_Grenade_shell", "1Rnd_Smoke_Grenade_shell", "1Rnd_SmokeYellow_Grenade_shell"], 20],
-        ['HK416A5 14.5" Kit', ["arifle_SPAR_02_blk_F", "arifle_SPAR_02_khk_F","bipod_01_F_khk","bipod_01_F_blk","bipod_01_F_khk", "30Rnd_556x45_Stanag_Tracer_Red", "30Rnd_556x45_Stanag_Sand_Tracer_Red", "ACE_30Rnd_556x45_Stanag_M995_AP_mag", "ACE_30Rnd_556x45_Stanag_Mk262_mag", "ACE_30Rnd_556x45_Stanag_Mk318_mag", "ACE_30Rnd_556x45_Stanag_Tracer_Dim"], 20],
-        ['HK417A2 20" Kit', ["arifle_SPAR_03_blk_F", "arifle_SPAR_03_khk_F","bipod_01_F_khk","bipod_01_F_blk","bipod_01_F_khk", "ACE_10Rnd_762x51_Mag_Tracer_Dim", "ACE_10Rnd_762x51_M118LR_Mag", "ACE_10Rnd_762x51_M993_AP_Mag", "ACE_10Rnd_762x51_Mk316_Mod_0_Mag", "ACE_10Rnd_762x51_Mk319_Mod_0_Mag", "ACE_10Rnd_762x51_Mag_SD","ACE_10Rnd_762x51_Mag_Tracer"], 20],
-        ["FN Minimi SPW Kit", ["LMG_03_F","200Rnd_556x45_Box_Tracer_Red_F"], 20]
+        ['HK416A5 11" Kit', ["arifle_SPAR_01_blk_F", "arifle_SPAR_01_khk_F", "30Rnd_556x45_Stanag_Tracer_Red", "30Rnd_556x45_Stanag_Sand_Tracer_Red", "ACE_30Rnd_556x45_Stanag_M995_AP_mag", "ACE_30Rnd_556x45_Stanag_Mk262_mag", "ACE_30Rnd_556x45_Stanag_Mk318_mag", "ACE_30Rnd_556x45_Stanag_Tracer_Dim"], 30],
+        ['HK416A5 11" GL Kit', ["arifle_SPAR_01_GL_blk_F", "arifle_SPAR_01_GL_khk_F", "30Rnd_556x45_Stanag_Tracer_Red", "30Rnd_556x45_Stanag_Sand_Tracer_Red", "ACE_30Rnd_556x45_Stanag_M995_AP_mag", "ACE_30Rnd_556x45_Stanag_Mk262_mag", "ACE_30Rnd_556x45_Stanag_Mk318_mag", "ACE_30Rnd_556x45_Stanag_Tracer_Dim", "1Rnd_HE_Grenade_shell", "ACE_40mm_Pike", "UGL_FlareGreen_F", "UGL_FlareRed_F", "UGL_FlareWhite_F", "ACE_HuntIR_M203", "1Rnd_SmokeBlue_Grenade_shell", "1Rnd_SmokeGreen_Grenade_shell", "1Rnd_SmokeOrange_Grenade_shell", "1Rnd_SmokePurple_Grenade_shell", "1Rnd_SmokeRed_Grenade_shell", "1Rnd_Smoke_Grenade_shell", "1Rnd_SmokeYellow_Grenade_shell"], 55],
+        ['HK416A5 14.5" Kit', ["arifle_SPAR_02_blk_F", "arifle_SPAR_02_khk_F","bipod_01_F_khk","bipod_01_F_blk","bipod_01_F_khk", "30Rnd_556x45_Stanag_Tracer_Red", "30Rnd_556x45_Stanag_Sand_Tracer_Red", "ACE_30Rnd_556x45_Stanag_M995_AP_mag", "ACE_30Rnd_556x45_Stanag_Mk262_mag", "ACE_30Rnd_556x45_Stanag_Mk318_mag", "ACE_30Rnd_556x45_Stanag_Tracer_Dim"], 55],
+        ['HK417A2 20" Kit', ["arifle_SPAR_03_blk_F", "arifle_SPAR_03_khk_F","bipod_01_F_khk","bipod_01_F_blk","bipod_01_F_khk", "ACE_10Rnd_762x51_Mag_Tracer_Dim", "ACE_10Rnd_762x51_M118LR_Mag", "ACE_10Rnd_762x51_M993_AP_Mag", "ACE_10Rnd_762x51_Mk316_Mod_0_Mag", "ACE_10Rnd_762x51_Mk319_Mod_0_Mag", "ACE_10Rnd_762x51_Mag_SD","ACE_10Rnd_762x51_Mag_Tracer"], 60],
+        ["FN Minimi SPW Kit", ["LMG_03_F","200Rnd_556x45_Box_Tracer_Red_F"], 60]
     ] ],
     [ "Launchers", [
         ["NLAW Kit", ["launch_NLAW_F"], 10],
@@ -49,11 +57,14 @@ RB_LogisticsOptions_Contact_NATO = [
     [ "Attachments", [
         ["Bipod Kit", ["bipod_01_F_blk", "bipod_01_F_khk"], 10],
         ["Rail Attachment Kit", ["ACE_DBAL_A3_Green", "ACE_DBAL_A3_Red", "acc_pointer_IR", "ACE_SPIR"], 15],
-        ["Suppressor Kit", ["muzzle_snds_B", "muzzle_snds_L", "muzzle_snds_M", "muzzle_snds_338_black", "muzzle_snds_338_green"], 75],
+        ["Suppressor Kit", ["muzzle_snds_h","muzzle_snds_B", "muzzle_snds_L", "muzzle_snds_M", "muzzle_snds_338_black", "muzzle_snds_338_green"], 75],
         ["CQB Scope Kit", ["optic_Yorris", "optic_Aco", "optic_Aco_smg", "optic_Holosight_blk_F", "optic_Holosight_smg_blk_F"], 25],
         ["Rifle Scope Kit", ["optic_MRCO", "optic_Hamr", "ACE_optic_MRCO_2D", "ACE_optic_Hamr_2D", "optic_Arco_blk_F", "optic_ERCO_blk_F", "optic_Hamr", "ACE_optic_Hamr_2D", "optic_Arco_lush_F", "optic_Hamr_snake_lxWS", "optic_ERCO_blk_F", "optic_ERCO_snd_F"], 50],
         ["Sniper Scope Kit", ["optic_DMS", "optic_SOS", "optic_LRPS", "ACE_optic_SOS_2D", "ACE_optic_LRPS_2D", "optic_KHS_blk", "optic_AMS", "optic_AMS_snd"], 75],
         ["Special Scopes Kit", ["optic_Nightstalker", "optic_NVS", "optic_tws", "optic_tws_mg"], 250]
+    ] ],
+        [ "Explosives", [
+        ["Mines Kit", ["ClaymoreDirectionalMine_Remote_Mag", "SLAMDirectionalMine_Wire_Mag", "APERSTripMine_Wire_Mag", "ACE_FlareTripMine_Mag","ACE_FlareTripMine_Mag_Green", "ACE_FlareTripMine_Mag_Red","APERSMine_Range_Mag","ACE_APERSMine_ToePopper_Mag","APERSMineDispenser_Mag"], 100]
     ] ],
     [ "Vehicles", [
         ["Quadbike", ["VEHICLE", "B_Quadbike_01_F"], 5],

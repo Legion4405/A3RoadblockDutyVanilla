@@ -5,108 +5,50 @@
 */
 
 params ["_civ"];
-private _scoringTable = missionNamespace getVariable ["RB_ScoringTable", []];
-private _scoringMap   = missionNamespace getVariable ["RB_ScoringTableMap", createHashMap];
+private _scoringMap = missionNamespace getVariable ["RB_ScoringTableMap", createHashMap];
 
-// --- Helper to get display reason string by key
-private _getReasonText = {
-    params ["_key"];
-    private _entry = _scoringTable select { _x#0 == _key };
-    if (count _entry > 0) then { (_entry select 0)#2 } else { _key };
-};
+// Helper to get display text from the scoring map (using keys)
+// Ideally we would look up the 3rd element "Display Name" from the array table, 
+// but for speed we will assume the key is sufficient or we can improve this later.
+// For now, let's rely on validation providing reasons, or map lookup.
 
-// Vehicle context
-private _vehicle = _civ getVariable ["rb_vehicle", objNull];
-private _hadBomb       = false;
-private _bombDefused   = false;
-private _vehContraband = [];
-private _wasDriver     = false;
+private _validation = [_civ] call RB_fnc_validateCivilian;
+private _isIllegal  = _validation get "isIllegal";
+private _violations = _validation get "violations";
+private _isFugitive = _validation get "isFugitive";
 
-if (!isNull _vehicle) then {
-    _hadBomb       = _vehicle getVariable ["rb_hasBomb", false];
-    _bombDefused   = _vehicle getVariable ["rb_bombDefused", false];
-    _vehContraband = _vehicle getVariable ["veh_contraband", []];
-    _wasDriver     = (driver _vehicle == _civ);
-} else {
-    // Use persistent context
-    _hadBomb       = _civ getVariable ["rb_vehicleBombHad", false];
-    _bombDefused   = _civ getVariable ["rb_vehicleBombDefused", false];
-    _vehContraband = _civ getVariable ["rb_vehicleContraband", []];
-    _wasDriver     = _civ getVariable ["rb_vehicleWasDriver", false];
-};
-if (isNil "_vehContraband") then { _vehContraband = []; };
+private _reasonsDisplay = _validation get "reasons";
+private _scoreDelta = 0;
+private _statusText = "";
+private _arrestable = _isIllegal;
 
-// Scoring logic
-private _reasons     = [];
-private _arrestable  = false;
-private _scoreDelta  = 0;
-private _statusText  = "";
+if (_isIllegal) then {
+    // Sum up scores for all violations
+    {
+        private _key = _x;
+        // Default to 0 if key missing, to avoid script errors, but ideally all keys exist
+        private _pts = _scoringMap getOrDefault [_key, 0]; 
+        
+        if (_pts == 0) then {
+            diag_log format ["[RB] WARNING: Scoring key '%1' not found in RB_ScoringTableMap or value is 0.", _key];
+        };
+        
+        _scoreDelta = _scoreDelta + _pts;
+        
+    } forEach _violations;
 
-// --- 1: Bomb (arrestable for *any* bomb, even defused)
-if (_hadBomb) then {
-    _arrestable = true;
-    if (!_bombDefused) then {
-        _reasons pushBack (["vehicle_bomb"] call _getReasonText);
-        _scoreDelta = _scoreDelta + (_scoringMap getOrDefault ["vehicle_bomb", 25]);
-    } else {
-        _reasons pushBack (["vehicle_bomb_defused"] call _getReasonText);
-        _scoreDelta = _scoreDelta + (_scoringMap getOrDefault ["vehicle_bomb_defused", -10]);
-    };
-};
-
-// --- 2: Vehicle contraband (driver only)
-if (_wasDriver && (_vehContraband isNotEqualTo [])) then {
-    _arrestable = true;
-    _reasons pushBack (["vehicle_contraband"] call _getReasonText);
-    _scoreDelta = _scoreDelta + (_scoringMap getOrDefault ["vehicle_contraband", 10]);
-};
-
-// --- 3: Personal contraband
-private _contraband = _civ getVariable ["rb_contraband", []];
-if (_contraband isNotEqualTo []) then {
-    _arrestable = true;
-    _reasons pushBack (["personal_contraband"] call _getReasonText);
-    _scoreDelta = _scoreDelta + (_scoringMap getOrDefault ["personal_contraband", 10]);
-};
-
-// --- 4: Banned origin
-private _identity = _civ getVariable ["civ_identity", ["Unknown", "Unknown", "Unknown", "UNKNOWN"]];
-private _origin = _identity param [1, "Unknown"];
-private _bannedTowns = missionNamespace getVariable ["RB_BannedTowns", []];
-if (_origin in _bannedTowns) then {
-    _arrestable = true;
-    _reasons pushBack (["banned_origin"] call _getReasonText);
-    _scoreDelta = _scoreDelta + (_scoringMap getOrDefault ["banned_origin", 8]);
-};
-
-// --- 5: Fugitive handling (arrest or penalty)
-private _isFugitive = _civ getVariable ["rb_isFugitive", false];
-
-// Fugitive is *arrested* (detained via interaction)
-if (_arrestable && _isFugitive) then {
-    _reasons pushBack (["fugitive_arrested"] call _getReasonText);
-    _scoreDelta = _scoreDelta + (_scoringMap getOrDefault ["fugitive_arrested", 20]);
-    // Generate a new fugitive for the next cycle
-    [] call RB_fnc_generateFugitive;
-};
-
-// --- 6: Innocent fallback OR wrongful fugitive release
-if (_reasons isEqualTo []) then {
+    // Generate new fugitive if we caught one
     if (_isFugitive) then {
-        // Wrongful fugitive release!
-        _scoreDelta = _scoringMap getOrDefault ["fugitive_released", -25];
-        _reasons = [(["fugitive_released"] call _getReasonText)];
-        _statusText = "" + (["fugitive_released"] call _getReasonText);
         [] call RB_fnc_generateFugitive;
-    } else {
-        _scoreDelta = _scoringMap getOrDefault ["arrest_innocent", -5];
-        _statusText = "Innocent Civilian";
     };
-    _arrestable = false;
+
+    _statusText = "Arrested: " + (_reasonsDisplay joinString ", ");
+    
 } else {
-    _statusText = "Arrested: " + (_reasons joinString ", ");
-    _arrestable = true;
+    // Innocent Civilian Arrested
+    _scoreDelta = _scoringMap getOrDefault ["arrest_innocent", -5];
+    _statusText = "Innocent Civilian";
+    _reasonsDisplay = ["Innocent"];
 };
 
-
-[_arrestable, _reasons, _scoreDelta, _statusText]
+[_arrestable, _reasonsDisplay, _scoreDelta, _statusText]

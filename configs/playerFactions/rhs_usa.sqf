@@ -1,25 +1,34 @@
-// For starterloadout, copy/export ACE Arsenal, and make sure it's unwrapped properly. Two [[ at the start of the arrays, and ends with []; (The final one is a patch, so if you save a patch, the last [] will have a string inside.
 RB_StarterLoadout_RHS_USA = [["rhs_weap_m4_carryhandle","","","",["rhs_mag_30Rnd_556x45_M855A1_Stanag",30],[],""],[],["ACE_VMM3","","","",[],[],""],["rhs_uniform_acu_oefcp",[["ACE_EarPlugs",1],["ACE_CableTie",10],["ACE_elasticBandage",10],["ACE_packingBandage",10],["ACE_morphine",2],["ACE_epinephrine",2],["ACE_salineIV_500",2],["ACE_splint",2],["ACE_tourniquet",2],["ACE_MapTools",1],["ACE_bloodIV_250",1]]],["V_TacVest_khk",[["ACE_Sunflower_Seeds",1],["ACE_personalAidKit",1],["ACE_bloodIV_250",1],["ACE_bloodIV_500",1],["HandGrenade",2,1],["SmokeShell",1,1],["SmokeShellGreen",1,1],["rhs_mag_30Rnd_556x45_M855A1_Stanag",3,30],["rhs_mag_30Rnd_556x45_M855A1_Stanag_Tracer_Red",2,30]]],[],"rhsusf_patrolcap_ocp","",["Binocular","","","",[],[],""],["ItemMap","ItemGPS","ItemRadio","ItemCompass","ItemWatch","ACE_NVGoggles_WP"]],[];
 RB_Ambient_Rotary_RHS_USA = ["RHS_AH64D", "RHS_CH_47F_10", "RHS_UH60M_d", "RHS_UH60M_ESSS_d", "RHS_UH60M_ESSS2_d", "RHS_UH60M_MEV2_d"];
 RB_Ambient_Fixed_RHS_USA  = ["RHS_A10", "RHS_C130J", "rhsusf_f22"];
 
-// You can add as many categories as you like, it should work. Vehicles, and Turrets have VEHICLE and TURRET in their arrays, the script reads this and spawns the turrets/vehicles properly. Anything else will be unlockled in the arsenal.
-// "Ammo" is the sub-category in Logistic Menu, then ["DisplayName", ["Item1", "Item2", "Etc.."], Point Cost],
-// === Gear Upgrade Arrays ===
 private _gearUpgrade1 = ["rhs_uniform_cu_ocp", "rhsusf_spcs_ocp_grenadier", "rhsusf_spcs_ocp_machinegunner", "rhsusf_spcs_ocp_medic", "rhsusf_spcs_ocp", "rhsusf_spcs_ocp_rifleman_alt", "rhsusf_spcs_ocp_rifleman", "rhsusf_spcs_ocp_saw", "rhsusf_spcs_ocp_sniper", "rhsusf_spcs_ocp_squadleader", "rhsusf_spcs_ocp_teamleader_alt", "rhsusf_spcs_ocp_teamleader", "rhsusf_falconii_mc", "rhsusf_ach_helmet_ocp","rhsusf_ach_helmet_ocp_alt", "rhsusf_ach_helmet_ESS_ocp", "rhsusf_ach_helmet_ESS_ocp_alt","rhsusf_ach_helmet_headset_ocp", "rhsusf_ach_helmet_headset_ocp_alt","rhsusf_ach_helmet_headset_ess_ocp","rhsusf_ach_helmet_headset_ess_ocp_alt", "rhsusf_ach_helmet_camo_ocp", "rhsusf_ach_helmet_ocp_norotos", "ACE_NVG_Gen4_WP", "ACE_Vector"];
 private _gearUpgrade2 = _gearUpgrade1 + ["rhsusf_iotv_ocp_Grenadier", "rhsusf_iotv_ocp_Medic", "rhsusf_iotv_ocp", "rhsusf_iotv_ocp_Repair", "rhsusf_iotv_ocp_Rifleman", "rhsusf_iotv_ocp_SAW", "rhsusf_iotv_ocp_Squadleader", "rhsusf_iotv_ocp_Teamleader", "rhsusf_opscore_mc_cover", "rhsusf_opscore_mc_cover_pelt", "rhsusf_opscore_mc_cover_pelt_nsw", "rhsusf_opscore_mc_cover_pelt_cam","rhsusf_opscore_mc", "rhsusf_opscore_mc_pelt","rhsusf_opscore_mc_pelt_nsw", "rhsusf_assault_eagleaiii_ocp", "ACE_NVG_Wide_WP", "ACE_MX2A"];
 
-// === Logistics Options Horizontal Layout ===
 RB_LogisticsOptions_RHS_USA = [
+    [ "Reinforcements", [
+        // Format: [Label, [Units], TransportVehicle, Cost]
+        ["Rifleman (Light)", ["rhsusf_army_ocp_riflemanl"], "rhsusf_m1043_d", 20],
+        ["Rifleman", ["rhsusf_army_ocp_rifleman_m4"], "rhsusf_m1043_d", 30],
+        ["Sentry (2)", ["rhsusf_army_ocp_teamleader", "rhsusf_army_ocp_rifleman_m4"], "rhsusf_m1152_usarmy_d", 50],
+        ["Fire Team (4)",   ["rhsusf_army_ocp_teamleader", "rhsusf_army_ocp_medic", "rhsusf_army_ocp_grenadier", "rhsusf_army_ocp_autorifleman"], "rhsusf_m1240a1_usarmy_d", 75],
+        ["Squad (10)",       ["rhsusf_army_ocp_squadleader", "rhsusf_army_ocp_teamleader", "rhsusf_army_ocp_medic", "rhsusf_army_ocp_grenadier", "rhsusf_army_ocp_autorifleman", "rhsusf_army_ocp_marksman","rhsusf_army_ocp_teamleader", "rhsusf_army_ocp_grenadier", "rhsusf_army_ocp_machinegunner", "rhsusf_army_ocp_maaws"], "rhsusf_M1220_usarmy_d", 200]
+    ] ],
     [ "Ammo", [
         ["6.5mm 100rnd Mags", ["100Rnd_65x39_caseless_black_mag", "100Rnd_65x39_caseless_mag", "ACE_100Rnd_65x39_caseless_mag_Tracer_Dim", "100Rnd_65x39_caseless_black_mag_tracer", "100Rnd_65x39_caseless_mag_Tracer"], 30],
         ["7.62mm 20rnd Mags", ["20Rnd_762x51_Mag", "ACE_20Rnd_762x51_Mag_Tracer_Dim", "ACE_20Rnd_762x51_M118LR_Mag", "ACE_20Rnd_762x51_M993_AP_Mag", "ACE_20Rnd_762x51_Mk316_Mod_0_Mag", "ACE_20Rnd_762x51_Mk319_Mod_0_Mag", "ACE_20Rnd_762x51_Mag_SD", "ACE_20Rnd_762x51_Mag_Tracer"], 15]
     ] ],
     [ "Carbines", [
-        ["M4A1 Kit", ["rhs_weap_m4a1_carryhandle", "rhs_mag_30Rnd_556x45_M855A1_PMAG", "rhs_mag_30Rnd_556x45_M855A1_PMAG_Tracer_Red", "rhs_mag_30Rnd_556x45_Mk262_PMAG", "rhs_mag_30Rnd_556x45_Mk318_PMAG"], 10],
-        ["M4A1 M203 Kit", ["rhs_weap_m4a1_carryhandle_m203", "rhs_mag_30Rnd_556x45_M855A1_PMAG", "rhs_mag_30Rnd_556x45_M855A1_PMAG_Tracer_Red", "rhs_mag_30Rnd_556x45_Mk262_PMAG", "rhs_mag_30Rnd_556x45_Mk318_PMAG", "rhs_mag_M397_HET", "ACE_40mm_Pike", "rhs_mag_M397_HET", "rhs_mag_M433_HEDP", "rhs_mag_M441_HE", "ACE_HuntIR_M203", "rhs_mag_m576", "rhs_mag_M583A1_white", "rhs_mag_M585_white_cluster", "rhs_mag_m661_green", "rhs_mag_m662_red", "rhs_mag_M663_green_cluster", "rhs_mag_M664_red_cluster", "rhs_mag_m713_Red", "rhs_mag_m714_White", "rhs_mag_m715_Green", "rhs_mag_m716_yellow"], 20],
-        ["M4A1 PIP Kit", ["rhs_weap_m4a1", "rhs_weap_m4a1_d", "rhs_mag_30Rnd_556x45_M855A1_PMAG", "rhs_mag_30Rnd_556x45_M855A1_PMAG_Tracer_Red", "rhs_mag_30Rnd_556x45_Mk262_PMAG", "rhs_mag_30Rnd_556x45_Mk318_PMAG"], 15],
-        ["M4A1 PIP M320 Kit", ["rhs_weap_m4a1_m320", "rhs_mag_30Rnd_556x45_M855A1_PMAG", "rhs_mag_30Rnd_556x45_M855A1_PMAG_Tracer_Red", "rhs_mag_30Rnd_556x45_Mk262_PMAG", "rhs_mag_30Rnd_556x45_Mk318_PMAG", "rhs_mag_M397_HET", "ACE_40mm_Pike", "rhs_mag_M397_HET", "rhs_mag_M433_HEDP", "rhs_mag_M441_HE", "ACE_HuntIR_M203", "rhs_mag_m576", "rhs_mag_M583A1_white", "rhs_mag_M585_white_cluster", "rhs_mag_m661_green", "rhs_mag_m662_red", "rhs_mag_M663_green_cluster", "rhs_mag_M664_red_cluster", "rhs_mag_m713_Red", "rhs_mag_m714_White", "rhs_mag_m715_Green", "rhs_mag_m716_yellow"], 25]
+        ["M4A1 Kit", ["rhs_weap_m4a1_carryhandle"], 10],
+        ["M16A4 Kit", ["rhs_weap_m16a4", "rhs_weap_m16a4_carryhandle", "rhs_weap_m16a4_imod"], 10],
+        ["M16A4 M203 Kit", ["rhs_weap_m16a4_imod_M203", "rhs_weap_m16a4_carryhandle_M203"], 35],
+        ["Shotgun Kit", ["rhs_weap_M590_8RD", "rhs_weap_M590_5RD", "rhsusf_5Rnd_00Buck", "rhsusf_5Rnd_Slug"], 10],
+        ["M4A1 M203 Kit", ["rhs_weap_m4a1_carryhandle_m203"], 35],
+        ["M4A1 PIP Kit", ["rhs_weap_m4a1", "rhs_weap_m4a1_d"], 30],
+        ["M4A1 PIP M320 Kit", ["rhs_weap_m4a1_m320"], 45],
+        ["M4A1 Block II Kit", ["rhs_weap_m4a1_blockII", "rhs_weap_m4a1_blockII_bk", "rhs_weap_m4a1_blockII_M203_bk","rhs_weap_m4a1_blockII_KAC_bk", "rhs_weap_m4a1_blockII_d", "rhs_weap_m4a1_blockII_M203_d","rhs_weap_m4a1_blockII_KAC_d","rhs_weap_m4a1_blockII_M203","rhs_weap_m4a1_blockII_KAC", "rhs_weap_m4a1_blockII_wd", "rhs_weap_m4a1_blockII_M203_wd","rhs_weap_m4a1_blockII_KAC_wd"], 70],
+        ["Mk 18 Kit", ["rhs_weap_mk18", "rhs_weap_mk18_bk", "rhs_weap_mk18_KAC_bk","rhs_weap_mk18_d", "rhs_weap_mk18_KAC_d", "rhs_weap_mk18_m320","rhs_weap_mk18_KAC","rhs_weap_mk18_wd","rhs_weap_mk18_KAC_wd"], 70],
+        ["Mk 17 Kit", ["rhs_weap_mk17_CQC", "rhs_weap_mk17_LB", "rhs_weap_mk17_STD","rhs_weap_mk18_d", "rhs_weap_mk18_KAC_d", "rhs_weap_mk18_m320","rhs_weap_mk18_KAC","rhs_weap_mk18_wd","rhs_weap_mk18_KAC_wd"], 75]
     ] ],
     [ "Machineguns", [
         ["M249 Kit", ["rhs_weap_m249_pip", "rhs_weap_m249_pip_L_para", "rhs_weap_m249_light_L", "rhs_weap_m249_pip_L", "rhs_weap_m249_pip_ris", "rhs_weap_m249_light_S", "rhs_weap_m249_pip_S_para", "rhs_weap_m249_pip_S", "rhsusf_100Rnd_556x45_soft_pouch_coyote", "rhsusf_100Rnd_556x45_mixed_soft_pouch_coyote", "rhsusf_100Rnd_556x45_M995_soft_pouch_coyote", "rhsusf_acc_saw_bipod", "rhsusf_acc_grip4", "rhsusf_acc_grip4_bipod", "rhsusf_acc_saw_lw_bipod"], 25],
@@ -52,6 +61,9 @@ RB_LogisticsOptions_RHS_USA = [
         ["Sniper Scope Kit", ["rhsusf_acc_M8541", "rhsusf_acc_M8541_d", "rhsusf_acc_M8541_mrds", "rhsusf_acc_M8541_wd", "rhsusf_acc_premier_low", "rhsusf_acc_premier_anpvs27", "rhsusf_acc_premier", "rhsusf_acc_premier_mrds", "rhsusf_acc_LEUPOLDMK4_2", "rhsusf_acc_LEUPOLDMK4_2_d", "rhsusf_acc_LEUPOLDMK4_2_mrds", "rhsusf_acc_nxs_3515x50_md", "rhsusf_acc_nxs_3515x50f1_h58", "rhsusf_acc_nxs_3515x50f1_md", "rhsusf_acc_nxs_3515x50f1_h58_sun", "rhsusf_acc_nxs_3515x50f1_md_sun", "rhsusf_acc_nxs_5522x56_md", "rhsusf_acc_nxs_5522x56_md_sun", "rhsusf_acc_LEUPOLDMK4", "rhsusf_acc_LEUPOLDMK4_2", "rhsusf_acc_LEUPOLDMK4_d", "rhsusf_acc_LEUPOLDMK4_wd", "rhsusf_acc_LEUPOLDMK4_2_d", "rhsusf_acc_LEUPOLDMK4_2_mrds"], 75],
         ["Special Scopes Kit", ["optic_Nightstalker", "optic_NVS", "optic_tws", "optic_tws_mg"], 250]
     ] ],
+    [ "Explosives", [
+        ["Mines Kit", ["ClaymoreDirectionalMine_Remote_Mag", "SLAMDirectionalMine_Wire_Mag", "APERSTripMine_Wire_Mag", "ACE_FlareTripMine_Mag","ACE_FlareTripMine_Mag_Green", "ACE_FlareTripMine_Mag_Red","APERSMine_Range_Mag","ACE_APERSMine_ToePopper_Mag","APERSMineDispenser_Mag"], 100]
+    ] ],
     [ "Turrets", [
         ["M2HB (Low)", ["TURRET", "RHS_M2StaticMG_MiniTripod_D"], 10],
         ["M2HB (Raised)", ["TURRET", "RHS_M2StaticMG_D"], 10],
@@ -62,4 +74,9 @@ RB_LogisticsOptions_RHS_USA = [
         ["M47 Super Dragon", ["TURRET", "ace_dragon_staticAssembled"], 25],
         ["Mk.6 Mortar", ["TURRET", "B_Mortar_01_F"], 50]
     ] ]
+];
+
+RB_ArsenalExtra_RHS_USA = [
+    "rhs_mag_30Rnd_556x45_M855A1_PMAG", "rhs_mag_30Rnd_556x45_M855A1_PMAG_Tracer_Red", "rhs_mag_30Rnd_556x45_Mk262_PMAG", "rhs_mag_30Rnd_556x45_Mk318_PMAG", "rhs_mag_M397_HET", "ACE_40mm_Pike", "rhs_mag_M397_HET", "rhs_mag_M433_HEDP", "rhs_mag_M441_HE", "ACE_HuntIR_M203", "rhs_mag_m576", "rhs_mag_M583A1_white", "rhs_mag_M585_white_cluster", "rhs_mag_m661_green", "rhs_mag_m662_red", "rhs_mag_M663_green_cluster", "rhs_mag_M664_red_cluster", "rhs_mag_m713_Red", "rhs_mag_m714_White", "rhs_mag_m715_Green", "rhs_mag_m716_yellow",
+    "rhs_mag_20Rnd_SCAR_762x51_m118_special", "rhs_mag_20Rnd_SCAR_762x51_m61_ap", "rhs_mag_20Rnd_SCAR_762x51_m62_tracer", "rhs_mag_20Rnd_SCAR_762x51_m80_ball","rhs_mag_20Rnd_SCAR_762x51_m80a1_epr", "rhs_mag_20Rnd_SCAR_762x51_mk316_special", "rhsusf_20Rnd_762x51_SR25_m118_special_Mag", "rhsusf_20Rnd_762x51_SR25_m62_Mag","rhsusf_20Rnd_762x51_SR25_m993_Mag", "rhsusf_20Rnd_762x51_SR25_mk316_special_Mag"
 ];

@@ -1,7 +1,7 @@
 /*
     File: runDynamicWeather.sqf
-    Description: Continuously changes weather over time with smooth transitions, synced to all clients (MP/JIP safe).
-    Fog is now light and only appears rarely.
+    Description: Continuously changes weather over time with smooth transitions.
+    Refactored to rely on Arma 3 engine sync for weather, broadcasting only Wind (which is local).
 */
 
 if (!isServer) exitWith {};
@@ -20,16 +20,15 @@ while { true } do {
 
     private _transitionTime = 600 + random 300; // 10–15 min
 
-    // === Broadcast to all clients, including JIP
-    [
-        _targetOvercast, 
-        _targetRain, 
-        _targetFog, 
-        _targetLightning, 
-        _windX, 
-        _windY, 
-        _transitionTime
-    ] remoteExec ["RB_fnc_applyWeather", 0, true];
+    // === Apply Global Effects on Server (Engine syncs these) ===
+    _transitionTime setOvercast _targetOvercast;
+    _transitionTime setRain _targetRain;
+    _transitionTime setFog _targetFog;
+    _transitionTime setLightnings _targetLightning;
+
+    // === Broadcast Wind (Wind is Local) ===
+    // We force wind sync via remoteExec. JIP queue ensures joiners get the latest wind.
+    [[_windX, _windY], { setWind _this; }] remoteExec ["call", 0, true];
 
     diag_log format [
         "[RB] New weather cycle: Overcast=%.2f Rain=%.2f Fog=%.2f Lightning=%.2f Wind=[%.2f, %.2f]",
@@ -37,4 +36,4 @@ while { true } do {
     ];
 
     sleep _transitionTime;
-}; 
+};

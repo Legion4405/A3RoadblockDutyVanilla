@@ -8,6 +8,14 @@ private _gearUpgrade1 = ["vn_b_uniform_macv_01_15", "vn_b_uniform_macv_01_06", "
 private _gearUpgrade2 = _gearUpgrade1 + ["vn_b_vest_usmc_05", "vn_b_vest_usmc_04", "vn_b_vest_usmc_03", "vn_b_vest_usmc_06", "vn_b_vest_usmc_01", "vn_b_vest_usmc_02", "vn_b_pack_lw_04", "vn_b_pack_m5_01", "vn_b_pack_lw_07", "vn_b_pack_lw_05", "vn_b_pack_lw_02", "vn_b_pack_lw_01", "vn_b_pack_lw_06", "vn_b_pack_prc77_01", "vn_b_pack_lw_03", "vn_b_pack_trp_03_02", "vn_b_pack_trp_01_02", "vn_b_pack_trp_04_02", "vn_b_pack_trp_02_02", "vn_i_helmet_m1_02_01", "vn_i_helmet_m1_03_01", "vn_b_helmet_m1_14_02", "vn_b_helmet_m1_14_01", "vn_b_helmet_m1_15_02", "vn_b_helmet_m1_15_01", "vn_b_helmet_m1_16_02", "vn_b_helmet_m1_16_01", "vn_b_helmet_m1_18_02", "vn_b_helmet_m1_18_01", "vn_b_helmet_m1_19_02", "vn_b_helmet_m1_19_01", "vn_b_helmet_m1_02_02", "vn_b_helmet_m1_02_01", "vn_b_helmet_m1_20_02", "vn_b_helmet_m1_20_01", "vn_b_helmet_m1_03_02", "vn_b_helmet_m1_03_01", "vn_b_helmet_m1_05_02", "vn_b_helmet_m1_05_01", "vn_b_helmet_m1_06_02", "vn_b_helmet_m1_06_01", "vn_b_helmet_m1_07_02", "vn_b_helmet_m1_07_01", "vn_b_helmet_m1_09_02", "vn_b_helmet_m1_09_01", "vn_b_helmet_m1_04_02", "vn_b_helmet_m1_04_01", "vn_b_helmet_m1_17_02", "vn_b_helmet_m1_17_01", "vn_b_helmet_m1_08_02", "vn_b_helmet_m1_08_01", "vn_b_helmet_m1_10_01", "vn_b_helmet_m1_11_01", "UK3CB_BAF_H_Mk7_Scrim_C", "UK3CB_BAF_H_Mk7_Scrim_D", "UK3CB_BAF_H_Mk7_Scrim_E", "UK3CB_BAF_H_Mk7_Scrim_F", "UK3CB_BAF_H_Mk7_Scrim_ESS_A", "UK3CB_BAF_H_Mk7_Scrim_ESS_B", "UK3CB_BAF_H_Mk7_Scrim_ESS_C", "UK3CB_BAF_H_Mk7_Camo_CESS_A", "UK3CB_BAF_H_Mk7_Camo_CESS_B", "UK3CB_BAF_H_Mk7_Camo_CESS_C", "UK3CB_BAF_H_Mk7_Camo_CESS_D", "UK3CB_BAF_H_Wool_Hat", "UK3CB_BAF_B_Kitbag_TAN", "UK3CB_BAF_B_Kitbag_OLI", "UK3CB_BAF_B_Kitbag_MTP", "UK3CB_BAF_B_Kitbag_DPMT", "UK3CB_BAF_B_Kitbag_DDPM", "UK3CB_BAF_B_Carryall_TAN", "UK3CB_BAF_B_Carryall_OLI", "UK3CB_BAF_B_Carryall_MTP", "UK3CB_BAF_B_Carryall_DPMT", "UK3CB_BAF_B_Carryall_DDPM", "UK3CB_BAF_B_Bergen_MTP_Sapper_L_A", "UK3CB_BAF_B_Bergen_MTP_Radio_L_A", "UK3CB_BAF_B_Bergen_MTP_Medic_L_B", "ACE_NVG_Wide_WP", "ACE_MX2A"];
 
 RB_LogisticsOptions_SOGPF_US = [
+    [ "Reinforcements", [
+        // Format: [Label, [Units], TransportVehicle, Cost]
+        ["Military Policeman", ["vn_b_men_army_22"], "vn_b_wheeled_m151_mg_04_mp", 15],
+        ["Rifleman", ["vn_b_men_army_19"], "vn_b_wheeled_m151_01", 30],
+        ["Sentry (2)", ["vn_b_men_army_02", "vn_b_men_army_19"], "vn_b_wheeled_m151_01", 50],
+        ["Fire Team (4)",   ["vn_b_men_army_02", "vn_b_men_army_07", "vn_b_men_army_06", "vn_b_men_army_20"], "vn_b_wheeled_m151_01", 75],
+        ["Squad (10)",       ["vn_b_men_army_02", "vn_b_men_army_03","vn_b_men_army_02", "vn_b_men_army_06", "vn_b_men_army_17", "vn_b_men_army_10","vn_b_men_army_02", "vn_b_men_army_11", "vn_b_men_army_09", "vn_b_men_army_27"], "vn_b_wheeled_m54_02_sog", 200]
+    ] ],
     [ "Ammo", [
         ["M16 30rnd Mags", ["vn_m16_30_mag", "vn_m16_30_t_mag"], 30],
         ["M14 20rnd Mags", ["vn_m14_mag", "vn_m14_t_mag"], 30]
@@ -37,6 +45,9 @@ RB_LogisticsOptions_SOGPF_US = [
         ["M16 4x Scope", ["vn_o_4x_m16"], 50],
         ["Long Range Scope Kit", ["vn_o_9x_m16", "vn_o_9x_m14", "vn_o_9x_m40a1"], 75],
         ["Starlight Scope Kit", ["vn_o_anpvs2_m40a1", "vn_o_anpvs2_m16", "vn_o_anpvs2_m14"], 100]
+    ] ],
+        [ "Explosives", [
+        ["Mines Kit", ["vn_mine_tripwire_m49_02_mag", "vn_mine_tripwire_m49_04_mag", "vn_mine_m112_remote_mag", "vn_mine_m14_mag","vn_mine_tripwire_m16_02_mag", "vn_mine_tripwire_m16_04_mag","vn_mine_m16_mag","vn_mine_m18_fuze10_mag","vn_mine_m18_range_mag", "vn_mine_m18_mag", "vn_mine_m18_x3_range_mag", "vn_mine_m18_x3_mag", "vn_mine_m18_wp_fuze10_mag", "vn_mine_m18_wp_range_mag", "vn_mine_m18_wp_mag", "vn_mine_tripwire_m49_02_mag", "vn_mine_tripwire_m49_04_mag"], 100]
     ] ],
     [ "Turrets", [
         ["M1919A6 (Prone)", ["TURRET", "vn_b_army_static_m1919a6"], 15],

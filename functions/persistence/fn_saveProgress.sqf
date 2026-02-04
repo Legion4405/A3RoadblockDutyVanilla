@@ -27,20 +27,49 @@ if (!isNull _term) then { _score = _term getVariable ["rb_score", 0]; };
 private _loadouts = [];
 { if (alive _x && isPlayer _x) then { _loadouts pushBack [_forEachIndex, getUnitLoadout _x]; }; } forEach playableUnits;
 
-// persistent vehicles/turrets
+// persistent vehicles/turrets/fortifications
+if (isNil "RB_PersistentFortifications") then { RB_PersistentFortifications = []; };
+if (isNil "RB_LogisticsObjects") then { RB_LogisticsObjects = []; };
+
+RB_PersistentFortifications = RB_PersistentFortifications - [objNull];
+RB_LogisticsObjects = RB_LogisticsObjects - [objNull];
+
 private _seen = [];
-private _logiObjects = (vehicles + allMissionObjects "StaticWeapon") select {
+// Optimization: Only check registered objects, avoiding 'allMissionObjects' scan
+private _candidates = RB_LogisticsObjects + RB_PersistentFortifications;
+
+private _logiObjects = _candidates select {
   private _id = str _x;
   (!(_id in _seen)) && { _seen pushBack _id; _x getVariable ["rb_isPersistentLogi", false] }
 };
 private _logiData = [];
-private _objectSummaries = [];
 {
-  private _obj=_x; private _class=typeOf _obj; private _pos=getPosATL _obj; private _dir=getDir _obj;
+  private _obj=_x; private _class=typeOf _obj; private _pos=getPosATL _obj; 
+  // Save full 3D orientation (Dir + Up) for static objects to preserve tilt
+  private _vec=[vectorDir _obj, vectorUp _obj];
   private _kind = if (_obj isKindOf "StaticWeapon") then {"turret"} else {"vehicle"};
-  _logiData pushBack [_class, _pos, _dir, _kind];
-  _objectSummaries pushBack format ["%1 at %2 (%3)", _class, str _pos, _kind];
+  _logiData pushBack [_class, _pos, _vec, _kind];
 } forEach _logiObjects;
+
+// persistent squads (High Command)
+private _persistentGroups = [];
+{
+    private _grp = _x;
+    private _units = units _grp;
+    // Save group if it contains persistent units and no players
+    if (({isPlayer _x} count _units == 0) && {({_x getVariable ["rb_isPersistentLogi", false]} count _units > 0)}) then {
+        private _groupData = [];
+        {
+            // [Class, Pos, Dir, Loadout]
+            _groupData pushBack [typeOf _x, getPosATL _x, getDir _x, getUnitLoadout _x];
+        } forEach _units;
+        
+        if (count _groupData > 0) then {
+            // [GroupID, Side, Units]
+            _persistentGroups pushBack [groupId _grp, side _grp, _groupData];
+        };
+    };
+} forEach allGroups;
 
 // unlocks + faction
 if (isNil "RB_ArsenalUnlocks") then { RB_ArsenalUnlocks = []; };
@@ -51,6 +80,7 @@ private _saveData = [
   ["score",               _score],
   ["loadouts",            _loadouts],
   ["logiObjects",         _logiData],
+  ["persistentSquads",    _persistentGroups],
   ["arsenalUnlocks",      RB_ArsenalUnlocks],
   ["RB_LogisticsFaction", _logiFaction]
 ];
@@ -64,8 +94,8 @@ private _lines = [
   format ["• Score: %1", _score],
   format ["• Loadouts: %1", count _loadouts],
   format ["• Vehicles/turrets: %1 objects", count _logiData],
+  format ["• Persistent Squads: %1", count _persistentGroups],
   format ["• Arsenal unlocks: %1 items", count RB_ArsenalUnlocks],
   format ["• Logistics Faction: %1", _logiFaction]
 ];
-_lines append _objectSummaries;
 hint (_lines joinString "\n");

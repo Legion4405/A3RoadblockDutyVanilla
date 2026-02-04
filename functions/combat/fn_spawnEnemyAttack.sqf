@@ -1,99 +1,86 @@
 /*
-    File: spawnEnemyAttack.sqf
-    Description: Spawns a group of enemies at a random spawn marker and sends them to attack the checkpoint using waypoints.
-                 Occasionally spawns a small 'infiltrator' group instead of the main attack group.
+    File: fn_spawnEnemyAttack.sqf
+    Description: Spawns a group of enemies at a random spawn marker and sends them to attack the checkpoint.
+                 Uses cached markers for performance.
 */
 
 if (!isServer) exitWith {};
 
-// === Find all available enemy spawn markers with no players within 200m
-private _spawnMarkers = [];
-private _i = 1;
-while {true} do {
-    private _markerName = format ["RB_EnemySpawn_%1", _i];
-    if (getMarkerPos _markerName isEqualTo [0,0,0]) exitWith {};
-    private _markerPos = getMarkerPos _markerName;
-    // Only add if NO player is within 200m
-    if ({_markerPos distance _x < 200} count allPlayers == 0) then {
-        _spawnMarkers pushBack _markerName;
+// === 1. SELECT SPAWN MARKER ===
+private _allSpawns = missionNamespace getVariable ["RB_CachedEnemySpawns", []];
+if (_allSpawns isEqualTo []) exitWith { diag_log "[RB] No enemy spawn markers cached."; };
+
+private _validSpawns = [];
+{
+    private _pos = getMarkerPos _x;
+    // Only use if no players are within 250m
+    if ({_x distance2D _pos < 250} count allPlayers == 0) then {
+        _validSpawns pushBack _x;
     };
-    _i = _i + 1;
-};
-if (_spawnMarkers isEqualTo []) exitWith { diag_log "[RB] No enemy spawn markers found (all blocked by players)!"; };
+} forEach _allSpawns;
 
+if (_validSpawns isEqualTo []) exitWith { diag_log "[RB] Enemy attack skipped: All spawns are too close to players."; };
 
+private _spawnMarker = selectRandom _validSpawns;
+private _spawnPos    = getMarkerPos _spawnMarker;
+
+// === 2. SETUP ATTACK ===
 private _checkpoint = getMarkerPos "RB_Checkpoint";
-if (_checkpoint isEqualTo [0,0,0]) exitWith { diag_log "[RB] RB_Checkpoint marker not found!"; };
+if (_checkpoint isEqualTo [0,0,0]) exitWith { diag_log "[RB] RB_Checkpoint marker missing."; };
 
 private _enemyTypes = missionNamespace getVariable ["RB_EnemyInfantryPool", ["O_Soldier_F"]];
 private _playerCount = count allPlayers;
-private _groupSize = (2 + floor random 3) + (2 * _playerCount); // 3–5 base + 2 per player
+// Dynamic scaling: 3 base + 2 per player
+private _groupSize = 3 + (2 * _playerCount); 
 
-// === Decide attack type: Infiltrator or Main Group (e.g., 25% chance infiltrator)
-private _attackType = if (random 1 < 0.15) then {"infiltrator"} else {"main"};
+// Chance for small infiltrator team (20%)
+private _isInfiltration = (random 1 < 0.20);
+if (_isInfiltration) then { _groupSize = 4; }; // Fixed size for spec ops
 
-if (_attackType == "main") then {
-    // Main Attack Group
-    private _mainMarker = selectRandom _spawnMarkers;
-    private _mainPos = getMarkerPos _mainMarker;
+private _grp = createGroup [east, true];
 
-    private _grp = createGroup east;
-    for "_i" from 1 to _groupSize do {
-        private _unitClass = selectRandom _enemyTypes;
-        _grp createUnit [_unitClass, _mainPos, [], 5, "FORM"];
-    };
+// === 3. SPAWN UNITS ===
+for "_i" from 1 to _groupSize do {
+    private _type = selectRandom _enemyTypes;
+    private _unit = _grp createUnit [_type, _spawnPos, [], 5, "NONE"];
+    
+    _unit setSkill (if (_isInfiltration) then {0.7} else {0.4});
+};
 
+// === 4. ORDERS ===
+if (_isInfiltration) then {
+    // Stealth approach
+    _grp setBehaviour "STEALTH";
+    _grp setCombatMode "GREEN"; // Hold fire until compromised
+    _grp setSpeedMode "NORMAL";
+
+    diag_log format ["[RB] SpecOps Infiltration (%1 units) from %2", count (units _grp), _spawnMarker];
+
+    // Approach WP
+    private _wp1 = _grp addWaypoint [_checkpoint, 50];
+    _wp1 setWaypointType "MOVE";
+    _wp1 setWaypointBehaviour "STEALTH";
+    _wp1 setWaypointCompletionRadius 30;
+    
+    // Attack WP
+    private _wp2 = _grp addWaypoint [_checkpoint, 0];
+    _wp2 setWaypointType "SAD";
+    _wp2 setWaypointBehaviour "COMBAT";
+    _wp2 setWaypointCombatMode "RED";
+    
+} else {
+    // Full assault
     _grp setBehaviour "COMBAT";
     _grp setCombatMode "RED";
+    _grp setSpeedMode "FULL";
 
-    // Main group waypoint
+    diag_log format ["[RB] Main Assault (%1 units) from %2", count (units _grp), _spawnMarker];
+
     private _wp = _grp addWaypoint [_checkpoint, 0];
-    _wp setWaypointType "SAD";         // Seek and destroy
+    _wp setWaypointType "SAD";
     _wp setWaypointBehaviour "COMBAT";
     _wp setWaypointCombatMode "RED";
-    _wp setWaypointCompletionRadius 20; // Normal value
-
-    diag_log format [
-        "[RB] Main enemy attack spawned: %1 units at %2.",
-        _groupSize, _mainMarker
-    ];
-
-} else {
-    // Infiltrator Group
-    private _infMarker = selectRandom _spawnMarkers;
-    private _infPos = getMarkerPos _infMarker;
-    private _infilGrp = createGroup east;
-    for "_j" from 1 to 4 do {
-        private _unitClass = selectRandom _enemyTypes;
-        private _unit = _infilGrp createUnit [_unitClass, _infPos, [], 5, "FORM"];
-        _unit setSkill 0.7;
-    };
-
-    _infilGrp setBehaviourStrong "STEALTH"; // Do not fire unless fired upon
-
-    // First waypoint: approach in stealth/yellow
-    private _infWp1 = _infilGrp addWaypoint [_checkpoint, 0];
-    _infWp1 setWaypointType "MOVE";
-    _infWp1 setWaypointBehaviour "STEALTH";
-    _infWp1 setWaypointCombatMode "WHITE";
-    _infWp1 setWaypointCompletionRadius 50;
-
-    // Second waypoint: open fire after reaching checkpoint
-    private _infWp2 = _infilGrp addWaypoint [_checkpoint, 0];
-    _infWp2 setWaypointType "SAD";
-    _infWp2 setWaypointBehaviour "COMBAT";
-    _infWp2 setWaypointCombatMode "RED";
-    _infWp2 setWaypointCompletionRadius 30;
-
-    // When the group completes waypoint 1, change to RED combat mode
-    _infWp1 setWaypointStatements [
-        "group this setCombatMode 'RED';",
-        ""
-    ];
-
-
-    diag_log format [
-        "[RB] Infiltrator group spawned at %1.",
-        _infMarker
-    ];
 };
+
+// Cleanup garbage eventually (via separate garbage collector script usually, or add to a list)
+// For now, reliance on "AllDead" cleanup or engine GC.

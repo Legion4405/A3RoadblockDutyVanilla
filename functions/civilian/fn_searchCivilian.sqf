@@ -17,7 +17,7 @@ private _text = if (_items isEqualTo []) then {
 };
 
 // Show structured text
-[_text, 10] call ace_common_fnc_displayTextStructured;
+[_text, 10] call RB_fnc_showNotification;
 
 // Attempt to turn hostile if illegal items are present
 [_civ] call RB_fnc_tryTurnHostile;

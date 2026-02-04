@@ -1,9 +1,15 @@
 RB_StarterLoadout_APEX_Gendarmerie = [["SMG_05_F","","acc_flashlight","",["30Rnd_9x21_Mag_SMG_02",30],[],""],[],["ACE_VMM3","","","",[],[],""],["U_B_GEN_Soldier_F",[["ACE_CableTie",10],["ACE_EarPlugs",1],["ACE_elasticBandage",10],["ACE_packingBandage",5],["ACE_salineIV_500",1],["ACE_salineIV_250",1],["ACE_splint",2],["ACE_tourniquet",2],["ACE_personalAidKit",1],["ACE_morphine",2],["ACE_epinephrine",2]]],["V_TacVest_blk_POLICE",[["ACE_Humanitarian_Ration",1],["ACE_MapTools",1],["ACE_Flashlight_MX991",1],["SmokeShell",2,1],["SmokeShellGreen",1,1],["HandGrenade",2,1],["acex_intelitems_notepad",1,1],["SmokeShellRed",1,1],["ACE_HandFlare_White",2,1],["ACE_HandFlare_Green",1,1],["30Rnd_9x21_Mag_SMG_02",3,30],["30Rnd_9x21_Mag_SMG_02_Tracer_Red",1,30]]],[],"H_Beret_gen_F","",["Binocular","","","",[],[],""],["ItemMap","","ItemRadio","ItemCompass","ItemWatch",""]],[];
-
 RB_Ambient_Rotary_Gendarmerie = ["B_Heli_Light_01_F", "B_Heli_Transport_03_F", "B_Heli_Attack_01_dynamicLoadout_F", "B_Heli_Transport_01_F"];
 RB_Ambient_Fixed_Gendarmerie = ["B_Plane_CAS_01_dynamicLoadout_F"];
 
 RB_LogisticsOptions_APEX_Gendarmerie = [
+    [ "Reinforcements", [
+        // Format: [Label, [Units], TransportVehicle, Cost]
+        ["Gendarme", ["B_GEN_Soldier_F"], "B_GEN_Offroad_01_gen_F", 15],
+        ["Sentry (2)", ["B_GEN_Soldier_F", "B_GEN_Soldier_F"], "B_GEN_Offroad_01_gen_F", 50],
+        ["Fire Team (4)",   ["B_GEN_Commander_F", "B_GEN_Soldier_F", "B_GEN_Soldier_F", "B_GEN_Soldier_F"], "B_GEN_Van_02_transport_F", 75],
+        ["Squad (10)",       ["B_Captain_Dwarden_F", "B_GEN_Commander_F", "B_GEN_Soldier_F", "B_GEN_Soldier_F", "B_GEN_Soldier_F", "B_GEN_Commander_F","B_GEN_Soldier_F", "B_GEN_Soldier_F", "B_GEN_Soldier_F", "B_GEN_Soldier_F"], "B_GEN_Van_02_transport_F", 200]
+    ] ],
     [
         "Ammo",
         [
@@ -41,6 +47,12 @@ RB_LogisticsOptions_APEX_Gendarmerie = [
             ["Rifle Scope Kit", ["optic_MRCO", "optic_Hamr", "ACE_optic_MRCO_2D", "ACE_optic_Hamr_2D", "optic_Arco_blk_F", "optic_ERCO_blk_F","optic_Hamr", "ACE_optic_Hamr_2D", "optic_Hamr_sand_lxWS", "optic_Hamr_snake_lxWS", "optic_ERCO_blk_F", "optic_ERCO_snd_F"], 50],
             ["Sniper Scope Kit", ["optic_DMS", "optic_SOS", "optic_LRPS", "ACE_optic_SOS_2D", "ACE_optic_LRPS_2D", "optic_KHS_blk", "optic_AMS"], 75],
             ["Special Scopes Kit", ["optic_Nightstalker", "optic_NVS", "optic_tws", "optic_tws_mg"], 250]
+        ]
+    ],
+    [
+        "Expolsives",
+        [
+            ["Mines Kit", ["ClaymoreDirectionalMine_Remote_Mag", "SLAMDirectionalMine_Wire_Mag", "APERSTripMine_Wire_Mag", "ACE_FlareTripMine_Mag","ACE_FlareTripMine_Mag_Green", "ACE_FlareTripMine_Mag_Red","APERSMine_Range_Mag","ACE_APERSMine_ToePopper_Mag","APERSMineDispenser_Mag"], 100]
         ]
     ],
     [

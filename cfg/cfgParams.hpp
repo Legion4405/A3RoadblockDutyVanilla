@@ -29,15 +29,21 @@ class RB_Header_2
 class RB_LogisticsFaction
 {
     title = "Player Faction";
-    values[] = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
-    texts[] = {"Custom", "Vanilla NATO", "APEX NATO", "Contact NATO", "Contact LDF", "APEX Gendarmerie", "CDLC Western Sahara UNA", "RHS US Army", "3CB British Armed Forces", "SOGPF US"};
+    values[] = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
+    texts[] = {"Custom", "Vanilla NATO", "APEX NATO", "Contact NATO", "Contact LDF", "APEX Gendarmerie", "CDLC Western Sahara UNA", "RHS US Army", "3CB British Armed Forces", "CDLC S.O.G. Prairie Fire US Army", "CDLC Expeditionary Forces MJTF"};
     default = 1;
 };
 class RB_AmbientAir {
     title = "Ambient Air Activity";
-    values[] = {0, 1, 2, 3, 4, 5, 6, 7, 8};
-    texts[] = {"Disabled", "Custom", "NATO", "APEX NATO", "APEX Gendarmerie", "WS UNA", "RHS US Army", "3CB British Armed Forces", "SOGPF US"};
+    values[] = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
+    texts[] = {"Disabled", "Custom", "NATO", "APEX NATO", "APEX Gendarmerie", "CDLC WS UNA", "RHS US Army", "3CB British Armed Forces", "CDLC S.O.G. Prairie Fire", "CDLC Expeditionary Force MJTF"};
     default = 2;
+};
+class RB_AmbientAirIntensity {
+    title = "Ambient Air Frequency";
+    values[] = {0, 1, 2, 3};
+    texts[] = {"Low", "Medium", "High", "Very High"};
+    default = 1;
 };
 class RB_Spacer_2
 {
