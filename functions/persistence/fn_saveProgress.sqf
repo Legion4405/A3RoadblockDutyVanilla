@@ -75,14 +75,19 @@ private _persistentGroups = [];
 if (isNil "RB_ArsenalUnlocks") then { RB_ArsenalUnlocks = []; };
 private _logiFaction = if (isNil "RB_LogisticsFaction") then { "" } else { RB_LogisticsFaction };
 
-// payload (no legacy tags stored)
+// Payload (includes faction indices for pool restoration)
 private _saveData = [
   ["score",               _score],
   ["loadouts",            _loadouts],
   ["logiObjects",         _logiData],
   ["persistentSquads",    _persistentGroups],
   ["arsenalUnlocks",      RB_ArsenalUnlocks],
-  ["RB_LogisticsFaction", _logiFaction]
+  ["RB_LogisticsFaction", _logiFaction],
+  ["RB_CivPoolIndex",     missionNamespace getVariable ["RB_SavedCivPoolIndex", 0]],
+  ["RB_VehPoolIndex",     missionNamespace getVariable ["RB_SavedVehPoolIndex", 0]],
+  ["RB_EnemyInfIndex",    missionNamespace getVariable ["RB_SavedEnemyInfIndex", 0]],
+  ["RB_EnemyVehIndex",    missionNamespace getVariable ["RB_SavedEnemyVehIndex", 0]],
+  ["RB_AirIndex",         missionNamespace getVariable ["RB_SavedAirIndex", 0]]
 ];
 
 profileNamespace setVariable [_varNameNew, _saveData];

@@ -19,9 +19,11 @@ call compile preprocessFileLineNumbers "configs\playerFactions\rhs_usa.sqf";
 call compile preprocessFileLineNumbers "configs\playerFactions\3cb_british.sqf";
 call compile preprocessFileLineNumbers "configs\playerFactions\sogpf_us.sqf";
 call compile preprocessFileLineNumbers "configs\playerFactions\ef_mjtf.sqf";
+call compile preprocessFileLineNumbers "configs\playerFactions\gm_west_ger.sqf";
 
 call compile preprocessFileLineNumbers "configs\civilianFactions.sqf";
 call compile preprocessFileLineNumbers "configs\customFactions.sqf";
+call compile preprocessFileLineNumbers "configs\ambientAirClasses.sqf";
 
 east setFriend [resistance, 1];
 resistance setFriend [east, 1];

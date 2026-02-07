@@ -106,12 +106,13 @@ if (!isNull _veh) then {
     if (!isNull _driver) then {
         private _dest = getMarkerPos "RB_ExitPoint";
         if (_dest isEqualTo [0,0,0]) exitWith { diag_log "[RB] ERROR: Marker 'RB_ExitPoint' not found."; };
+        
         private _vehGroup = group _driver;
         if (isNull _vehGroup || {_vehGroup == grpNull}) then {
             _vehGroup = createGroup civilian;
             [_driver] joinSilent _vehGroup;
         };
-        for "_i" from (count waypoints _vehGroup - 1) to 1 step -1 do {
+        for "_i" from (count waypoints _vehGroup - 1) to 0 step -1 do {
             deleteWaypoint [_vehGroup, _i];
         };
         private _wp = _vehGroup addWaypoint [_dest, 0];
@@ -137,6 +138,12 @@ if (!isNull _veh) then {
         _veh engineOn true;
         _veh setPilotLight true;
         _veh action ["lightOn", _veh];
+        
+        // Re-enable AI
+        if (!isNull _driver) then {
+            _driver enableAI "MOVE";
+            _driver enableAI "PATH";
+        };
     }
 } else {
     // === On-foot civs: walk to exit
@@ -147,11 +154,12 @@ if (!isNull _veh) then {
         _x setVariable ["rb_alreadyCleared", true, true];
         [_x] joinSilent _civGroup;
         _x enableAI "MOVE";
+        _x enableAI "PATH";
         _x setBehaviour "SAFE";
         _x setSpeedMode "LIMITED";
         RB_CivBatch pushBackUnique _x;
     } forEach _civs;
-    for "_i" from (count waypoints _civGroup - 1) to 1 step -1 do {
+    for "_i" from (count waypoints _civGroup - 1) to 0 step -1 do {
         deleteWaypoint [_civGroup, _i];
     };
     private _wp = _civGroup addWaypoint [_dest, 0];
@@ -248,7 +256,7 @@ if (!isNull _veh) then {
                 _newScore
             ];
             [_resultText, 15] remoteExec ["ace_common_fnc_displayTextStructured", 0];
-    deleteVehicle _veh;
+            deleteVehicle _veh;
         } forEach _vehList;
 
         // === Score and delete foot civs

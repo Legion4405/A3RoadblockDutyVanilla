@@ -204,6 +204,17 @@ private _actionDefuse = [
         if (_bombRemoved) then {
             _target setVariable ["rb_hasBomb", false, true];
             _target setVariable ["rb_hadBomb", true, true];
+            
+            // === Hostile Reaction ===
+            // If the bomb is found, the crew realizes the jig is up.
+            // 70% chance per crew member to bail out and fight.
+            {
+                if (alive _x && {random 1 < 0.7}) then {
+                    unassignVehicle _x;
+                    moveOut _x;
+                    [_x, true] call RB_fnc_tryTurnHostile;
+                };
+            } forEach crew _target;
         };
         _target setVariable ["rb_bombDefused", true, true];
 

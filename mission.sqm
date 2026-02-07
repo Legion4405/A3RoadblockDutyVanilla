@@ -12,7 +12,7 @@ class EditorData
 	};
 	class ItemIDProvider
 	{
-		nextID=453;
+		nextID=457;
 	};
 	class MarkerIDProvider
 	{
@@ -20,10 +20,10 @@ class EditorData
 	};
 	class Camera
 	{
-		pos[]={3829.8047,102.36176,4122.8057};
-		dir[]={-0.33863208,-0.93977511,0.046651945};
-		up[]={-0.93099278,0.34177202,0.12825881};
-		aside[]={0.13647953,1.2025703e-07,0.99065417};
+		pos[]={3792.9622,166.39299,4008.3184};
+		dir[]={-0.027541531,-0.83218932,0.5538072};
+		up[]={-0.041334745,0.55449158,0.83116221};
+		aside[]={0.99876571,-1.8626451e-09,0.04966988};
 	};
 };
 binarizationWanted=0;
@@ -35,15 +35,14 @@ addons[]=
 	"ace_optics",
 	"ace_hearing",
 	"ace_captives",
-	"ace_medical_treatment",
 	"ace_maptools",
 	"A3_Modules_F_Curator_Curator",
-	"ef_curator",
 	"A3_Structures_F_Enoch_Military_Barracks",
 	"A3_Props_F_Enoch_Military_Equipment",
 	"A3_Structures_F_Bootcamp_Items_Electronics",
 	"A3_Props_F_Enoch_Military_Camps",
 	"A3_Ui_F",
+	"Desert",
 	"A3_Structures_F_Walls",
 	"A3_Structures_F_Mil_Helipads",
 	"A3_Structures_F_Mil_BagBunker",
@@ -58,7 +57,6 @@ addons[]=
 	"A3_Structures_F_Tank_Military_RepairDepot",
 	"A3_Weapons_F_Ammoboxes",
 	"ace_cargo",
-	"emr_main",
 	"ace_logistics_wirecutter",
 	"ace_concertina_wire",
 	"A3_Structures_F_Civ_InfoBoards",
@@ -69,7 +67,7 @@ class AddonsMetaData
 {
 	class List
 	{
-		items=25;
+		items=23;
 		class Item0
 		{
 			className="A3_Characters_F";
@@ -107,138 +105,122 @@ class AddonsMetaData
 		};
 		class Item5
 		{
-			className="ace_medical_treatment";
-			name="ACE3 - Medical Treatment";
-			author="ACE-Team";
-			url="https://ace3.acemod.org/";
-		};
-		class Item6
-		{
 			className="ace_maptools";
 			name="ACE3 - Map Tools";
 			author="ACE-Team";
 			url="https://ace3.acemod.org/";
 		};
-		class Item7
+		class Item6
 		{
 			className="A3_Modules_F_Curator";
 			name="Arma 3 Zeus Update - Scripted Modules";
 			author="Bohemia Interactive";
 			url="https://www.arma3.com";
 		};
-		class Item8
-		{
-			className="EF_Curator";
-			name="Expeditionary Forces - Zeus";
-			author="Tiny Gecko Studios";
-			url="https://www.arma3.com";
-		};
-		class Item9
+		class Item7
 		{
 			className="A3_Structures_F_Enoch_Military";
 			name="Arma 3 Contact Platform - Military Buildings and Structures";
 			author="Bohemia Interactive";
 			url="https://www.arma3.com";
 		};
-		class Item10
+		class Item8
 		{
 			className="A3_Props_F_Enoch";
 			name="Arma 3 Contact Platform - Decorative and Mission Objects";
 			author="Bohemia Interactive";
 			url="https://www.arma3.com";
 		};
-		class Item11
+		class Item9
 		{
 			className="A3_Structures_F_Bootcamp";
 			name="Arma 3 Bootcamp Update - Buildings and Structures";
 			author="Bohemia Interactive";
 			url="https://www.arma3.com";
 		};
-		class Item12
+		class Item10
 		{
 			className="A3_Ui_F";
 			name="Arma 3 - User Interface";
 			author="Bohemia Interactive";
 			url="https://www.arma3.com";
 		};
-		class Item13
+		class Item11
+		{
+			className="Desert";
+			name="Desert";
+		};
+		class Item12
 		{
 			className="A3_Structures_F";
 			name="Arma 3 - Buildings and Structures";
 			author="Bohemia Interactive";
 			url="https://www.arma3.com";
 		};
-		class Item14
+		class Item13
 		{
 			className="A3_Structures_F_Mil";
 			name="Arma 3 - Military Buildings and Structures";
 			author="Bohemia Interactive";
 			url="https://www.arma3.com";
 		};
-		class Item15
+		class Item14
 		{
 			className="A3_Modules_F";
 			name="Arma 3 Alpha - Scripted Modules";
 			author="Bohemia Interactive";
 			url="https://www.arma3.com";
 		};
-		class Item16
+		class Item15
 		{
 			className="A3_Structures_F_EPA";
 			name="Arma 3 Survive Episode - Buildings and Structures";
 			author="Bohemia Interactive";
 			url="https://www.arma3.com";
 		};
-		class Item17
+		class Item16
 		{
 			className="A3_Signs_F";
 			name="Arma 3 - Signs";
 			author="Bohemia Interactive";
 			url="https://www.arma3.com";
 		};
-		class Item18
+		class Item17
 		{
 			className="A3_Structures_F_Ind";
 			name="Arma 3 - Industrial Structures";
 			author="Bohemia Interactive";
 			url="https://www.arma3.com";
 		};
-		class Item19
+		class Item18
 		{
 			className="A3_Structures_F_Tank";
 			name="Arma 3 Tank - Buildings and Structures";
 			author="Bohemia Interactive";
 			url="https://www.arma3.com";
 		};
-		class Item20
+		class Item19
 		{
 			className="ace_cargo";
 			name="ACE3 - Cargo";
 			author="ACE-Team";
 			url="https://ace3.acemod.org/";
 		};
-		class Item21
-		{
-			className="emr_main";
-			name="Enhanced Movement Rework";
-			author="Simplex Team";
-			url="https://github.com/SceptreOfficial/Enhanced-Movement-Rework";
-		};
-		class Item22
+		class Item20
 		{
 			className="ace_logistics_wirecutter";
 			name="ACE3 - Logistics Wire Cutter";
 			author="ACE-Team";
 			url="https://ace3.acemod.org/";
 		};
-		class Item23
+		class Item21
 		{
 			className="ace_concertina_wire";
 			name="ACE3 - Concertina Wire";
 			author="ACE-Team";
 			url="https://ace3.acemod.org/";
 		};
-		class Item24
+		class Item22
 		{
 			className="ace_fortify";
 			name="ACE3 - Fortify";
@@ -268,6 +250,19 @@ class CustomAttributes
 		name="Multiplayer";
 		class Attribute0
 		{
+			property="ENH_saveLoadout";
+			expression="if (!isMultiplayer || !_value || is3DEN || !hasInterface) exitWith {};        0 spawn        {            waitUntil {sleep 1; !isNull player};            player setVariable ['ENH_savedLoadout', getUnitloadout player];            player addMPEventHandler ['MPRespawn',            {                params ['_unit'];                private _loadout = _unit getVariable ['ENH_savedLoadout', []];                if (_loadout isNotEqualTo []) then {_unit setUnitLoadout _loadout};            }];        };";
+			class Value
+			{
+				class data
+				{
+					singleType="BOOL";
+					value=1;
+				};
+			};
+		};
+		class Attribute1
+		{
 			property="RespawnTemplates";
 			expression="true";
 			class Value
@@ -295,19 +290,6 @@ class CustomAttributes
 							};
 						};
 					};
-				};
-			};
-		};
-		class Attribute1
-		{
-			property="ENH_saveLoadout";
-			expression="if (!isMultiplayer || !_value || is3DEN || !hasInterface) exitWith {};        0 spawn        {            waitUntil {sleep 1; !isNull player};            player setVariable ['ENH_savedLoadout', getUnitloadout player];            player addMPEventHandler ['MPRespawn',            {                params ['_unit'];                private _loadout = _unit getVariable ['ENH_savedLoadout', []];                if (_loadout isNotEqualTo []) then {_unit setUnitLoadout _loadout};            }];        };";
-			class Value
-			{
-				class data
-				{
-					singleType="BOOL";
-					value=1;
 				};
 			};
 		};

@@ -1,43 +1,54 @@
 // === Civilian Hostility Settings ===
 RB_HostileChance = 0.1;  // 1.0 = 100%, lower for real missions
-//RB_HostileChance = 0.075;  // 1.0 = 100%, lower for real missions
 
 // === Weapon Loadouts for Hostile Civilians
 RB_HostileWeapons = [
-    ["hgun_Pistol_01_F", ["10Rnd_9x21_Mag", 3]]
+    // Secondaries (Common)
+    ["hgun_Pistol_01_F", ["10Rnd_9x21_Mag", 4]],
+    ["hgun_Rook40_F", ["16Rnd_9x21_Mag", 4]],
+    ["hgun_P07_F", ["16Rnd_9x21_Mag", 4]],
+    
+    // Primaries (Dangerous)
+    ["SMG_01_F", ["30Rnd_45ACP_Mag_SMG_01", 4]],      // Vermin
+    ["SMG_02_F", ["30Rnd_9x21_Mag_SMG_02", 4]],      // Scorpion
+    ["SMG_05_F", ["30Rnd_9x21_Mag_SMG_02", 4]],      // Protector
+    ["arifle_AKS_F", ["30Rnd_545x39_Mag_F", 4]],     // AKS-74U
+    ["arifle_AKM_F", ["30Rnd_762x39_Mag_F", 4]]     // AKM
 ];
 
 RB_ScoringTable = [
     // Key                          Points   Display Name
-    ["vehicle_bomb",                25,      "Vehicle Bomb"],
+    ["vehicle_bomb",                10,      "Vehicle Bomb"],
     ["vehicle_bomb_defused",        5,       "Vehicle Bomb (Defused)"],
     ["impound_bomb_notdefused",     -15,     "Impounded Bomb (Not Defused)"], 
     
-    ["vehicle_contraband",          10,      "Vehicle Contraband"],
-    ["personal_contraband",         10,      "Personal Contraband"],
+    ["vehicle_contraband",          5,      "Vehicle Contraband"],
+    ["personal_contraband",         5,      "Personal Contraband"],
     
     ["banned_origin",               8,       "Banned Origin"],
-    ["forged_id",                   10,      "Forged ID"],
+    ["forged_id",                   5,      "Forged ID"],
     ["missing_permit",              8,       "Missing Travel Permit"],
-    ["permit_mismatch",             10,      "Travel Permit Mismatch"],
+    ["permit_mismatch",             5,      "Travel Permit Mismatch"],
     ["permit_expired",              5,       "Expired Travel Permit"],
-    ["lying",                       15,      "Lying to Authority"],
+    ["lying",                       5,      "Lying to Authority"],
     
     ["hostile",                     15,      "Neutralized Hostile"],
     
     ["plate_mismatch",              5,       "License Plate Mismatch"],
     ["registration_mismatch",       5,       "Registration Mismatch"],
     
-    ["fugitive_arrested",           50,      "Fugitive Arrested"], // Big reward!
+    ["fugitive_arrested",           25,      "Fugitive Arrested"], // Big reward!
     ["fugitive_released",           -50,     "Fugitive Released"],
     
     // Penalties / Actions
-    ["arrest_innocent",             -10,     "Wrongful Arrest"],
-    ["wrong_impound",               -15,     "Wrongful Impound"],
+    ["arrest_innocent",             -15,     "Wrongful Arrest"],
+    ["wrong_impound",               -25,     "Wrongful Impound"],
     ["innocent_civilian_killed",    -50,     "Civilian Casualty"],
     
-    ["correct_release",             2,       "Correct Release"], // Small bonus for doing job
-    ["vehicle_release",             2,       "Correct Vehicle Release"]
+    ["correct_release",             5,       "Correct Release"], // Small bonus for doing job
+    ["wrong_release",               -15,     "Wrongful Release (Civilian)"],
+    ["correct_vehicle_release",     5,       "Correct Vehicle Release"],
+    ["wrong_vehicle_release",       -20,     "Wrongful Release (Vehicle)"]
 ];
 
 RB_ScoringTableMap = createHashMapFromArray RB_ScoringTable;
@@ -100,7 +111,7 @@ RB_FakeNames = [
     "Mateusz Kowalski", "Zoltan Szabo", "Nicolae Popescu", "Bojan Jankovic", "Milan Draganov",
     "Pavel Volkov", "Nikolai Mikhailov", "Radek Blazek", "Dmitri Ivanov", "Viktor Orlov",
     "Emil Markovic", "Stefan Dragomir", "Oleg Sidorov", "Jovan Petrovic", "Tomasz Nowak",
-    "Márton Varga", "Kristian Iliev", "Roman Kuznetsov", "Lukasz Wisniewski", "István Bodnar",
+    "Marton Varga", "Kristian Iliev", "Roman Kuznetsov", "Lukasz Wisniewski", "Istvan Bodnar",
 
     // African (20)
     "Kwame Boateng", "Amadou N'Diaye", "Joseph Okoro", "Fode Bamba", "Samuel Abebe",
@@ -117,9 +128,9 @@ RB_FakeNames = [
 
     "Agent No-Name",      "John Doe",       "Jane Roe",        "Mystery Man",      "Smith Smithson",
     "Sergeant Banana",    "Doctor Mysterio","Alexei the Fifth","Privateer X",      "Unregistered",
-    "Ghost Driver",       "Max Powers",     "April O’Neil",    "Jimmy Two-Times",  "Lisa Simpson",
+    "Ghost Driver",       "Max Powers",     "April O'Neil",    "Jimmy Two-Times",  "Lisa Simpson",
     "J. Random Citizen",  "Anonymous User", "Inspector Gadget","Sneaky Pete",      "Captain Obvious",
-    "Vladimir Putin",     "Chad Thunder",   "Random Encounter","Placeholder",      "MissingNo.",
+    "Vladimir Putin",     "Chad Thunder",   "Random Encounter", "MissingNo.",
     "Erik the Red",       "Juan Solo",      "Qwerty Uiop",     "Null Pointer",     "Indiana Jones",
     "Peter Griffin",      "Sasha Fierce",   "Test Subject 42", "Frank N. Stein",   "Sam Sung",
     "Moe Lester",         "Ben Dover",      "Al Dente",        "Phil McCraken",    "Yuri Gagarin",

@@ -79,6 +79,13 @@ if ((typeName _arsenalUnlocks) != "ARRAY") then { _arsenalUnlocks = []; };
 RB_ArsenalUnlocks = _arsenalUnlocks; publicVariable "RB_ArsenalUnlocks";
 RB_LogisticsFaction = [_data, "RB_LogisticsFaction", _paramLogiFaction] call _kvGet; publicVariable "RB_LogisticsFaction";
 
+// Load Saved Pool Indices
+RB_SavedCivPoolIndex  = [_data, "RB_CivPoolIndex", -1] call _kvGet;
+RB_SavedVehPoolIndex  = [_data, "RB_VehPoolIndex", -1] call _kvGet;
+RB_SavedEnemyInfIndex = [_data, "RB_EnemyInfIndex", -1] call _kvGet;
+RB_SavedEnemyVehIndex = [_data, "RB_EnemyVehIndex", -1] call _kvGet;
+RB_SavedAirIndex      = [_data, "RB_AirIndex", -1] call _kvGet;
+
 // score holder
 private _term = missionNamespace getVariable ["RB_Terminal", objNull];
 if (!isNull _term) then { _term setVariable ["rb_score", _score, true]; publicVariable "RB_Terminal"; };

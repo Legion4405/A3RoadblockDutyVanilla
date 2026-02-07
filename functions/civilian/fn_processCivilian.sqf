@@ -7,6 +7,7 @@ _civilian setVariable ["rb_isProcessed", true, true];
 unassignVehicle _civilian;
 [_civilian] allowGetIn false;
 _civilian enableAI "MOVE";
+_civilian enableAI "PATH";
 _civilian stop false;
 doStop _civilian;
 

@@ -51,62 +51,23 @@ RB_EnemyInfantryPool_Vanilla_Spetsnaz = [
 ];
 
 RB_EnemyInfantryPool_CDLC_WSTura = [
-"O_Tura_defector_lxWS", 
-"O_Tura_deserter_lxWS", 
-"O_Tura_enforcer_lxWS", 
-"O_Tura_hireling_lxWS", 
-"O_Tura_HeavyGunner_lxWS", 
-"O_Tura_medic2_lxWS", 
-"O_Tura_watcher_lxWS", 
-"O_Tura_thug_lxWS", 
-"O_Tura_soldier_UAV_lxWS"
+"O_Tura_defector_lxWS", "O_Tura_deserter_lxWS", "O_Tura_enforcer_lxWS", "O_Tura_hireling_lxWS", "O_Tura_HeavyGunner_lxWS", "O_Tura_medic2_lxWS", 
+"O_Tura_watcher_lxWS", "O_Tura_thug_lxWS", "O_Tura_soldier_UAV_lxWS"
 ];
 RB_EnemyInfantryPool_CDLC_WSSFIA = [
-"O_SFIA_Soldier_AAA_lxWS", 
-"O_SFIA_Soldier_AAT_lxWS", 
-"O_SFIA_Soldier_AR_lxWS", 
-"O_SFIA_medic_lxWS", 
-"O_SFIA_crew_lxWS", 
-"O_SFIA_exp_lxWS", 
-"O_SFIA_Soldier_GL_lxWS", 
-"O_SFIA_HeavyGunner_lxWS", 
-"O_SFIA_soldier_aa_lxWS", 
-"O_SFIA_sharpshooter_lxWS", 
-"O_SFIA_Soldier_TL_lxWS", 
-"O_SFIA_soldier_at_lxWS", 
-"O_SFIA_repair_lxWS", 
-"O_SFIA_soldier_lxWS", 
-"O_SFIA_soldier_lite_lxWS"
+"O_SFIA_Soldier_AAA_lxWS", "O_SFIA_Soldier_AAT_lxWS", "O_SFIA_Soldier_AR_lxWS", "O_SFIA_medic_lxWS", "O_SFIA_crew_lxWS", 
+"O_SFIA_exp_lxWS", "O_SFIA_Soldier_GL_lxWS", "O_SFIA_HeavyGunner_lxWS", "O_SFIA_soldier_aa_lxWS", "O_SFIA_sharpshooter_lxWS", 
+"O_SFIA_Soldier_TL_lxWS", "O_SFIA_soldier_at_lxWS", "O_SFIA_repair_lxWS", "O_SFIA_soldier_lxWS", "O_SFIA_soldier_lite_lxWS"
 ];
 RB_EnemyInfantryPool_RHSGREF_CHDKZ = [
-"rhsgref_ins_grenadier_rpg", 
-"rhsgref_ins_arifleman_rpk", 
-"rhsgref_ins_machinegunner", 
-"rhsgref_ins_medic", 
-"rhsgref_ins_militiaman_mosin", 
-"rhsgref_ins_rifleman", 
-"rhsgref_ins_rifleman_akm", 
-"rhsgref_ins_rifleman_aks74", 
-"rhsgref_ins_rifleman_aksu", 
-"rhsgref_ins_grenadier", 
-"rhsgref_ins_rifleman_RPG26", 
-"rhsgref_ins_engineer", 
-"rhsgref_ins_spotter", 
-"rhsgref_ins_sniper"
+"rhsgref_ins_grenadier_rpg", "rhsgref_ins_arifleman_rpk", "rhsgref_ins_machinegunner", "rhsgref_ins_medic", "rhsgref_ins_militiaman_mosin", 
+"rhsgref_ins_rifleman", "rhsgref_ins_rifleman_akm", "rhsgref_ins_rifleman_aks74", "rhsgref_ins_rifleman_aksu", "rhsgref_ins_grenadier", 
+"rhsgref_ins_rifleman_RPG26", "rhsgref_ins_engineer", "rhsgref_ins_spotter", "rhsgref_ins_sniper"
 ];
 RB_EnemyInfantryPool_RHSGREF_NAPA = [
-"rhsgref_nat_grenadier_rpg", 
-"rhsgref_nat_commander", 
-"rhsgref_nat_hunter", 
-"rhsgref_nat_machinegunner", 
-"rhsgref_nat_machinegunner_mg42", 
-"rhsgref_nat_medic", 
-"rhsgref_nat_rifleman_akms", 
-"rhsgref_nat_rifleman_aks74", 
-"rhsgref_nat_militiaman_kar98k", 
-"rhsgref_nat_grenadier", 
-"rhsgref_nat_rifleman_mp44", 
-"rhsgref_nat_rifleman_vz58"
+"rhsgref_nat_grenadier_rpg", "rhsgref_nat_commander", "rhsgref_nat_hunter", "rhsgref_nat_machinegunner", "rhsgref_nat_machinegunner_mg42", 
+"rhsgref_nat_medic", "rhsgref_nat_rifleman_akms", "rhsgref_nat_rifleman_aks74", "rhsgref_nat_militiaman_kar98k", "rhsgref_nat_grenadier", 
+"rhsgref_nat_rifleman_mp44", "rhsgref_nat_rifleman_vz58"
 ];
 
 RB_EnemyInfantryPool_SOGPF_VC = [
@@ -175,6 +136,48 @@ RB_EnemyInfantryPool_3CB_ADCM = [
 "UK3CB_ADG_O_AT_ISL", "UK3CB_ADG_O_AT_ASST_ISL", "UK3CB_ADG_O_AR_ISL", "UK3CB_ADG_O_DEM_ISL", "UK3CB_ADG_O_GL_ISL", "UK3CB_ADG_O_MG_ISL", "UK3CB_ADG_O_ENG_ISL", "UK3CB_ADG_O_LMG_ISL", "UK3CB_ADG_O_MG_ASST_ISL", "UK3CB_ADG_O_SL_ISL", "UK3CB_ADG_O_TL_ISL", "UK3CB_ADG_O_AT_ASST", "UK3CB_ADG_O_MK_ISL", "UK3CB_ADG_O_MD_ISL", "UK3CB_ADG_O_RIF_2_ISL", 
 "UK3CB_ADG_O_AT", "UK3CB_ADG_O_LMG", "UK3CB_ADG_O_MG", "UK3CB_ADG_O_MK", "UK3CB_ADG_O_MD", "UK3CB_ADG_O_SL", "UK3CB_ADG_O_AR", "UK3CB_ADG_O_DEM", "UK3CB_ADG_O_MG_ASST", "UK3CB_ADG_O_RIF_2", "UK3CB_ADG_O_TL"
 ];
+
+RB_EnemyInfantryPool_CUP_NPC = [
+"CUP_I_GUE_Ammobearer", "CUP_I_GUE_Soldier_AR", "CUP_I_GUE_Officer", "CUP_I_GUE_Sniper", "CUP_I_GUE_Soldier_MG", "CUP_I_GUE_Engineer", "CUP_I_GUE_Soldier_GL", "CUP_I_GUE_Medic", "CUP_I_GUE_Soldier_AKS74", 
+"CUP_I_GUE_Soldier_AKM", "CUP_I_GUE_Soldier_AKSU", "CUP_I_GUE_Soldier_LAT", "CUP_I_GUE_Soldier_AT", "CUP_I_GUE_Soldier_AA2", "CUP_I_GUE_Saboteur", "CUP_I_GUE_Commander", "CUP_I_GUE_Soldier_Scout"
+];
+RB_EnemyInfantryPool_CUP_TL = [
+"CUP_I_TK_GUE_Soldier_AR", "CUP_I_TK_GUE_Guerilla_Medic", "CUP_I_TK_GUE_Demo", "CUP_I_TK_GUE_Soldier_AK_47S", "CUP_I_TK_GUE_Soldier", "CUP_I_TK_GUE_Soldier_HAT", "CUP_I_TK_GUE_Guerilla_Enfield", "CUP_I_TK_GUE_Soldier_GL", 
+"CUP_I_TK_GUE_Soldier_LAT", "CUP_I_TK_GUE_Soldier_M16A2", "CUP_I_TK_GUE_Soldier_AAT", "CUP_I_TK_GUE_Soldier_AT", "CUP_I_TK_GUE_Sniper", "CUP_I_TK_GUE_Mechanic", "CUP_I_TK_GUE_Soldier_MG", "CUP_I_TK_GUE_Soldier_TL", "CUP_I_TK_GUE_Commander"
+];
+RB_EnemyInfantryPool_CUP_ION = [
+"CUP_I_PMC_Bodyguard_AA12", "CUP_I_PMC_Bodyguard_M4", "CUP_I_PMC_Contractor1", "CUP_I_PMC_Medic", "CUP_I_PMC_Contractor2", "CUP_I_PMC_Sniper", "CUP_I_PMC_Soldier_MG", "CUP_I_PMC_Soldier_MG_PKM", "CUP_I_PMC_Soldier_AT", 
+"CUP_I_PMC_Engineer", "CUP_I_PMC_Soldier_M4A3", "CUP_I_PMC_Soldier", "CUP_I_PMC_Sniper_KSVK", "CUP_I_PMC_Soldier_GL", "CUP_I_PMC_Soldier_TL", "CUP_I_PMC_Soldier_GL_M16A2"
+];
+RB_EnemyInfantryPool_CUP_TM = [
+"CUP_O_TK_INS_Soldier_AR", "CUP_O_TK_INS_Guerilla_Medic", "CUP_O_TK_INS_Bomber", "CUP_O_TK_INS_Soldier_MG", "CUP_O_TK_INS_Mechanic", "CUP_O_TK_INS_Soldier_GL", "CUP_O_TK_INS_Soldier", "CUP_O_TK_INS_Soldier_FNFAL", 
+"CUP_O_TK_INS_Soldier_TL", "CUP_O_TK_INS_Soldier_Enfield", "CUP_O_TK_INS_Soldier_AAT", "CUP_O_TK_INS_Soldier_AT", "CUP_O_TK_INS_Sniper"
+];
+RB_EnemyInfantryPool_CUP_TA = [
+"CUP_O_TK_INS_Soldier_AR", "CUP_O_TK_INS_Guerilla_Medic", "CUP_O_TK_INS_Bomber", "CUP_O_TK_INS_Soldier_MG", "CUP_O_TK_INS_Mechanic", "CUP_O_TK_INS_Soldier_GL", "CUP_O_TK_INS_Soldier", "CUP_O_TK_INS_Soldier_FNFAL", 
+"CUP_O_TK_INS_Soldier_TL", "CUP_O_TK_INS_Soldier_Enfield", "CUP_O_TK_INS_Soldier_AAT", "CUP_O_TK_INS_Soldier_AT", "CUP_O_TK_INS_Sniper"
+];
+RB_EnemyInfantryPool_CUP_TI = [
+"CUP_I_TK_GUE_Soldier_AR", "CUP_I_TK_GUE_Guerilla_Medic", "CUP_I_TK_GUE_Demo", "CUP_I_TK_GUE_Soldier_AK_47S", "CUP_I_TK_GUE_Soldier", "CUP_I_TK_GUE_Soldier_HAT", "CUP_I_TK_GUE_Guerilla_Enfield", "CUP_I_TK_GUE_Soldier_GL", "CUP_I_TK_GUE_Soldier_LAT", 
+"CUP_I_TK_GUE_Soldier_M16A2", "CUP_I_TK_GUE_Soldier_AAT", "CUP_I_TK_GUE_Soldier_AT", "CUP_I_TK_GUE_Sniper", "CUP_I_TK_GUE_Mechanic", "CUP_I_TK_GUE_Soldier_MG", "CUP_I_TK_GUE_Soldier_TL", "CUP_I_TK_GUE_Commander", "CUP_O_TK_INS_Soldier_AR", "CUP_O_TK_INS_Guerilla_Medic", 
+"CUP_O_TK_INS_Bomber", "CUP_O_TK_INS_Soldier_MG", "CUP_O_TK_INS_Mechanic", "CUP_O_TK_INS_Soldier_GL", "CUP_O_TK_INS_Soldier", "CUP_O_TK_INS_Soldier_FNFAL", "CUP_O_TK_INS_Soldier_TL", "CUP_O_TK_INS_Soldier_Enfield", "CUP_O_TK_INS_Soldier_AAT", "CUP_O_TK_INS_Soldier_AT", 
+"CUP_O_TK_INS_Sniper"];
+RB_EnemyInfantryPool_CUP_CMORS = [
+"CUP_I_TK_GUE_Soldier_AR", "CUP_I_TK_GUE_Guerilla_Medic", "CUP_I_TK_GUE_Demo", "CUP_I_TK_GUE_Soldier_AK_47S", "CUP_I_TK_GUE_Soldier", "CUP_I_TK_GUE_Soldier_HAT", "CUP_I_TK_GUE_Guerilla_Enfield", "CUP_I_TK_GUE_Soldier_GL", "CUP_I_TK_GUE_Soldier_LAT", 
+"CUP_I_TK_GUE_Soldier_M16A2", "CUP_I_TK_GUE_Soldier_AAT", "CUP_I_TK_GUE_Soldier_AT", "CUP_I_TK_GUE_Sniper", "CUP_I_TK_GUE_Mechanic", "CUP_I_TK_GUE_Soldier_MG", "CUP_I_TK_GUE_Soldier_TL", "CUP_I_TK_GUE_Commander", "CUP_O_TK_INS_Soldier_AR", "CUP_O_TK_INS_Guerilla_Medic", 
+"CUP_O_TK_INS_Bomber", "CUP_O_TK_INS_Soldier_MG", "CUP_O_TK_INS_Mechanic", "CUP_O_TK_INS_Soldier_GL", "CUP_O_TK_INS_Soldier", "CUP_O_TK_INS_Soldier_FNFAL", "CUP_O_TK_INS_Soldier_TL", "CUP_O_TK_INS_Soldier_Enfield", "CUP_O_TK_INS_Soldier_AAT", "CUP_O_TK_INS_Soldier_AT", 
+"CUP_O_TK_INS_Sniper"];
+
+RB_EnemyInfantryPool_GM_REV = [
+"gm_xx_army_antitank_hk53a2_rpg7_80_oli", "gm_xx_army_demolition_mp2a1_80_blk", "gm_xx_army_machinegunner_rpk_80_oli", "gm_xx_army_marksman_svd_80_wdl", 
+"gm_xx_army_squadleader_m16a1_80_grn", "gm_xx_army_medic_01_mpikms72_m84", "gm_xx_army_engineer_hk33a2_80_brn", "gm_xx_army_assault_ak74nk_80_wdl"];
+RB_EnemyInfantryPool_GM_EGER80 = [
+"gm_gc_army_antitank_mpiak74n_rpg7_80_str", "gm_gc_army_demolition_mpiaks74n_80_str", "gm_gc_army_antitank_mpiak74n_rpg18_80_str", "gm_gc_army_machinegunner_lmgrpk_80_str", "gm_gc_army_machinegunner_assistant_mpiak74n_lmgrpk_80_str", "gm_gc_army_machinegunner_pk_80_str",
+"gm_gc_army_machinegunner_assistant_mpiak74n_pk_80_str", "gm_gc_army_rifleman_mpiak74n_80_str", "gm_gc_army_marksman_svd_80_str", "gm_gc_army_medic_mpiak74n_80_str", "gm_gc_army_engineer_mpiaks74n_80_str", "gm_gc_army_radioman_mpiak74n_80_str", "gm_gc_army_squadleader_mpiak74n_80_str"];
+RB_EnemyInfantryPool_GM_EGER90 = [
+"gm_gc_army_antitank_mpiak74n_rpg7_90_str", "gm_gc_army_antitank_assistant_mpiak74n_rpg7_90_str", "gm_gc_army_demolition_mpiaks74n_90_str", "gm_gc_army_antitank_mpiak74n_rpg18_90_str", "gm_gc_army_machinegunner_lmgrpk74_90_str", "gm_gc_army_machinegunner_assistant_mpiak74n_lmgrpk74_90_str", 
+"gm_gc_army_machinegunner_pk_90_str", "gm_gc_army_machinegunner_assistant_mpiak74n_pk_90_str", "gm_gc_army_squadleader_mpiak74n_90_str", "gm_gc_army_marksman_svd_90_str", "gm_gc_army_medic_mpiak74n_90_str", "gm_gc_army_radioman_mpiak74n_90_str", "gm_gc_army_engineer_mpiaks74n_90_str", 
+"gm_gc_army_rifleman_mpiak74n_90_str"];
 
 // === Enemy Vehicle Pools ===
 RB_EnemyVehiclePool_Vanilla = [
@@ -312,4 +315,11 @@ RB_EnemyVehiclePool_3CB_ADCM = [
 "UK3CB_ADG_O_Landcruiser_ISL", "UK3CB_ADG_O_Pickup_DSHKM_ISL", "UK3CB_ADG_O_S1203_ISL", "UK3CB_ADG_O_Lada_ISL", 
 "UK3CB_ADG_O_Gaz24_ISL", "UK3CB_ADG_O_Hilux_Dshkm", "UK3CB_ADG_O_Hilux_Pkm", "UK3CB_ADG_O_Pickup_DSHKM", 
 "UK3CB_ADG_O_Golf_ISL"
+];
+RB_EnemyVehiclePool_GM_EGER = [
+"gm_gc_army_p601", "gm_gc_army_uaz469_cargo", "gm_gc_army_uaz469_dshkm", "gm_gc_army_uaz469_spg9", "gm_gc_army_ural4320_cargo"
+];
+RB_EnemyVehiclePool_GM_EGERAPC = [
+"gm_gc_army_p601", "gm_gc_army_uaz469_cargo", "gm_gc_army_uaz469_dshkm", "gm_gc_army_uaz469_spg9", "gm_gc_army_ural4320_cargo","gm_gc_army_brdm2", 
+"gm_gc_army_brdm2rkh", "gm_gc_army_btr60pb", "gm_gc_army_btr60pa_dshkm"
 ];

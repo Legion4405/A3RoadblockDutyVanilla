@@ -60,7 +60,8 @@ private _logisticsMap = createHashMapFromArray [
     [7, [RB_LogisticsOptions_RHS_USA, "rhsusf_M1078A1P2_B_D_CP_fmtv_usarmy", [], RB_StarterLoadout_RHS_USA]],
     [8, [RB_LogisticsOptions_3CB_BAF, "UK3CB_BAF_MAN_HX58_Transport_Green_MTP", [], RB_StarterLoadout_3CB_BAF]],
     [9, [RB_LogisticsOptions_SOGPF_US, "vn_b_wheeled_m54_02", [], RB_StarterLoadout_SOGPF_US]],
-    [10, [RB_LogisticsOptions_EF_MJTF, "EF_B_Truck_01_box_MJTF_Des", RB_ArsenalExtra_EF_MJTF, RB_StarterLoadout_EF_MJTF]]
+    [10, [RB_LogisticsOptions_EF_MJTF, "EF_B_Truck_01_box_MJTF_Des", RB_ArsenalExtra_EF_MJTF, RB_StarterLoadout_EF_MJTF]],
+    [11, [RB_LogisticsOptions_GM, "gm_ge_army_kat1_451_reammo", RB_ArsenalExtra_GM, RB_StarterLoadout_GM]]
 ];
 
 private _activeLogiIndex = [_param_LogiFaction, _logisticsMap, 1, "Logistics", "Player Faction"] call _fnc_validate;
@@ -92,7 +93,10 @@ private _civMap = createHashMapFromArray [
     [8, RB_CivilianPool_3CB_Africa],
     [9, RB_CivilianPool_3CB_Chernarus],
     [10, RB_CivilianPool_3CB_ME],
-    [11, RB_CivilianPool_SOGPF]
+    [11, RB_CivilianPool_SOGPF],
+    [12, RB_CivilianPool_CUP_Chernarus],
+    [13, RB_CivilianPool_CUP_Takistan],
+    [14, RB_CivilianPool_GM]
 ];
 
 _param_CivPoolIndex = [_param_CivPoolIndex, _civMap, 1, "SimpleArray", "Civilian Pool"] call _fnc_validate;
@@ -108,7 +112,8 @@ private _civVehMap = createHashMapFromArray [
     [3, RB_CivilianVehiclePool_CUP_West],
     [4, RB_CivilianVehiclePool_CUP_MiddleEast],
     [5, RB_CivilianVehiclePool_RDS_West],
-    [6, RB_CivilianVehiclePool_SOGPF]
+    [6, RB_CivilianVehiclePool_SOGPF],
+    [7, RB_CivilianVehiclePool_GM]
 ];
 
 _param_VehPoolIndex = [_param_VehPoolIndex, _civVehMap, 1, "SimpleArray", "Civilian Vehicle Pool"] call _fnc_validate;
@@ -140,7 +145,17 @@ private _enemyInfMap = createHashMapFromArray [
     [18, RB_EnemyInfantryPool_3CB_FIA],
     [19, RB_EnemyInfantryPool_3CB_ADM],
     [20, RB_EnemyInfantryPool_3CB_ADE],
-    [21, RB_EnemyInfantryPool_3CB_ADCM]
+    [21, RB_EnemyInfantryPool_3CB_ADCM],
+    [22, RB_EnemyInfantryPool_CUP_NPC],
+    [23, RB_EnemyInfantryPool_CUP_TL],
+    [24, RB_EnemyInfantryPool_CUP_ION],
+    [25, RB_EnemyInfantryPool_CUP_TM],
+    [26, RB_EnemyInfantryPool_CUP_TA],
+    [27, RB_EnemyInfantryPool_CUP_TI],
+    [28, RB_EnemyInfantryPool_CUP_CMORS],
+    [29, RB_EnemyInfantryPool_GM_REV],
+    [30, RB_EnemyInfantryPool_GM_EGER80],
+    [31, RB_EnemyInfantryPool_GM_EGER90]
 ];
 
 _param_EnemyInfIndex = [_param_EnemyInfIndex, _enemyInfMap, 1, "SimpleArray", "Enemy Faction"] call _fnc_validate;
@@ -167,7 +182,9 @@ private _enemyVehMap = createHashMapFromArray [
     [14, RB_EnemyVehiclePool_3CB_FIA],
     [15, RB_EnemyVehiclePool_3CB_ADM],
     [16, RB_EnemyVehiclePool_3CB_ADE],
-    [17, RB_EnemyVehiclePool_3CB_ADCM]
+    [17, RB_EnemyVehiclePool_3CB_ADCM],
+    [18, RB_EnemyVehiclePool_GM_EGER],
+    [19, RB_EnemyVehiclePool_GM_EGERAPC]
 ];
 
 _param_EnemyVehIndex = [_param_EnemyVehIndex, _enemyVehMap, 1, "SimpleArray", "Enemy Vehicle Pool"] call _fnc_validate;
@@ -187,7 +204,10 @@ private _ambientMap = createHashMapFromArray [
     [6, [RB_Ambient_Rotary_RHS_USA, RB_Ambient_Fixed_RHS_USA]],
     [7, [RB_Ambient_Rotary_3CB_BAF, RB_Ambient_Fixed_3CB_BAF]],
     [8, [RB_Ambient_Rotary_SOGPF_US, RB_Ambient_Fixed_SOGPF_US]],
-    [9, [RB_Ambient_Rotary_MJTF, RB_Ambient_Fixed_MJTF]]
+    [9, [RB_Ambient_Rotary_MJTF, RB_Ambient_Fixed_MJTF]],
+    [10, [RB_Ambient_Rotary_CUP_USArmy, RB_Ambient_Fixed_CUP_USArmy]],
+    [11, [RB_Ambient_Rotary_CUP_USMC, RB_Ambient_Fixed_CUP_USMC]],
+    [12, [RB_Ambient_Rotary_GM, RB_Ambient_Fixed_GM]]
 ];
 
 _param_Air = [_param_Air, _ambientMap, 1, "Air", "Ambient Air"] call _fnc_validate;

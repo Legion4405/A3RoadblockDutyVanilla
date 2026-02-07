@@ -4,7 +4,7 @@
                  Reloads weapon, prevents vehicle re-entry, and attacks nearest player.
 */
 
-params ["_civ"];
+params ["_civ", ["_force", false]];
 
 // Only convert true civilians!
 if (side group _civ != civilian) exitWith {};
@@ -18,7 +18,7 @@ if (!_arrestable) exitWith {};
 
 // Hostile chance check (from config or missionNamespace)
 private _chance = missionNamespace getVariable ["RB_HostileChance", 0.1];
-if (random 1 > _chance) exitWith {};
+if (!_force && {random 1 > _chance}) exitWith {};
 
 // Disallow vehicle re-entry
 unassignVehicle _civ;

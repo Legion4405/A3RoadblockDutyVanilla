@@ -275,7 +275,7 @@ private _text = format [selectRandom _templates, _origin, _destination, _purpose
 
 // === SLIP-UP LOGIC ===
 // If they are lying, occasionally make them slip up by saying the REAL location then correcting.
-if (_isLying && {random 1 < 0.4}) then {
+if (_isLying && {random 1 < 0.7}) then {
     // Determine which part they are lying about
     private _lieOrigin = (_origin != _realOrigin);
     private _lieDest   = (_destination != _realDestination);
@@ -292,7 +292,7 @@ if (_isLying && {random 1 < 0.4}) then {
 
 // === STUTTER LOGIC ===
 // If they are lying, add some nervous stuttering to the text
-if (_isLying && {random 1 < 0.4}) then {
+if (_isLying && {random 1 < 0.7}) then {
     private _words = _text splitString " ";
     private _stutteredText = [];
     {

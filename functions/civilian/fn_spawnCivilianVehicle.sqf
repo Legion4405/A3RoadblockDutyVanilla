@@ -104,6 +104,9 @@ if (random 1 < 0.15) then {
 // Get world name and uppercase it
 private _worldNameRaw = toUpper worldName;                // "MALDEN", "S'AHATRA", etc.
 
+// Strip 'GM_' prefix if present (for GM maps like Weferlingen)
+if (_worldNameRaw select [0, 3] == "GM_") then { _worldNameRaw = _worldNameRaw select [3]; };
+
 // Convert to array of chars and filter only A-Z
 private _worldNameArray = toArray _worldNameRaw;
 private _worldNameFilteredArray = _worldNameArray select { _x in toArray "ABCDEFGHIJKLMNOPQRSTUVWXYZ" };
@@ -111,12 +114,31 @@ private _worldNameFilteredArray = _worldNameArray select { _x in toArray "ABCDEF
 // Get first two letters and convert back to string
 private _prefix = toString (_worldNameFilteredArray select [0, 2]);
 
-// Plate assignment as before
-private _realPlate = format ["%1-%2", _prefix, floor (random 900000 + 100000)];
+// === Plate assignment
+private _isGM = ((typeOf _vehicle) select [0, 3] == "gm_");
+private _realPlate = "";
+
+if (_isGM) then {
+    // GM Specific Format: "WE 12-34" (Max space compliance)
+    _realPlate = format ["%1 %2-%3", _prefix, floor (random 90 + 10), floor (random 90 + 10)];
+} else {
+    // Standard Format: "XX-123456"
+    _realPlate = format ["%1-%2", _prefix, floor (random 900000 + 100000)];
+};
+
 _vehicle setPlateNumber _realPlate;
 
+// --- Global Mobilization Attribute Sync
+if (_isGM && {!isNil "gm_core_vehicles_fnc_vehicleMarkingsUpdateAttributes"}) then {
+    [_vehicle, _realPlate, 0, 1] call gm_core_vehicles_fnc_vehicleMarkingsUpdateAttributes;
+};
+
 private _regPlate = if (random 1 < 0.15) then {
-    format ["%1-%2", _prefix, floor (random 900000 + 100000)];
+    if (_isGM) then {
+        format ["%1 %2-%3", _prefix, floor (random 90 + 10), floor (random 90 + 10)]
+    } else {
+        format ["%1-%2", _prefix, floor (random 900000 + 100000)]
+    };
 } else {
     _realPlate;
 };

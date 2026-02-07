@@ -23,6 +23,14 @@ private _param_EnemyVehIndex = ["RB_EnemyVehiclePool", 0] call BIS_fnc_getParamV
 private _param_RespawnCost   = ["RB_RespawnCost", 10] call BIS_fnc_getParamValue;
 private _param_Air           = ["RB_AmbientAir", 1] call BIS_fnc_getParamValue;
 private _loadSlot            = ["RB_LoadSaveSlot", 0] call BIS_fnc_getParamValue;
+private _restorePools        = ["RB_RestoreSavedPools", 1] call BIS_fnc_getParamValue;
+
+// Store indices globally so they can be saved
+RB_SavedCivPoolIndex  = _param_CivPoolIndex;
+RB_SavedVehPoolIndex  = _param_VehPoolIndex;
+RB_SavedEnemyInfIndex = _param_EnemyInfIndex;
+RB_SavedEnemyVehIndex = _param_EnemyVehIndex;
+RB_SavedAirIndex      = _param_Air;
 
 // 3. SETUP HIGH COMMAND MODULE
 // Check for existing editor-placed module first to avoid conflicts
@@ -49,6 +57,18 @@ if (count _existingHC > 0) then {
 if (_loadSlot > 0) then {
     // Load progress (Sets RB_LogisticsFaction, RB_ArsenalUnlocks, etc.)
     [_loadSlot] call RB_fnc_loadProgress;
+
+    // Optional: Overwrite parameters with saved pool indices
+    if (_restorePools == 1) then {
+        if (missionNamespace getVariable ["RB_SavedCivPoolIndex", -1] != -1) then { _param_CivPoolIndex = RB_SavedCivPoolIndex; };
+        if (missionNamespace getVariable ["RB_SavedVehPoolIndex", -1] != -1) then { _param_VehPoolIndex = RB_SavedVehPoolIndex; };
+        if (missionNamespace getVariable ["RB_SavedEnemyInfIndex", -1] != -1) then { _param_EnemyInfIndex = RB_SavedEnemyInfIndex; };
+        if (missionNamespace getVariable ["RB_SavedEnemyVehIndex", -1] != -1) then { _param_EnemyVehIndex = RB_SavedEnemyVehIndex; };
+        if (missionNamespace getVariable ["RB_SavedAirIndex", -1] != -1) then { _param_Air = RB_SavedAirIndex; };
+        diag_log "[RB] Persistence: Faction pools restored from save.";
+    } else {
+        diag_log "[RB] Persistence: Restoration of pools disabled. Using mission parameters.";
+    };
     
     // Broadcast saved globals
     publicVariable "RB_LoadSaveSlot";
@@ -68,6 +88,13 @@ if (_loadSlot > 0) then {
     publicVariable "RB_LogisticsFaction";
     systemChat "Starting mission with fresh state.";
 };
+
+// Update global tracking variables for the current session (for future saving)
+RB_SavedCivPoolIndex  = _param_CivPoolIndex;
+RB_SavedVehPoolIndex  = _param_VehPoolIndex;
+RB_SavedEnemyInfIndex = _param_EnemyInfIndex;
+RB_SavedEnemyVehIndex = _param_EnemyVehIndex;
+RB_SavedAirIndex      = _param_Air;
 
 // 5. INITIALIZE FACTIONS
 [_param_LogiFaction, _param_CivPoolIndex, _param_VehPoolIndex, _param_EnemyInfIndex, _param_EnemyVehIndex, _param_Air] call RB_fnc_initializeFactions;

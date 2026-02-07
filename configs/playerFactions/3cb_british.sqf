@@ -6,6 +6,14 @@ private _gearUpgrade1 = ["UK3CB_BAF_U_CombatUniform_DDPM", "UK3CB_BAF_U_CombatUn
 private _gearUpgrade2 = _gearUpgrade1 + ["UK3CB_BAF_U_CombatUniform_MTP_TShirt", "UK3CB_BAF_U_CombatUniform_MTP_TShirt_RM", "UK3CB_BAF_U_CombatUniform_MTP", "UK3CB_BAF_U_CombatUniform_MTP_ShortSleeve", "UK3CB_BAF_U_JumperUniform_MTP", "UK3CB_BAF_U_RolledUniform_MTP", "UK3CB_BAF_V_Osprey", "UK3CB_BAF_V_Osprey_Belt_A", "UK3CB_BAF_V_Osprey_Grenadier_A", "UK3CB_BAF_V_Osprey_Grenadier_B", "UK3CB_BAF_V_Osprey_Holster", "UK3CB_BAF_V_Osprey_Marksman_A", "UK3CB_BAF_V_Osprey_Medic_A", "UK3CB_BAF_V_Osprey_Medic_B", "UK3CB_BAF_V_Osprey_Medic_C", "UK3CB_BAF_V_Osprey_Medic_D", "UK3CB_BAF_V_Osprey_MG_A", "UK3CB_BAF_V_Osprey_MG_B", "UK3CB_BAF_V_Osprey_Rifleman_A", "UK3CB_BAF_V_Osprey_Rifleman_B", "UK3CB_BAF_V_Osprey_Rifleman_C", "UK3CB_BAF_V_Osprey_Rifleman_D", "UK3CB_BAF_V_Osprey_Rifleman_E", "UK3CB_BAF_V_Osprey_Rifleman_F", "UK3CB_BAF_V_Osprey_SL_A", "UK3CB_BAF_V_Osprey_SL_B", "UK3CB_BAF_V_Osprey_SL_C", "UK3CB_BAF_V_Osprey_SL_D", "UK3CB_BAF_V_Osprey_Lite", "UK3CB_BAF_H_Mk7_Camo_A", "UK3CB_BAF_H_Mk7_Camo_B", "UK3CB_BAF_H_Mk7_Camo_C", "UK3CB_BAF_H_Mk7_Camo_D", "UK3CB_BAF_H_Mk7_Camo_E", "UK3CB_BAF_H_Mk7_Camo_F", "UK3CB_BAF_H_Mk7_Camo_ESS_A", "UK3CB_BAF_H_Mk7_Camo_ESS_B", "UK3CB_BAF_H_Mk7_Camo_ESS_C", "UK3CB_BAF_H_Mk7_Camo_ESS_D", "UK3CB_BAF_H_Mk7_Net_A", "UK3CB_BAF_H_Mk7_Net_B", "UK3CB_BAF_H_Mk7_Net_C", "UK3CB_BAF_H_Mk7_Net_D", "UK3CB_BAF_H_Mk7_Net_ESS_A", "UK3CB_BAF_H_Mk7_Net_ESS_B", "UK3CB_BAF_H_Mk7_Net_ESS_C", "UK3CB_BAF_H_Mk7_Net_ESS_D", "UK3CB_BAF_H_Mk7_Net_CESS_A", "UK3CB_BAF_H_Mk7_Net_CESS_B", "UK3CB_BAF_H_Mk7_Net_CESS_C", "UK3CB_BAF_H_Mk7_Net_CESS_D", "UK3CB_BAF_H_Mk7_Scrim_A", "UK3CB_BAF_H_Mk7_Scrim_B", "UK3CB_BAF_H_Mk7_Scrim_C", "UK3CB_BAF_H_Mk7_Scrim_D", "UK3CB_BAF_H_Mk7_Scrim_E", "UK3CB_BAF_H_Mk7_Scrim_F", "UK3CB_BAF_H_Mk7_Scrim_ESS_A", "UK3CB_BAF_H_Mk7_Scrim_ESS_B", "UK3CB_BAF_H_Mk7_Scrim_ESS_C", "UK3CB_BAF_H_Mk7_Camo_CESS_A", "UK3CB_BAF_H_Mk7_Camo_CESS_B", "UK3CB_BAF_H_Mk7_Camo_CESS_C", "UK3CB_BAF_H_Mk7_Camo_CESS_D", "UK3CB_BAF_H_Wool_Hat", "UK3CB_BAF_B_Kitbag_TAN", "UK3CB_BAF_B_Kitbag_OLI", "UK3CB_BAF_B_Kitbag_MTP", "UK3CB_BAF_B_Kitbag_DPMT", "UK3CB_BAF_B_Kitbag_DDPM", "UK3CB_BAF_B_Carryall_TAN", "UK3CB_BAF_B_Carryall_OLI", "UK3CB_BAF_B_Carryall_MTP", "UK3CB_BAF_B_Carryall_DPMT", "UK3CB_BAF_B_Carryall_DDPM", "UK3CB_BAF_B_Bergen_MTP_Sapper_L_A", "UK3CB_BAF_B_Bergen_MTP_Radio_L_A", "UK3CB_BAF_B_Bergen_MTP_Medic_L_B", "ACE_NVG_Wide_WP", "ACE_MX2A"];
 
 RB_LogisticsOptions_3CB_BAF = [
+    [ "Reinforcements", [
+        // Format: [Label, [Units], TransportVehicle, Cost]
+        ["Rifleman", ["UK3CB_BAF_Rifleman_MTP"], "UK3CB_BAF_LandRover_Soft_FFR_Green_A_MTP", 15],
+        ["LSW", ["UK3CB_BAF_LSW_MTP"], "UK3CB_BAF_LandRover_Soft_FFR_Green_A_MTP", 30],
+        ["Sentry (2)", ["UK3CB_BAF_Rifleman_MTP", "UK3CB_BAF_LSW_MTP"], "UK3CB_BAF_LandRover_Soft_FFR_Green_A_MTP", 50],
+        ["Fire Team (4)",   ["UK3CB_BAF_SC_MTP_RM", "UK3CB_BAF_LAT_762_MTP_RM", "UK3CB_BAF_MGGPMG_MTP_RM", "UK3CB_BAF_Marksman_MTP_RM"], "UK3CB_BAF_Husky_Logistics_HMG_Green_MTP", 75],
+        ["Squad (8)",       ["UK3CB_BAF_MGGPMG_MTP_RM", "UK3CB_BAF_SC_MTP_RM", "UK3CB_BAF_Sharpshooter_MTP_RM", "UK3CB_BAF_FT_MTP_RM", "UK3CB_BAF_Medic_MTP_RM", "UK3CB_BAF_MGLMG_MTP_RM", "UK3CB_BAF_Marksman_556_MTP", "UK3CB_BAF_LAT_ILAW_MTP"], "UK3CB_BAF_Coyote_Passenger_L111A1_W_MTP", 200]
+    ] ],
     [ "Ammo", [
         ["5.56mm 200rnd Boxmags", ["150Rnd_556x45_Drum_Green_Mag_F", "UK3CB_BAF_556_200Rnd", "UK3CB_BAF_556_200Rnd_T"], 30],
         ["7.62mm 200rnd Belt", ["UK3CB_BAF_762_200Rnd", "UK3CB_BAF_762_200Rnd_T"], 30]
@@ -42,6 +50,9 @@ RB_LogisticsOptions_3CB_BAF = [
         ["Rifle Scope Kit", ["UK3CB_BAF_Kite", "UK3CB_BAF_MaxiKite", "UK3CB_BAF_SpecterLDS", "UK3CB_BAF_SUIT", "UK3CB_BAF_SUSAT", "UK3CB_BAF_TA31F", "UK3CB_BAF_TA31F_Hornbill", "UK3CB_BAF_TA648", "UK3CB_BAF_TA648_308", "RKSL_optic_LDS", "RKSL_optic_LDS_C"], 50],
         ["Sniper Scope Kit", ["RKSL_optic_PMII_312", "RKSL_optic_PMII_312_des", "RKSL_optic_PMII_312_sunshade", "RKSL_optic_PMII_312_sunshade_des", "ACE_optic_LRPS_2D", "RKSL_optic_PMII_312_sunshade_wdl", "RKSL_optic_PMII_312_wdl", "RKSL_optic_PMII_525", "RKSL_optic_PMII_525_des", "RKSL_optic_PMII_525_wdl"], 75]
     ] ],
+        [ "Explosives", [
+        ["Mines Kit", ["ClaymoreDirectionalMine_Remote_Mag", "SLAMDirectionalMine_Wire_Mag", "APERSTripMine_Wire_Mag", "ACE_FlareTripMine_Mag","ACE_FlareTripMine_Mag_Green", "ACE_FlareTripMine_Mag_Red","APERSMine_Range_Mag","ACE_APERSMine_ToePopper_Mag","APERSMineDispenser_Mag"], 100]
+    ] ],
     [ "Turrets", [
         ["L7A2 (Low)", ["TURRET", "UK3CB_BAF_Static_L7A2_Deployed_Low_MTP"], 15],
         ["L7A2 (Mid)", ["TURRET", "UK3CB_BAF_Static_L7A2_Deployed_Mid_MTP"], 15],
@@ -56,4 +67,7 @@ RB_LogisticsOptions_3CB_BAF = [
         ["L6 Mortar", ["TURRET", "UK3CB_BAF_Static_M6_Deployed_MTP"], 45],
         ["L16 Mortar", ["TURRET", "UK3CB_BAF_Static_L16_Deployed_MTP"], 50]
     ] ]
+];
+
+RB_ArsenalExtra_3CB_BAF = [
 ];

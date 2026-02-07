@@ -157,6 +157,24 @@ RB_CivilianPool_3CB_ME = [
     "UK3CB_TKC_C_WORKER"
 ];
 
+RB_CivilianPool_CUP_Chernarus = [
+"CUP_C_C_Assistant_01", "CUP_C_C_Bully_02", "CUP_C_C_Bully_01", "CUP_C_C_Bully_04", "CUP_C_C_Bully_03", "CUP_C_C_Citizen_02", "CUP_C_C_Citizen_01", 
+"CUP_C_C_Citizen_04", "CUP_C_C_Citizen_03", "CUP_C_C_Functionary_01", "CUP_C_C_Functionary_02", "CUP_C_C_Functionary_03", "CUP_C_C_Functionary_jacket_01", 
+"CUP_C_C_Functionary_jacket_02", "CUP_C_C_Functionary_jacket_03", "CUP_C_C_Worker_05", "CUP_C_C_Mechanic_02", "CUP_C_C_Mechanic_03", "CUP_C_C_Mechanic_01", 
+"CUP_C_C_Priest_01", "CUP_C_C_Profiteer_02", "CUP_C_C_Profiteer_03", "CUP_C_C_Profiteer_01", "CUP_C_C_Profiteer_04", "CUP_C_C_Racketeer_01", 
+"CUP_C_C_Racketeer_04", "CUP_C_C_Racketeer_02", "CUP_C_C_Racketeer_03", "CUP_C_C_Rocker_01", "CUP_C_C_Rocker_03", "CUP_C_C_Rocker_02", 
+"CUP_C_C_Rocker_04", "CUP_C_C_Schoolteacher_01", "CUP_C_C_Citizen_Random", "CUP_C_C_Villager_01", "CUP_C_C_Villager_04", "CUP_C_C_Villager_02", 
+"CUP_C_C_Villager_03", "CUP_C_C_Woodlander_01", "CUP_C_C_Woodlander_02", "CUP_C_C_Woodlander_03", "CUP_C_C_Woodlander_04", "CUP_C_C_Worker_04", 
+"CUP_C_C_Worker_02", "CUP_C_C_Worker_01"
+];
+
+RB_CivilianPool_CUP_Takistan = [
+"CUP_C_TK_Man_04", "CUP_C_TK_Man_04_Jack", "CUP_C_TK_Man_07", "CUP_C_TK_Man_04_Waist", "CUP_C_TK_Man_07_Coat", "CUP_C_TK_Man_07_Waist", 
+"CUP_C_TK_Man_08", "CUP_C_TK_Man_08_Jack", "CUP_C_TK_Man_08_Waist", "CUP_C_TK_Man_05_Coat", "CUP_C_TK_Man_05_Jack", "CUP_C_TK_Man_05_Waist", 
+"CUP_C_TK_Man_06_Coat", "CUP_C_TK_Man_06_Jack", "CUP_C_TK_Man_06_Waist", "CUP_C_TK_Man_02", "CUP_C_TK_Man_02_Jack", "CUP_C_TK_Man_02_Waist", 
+"CUP_C_TK_Man_01_Waist", "CUP_C_TK_Man_01_Coat", "CUP_C_TK_Man_01_Jack", "CUP_C_TK_Man_03_Coat", "CUP_C_TK_Man_03_Jack", "CUP_C_TK_Man_03_Waist"
+];
+
 RB_CivilianPool_SOGPF = [
 "vn_c_men_13", "vn_c_men_22", "vn_c_men_23", "vn_c_men_24", "vn_c_men_25", 
 "vn_c_men_26", "vn_c_men_27", "vn_c_men_28", "vn_c_men_29", "vn_c_men_30", 
@@ -164,6 +182,10 @@ RB_CivilianPool_SOGPF = [
 "vn_c_men_18", "vn_c_men_19", "vn_c_men_20", "vn_c_men_21", "vn_c_men_05", 
 "vn_c_men_06", "vn_c_men_01", "vn_c_men_03", "vn_c_men_04", "vn_c_men_09", 
 "vn_c_men_10", "vn_c_men_11",  "vn_c_men_12"
+];
+RB_CivilianPool_GM = [
+"gm_gc_civ_man_02_80_gry", "gm_gc_civ_man_01_80_blk", "gm_gc_civ_man_01_80_blu", "gm_gc_civ_man_03_80_blu", 
+"gm_gc_civ_man_02_80_brn", "gm_gc_civ_man_03_80_grn", "gm_gc_civ_man_03_80_gry", "gm_gc_civ_man_04_80_blu", "gm_gc_civ_man_04_80_gry"
 ];
 
 // === Civilian Vehicle Pools ===
@@ -212,3 +234,8 @@ RB_CivilianVehiclePool_SOGPF = [
     "vn_c_wheeled_m151_01", "vn_c_car_01_02", "vn_c_car_04_01"
 ];
 
+RB_CivilianVehiclePool_GM = [
+"gm_gc_civ_p601", "gm_gc_dp_p601", "gm_gc_civ_ural375d_cargo", "gm_ge_civ_u1300l", "gm_ge_civ_typ1200", "gm_ge_dbp_typ1200", 
+"gm_ge_civ_typ247", "gm_ge_dbp_typ247", "gm_ge_civ_typ251", "gm_ge_dbp_typ251", "gm_ge_civ_typ253", "gm_ge_taxi_typ253", 
+"gm_ge_civ_w123", "gm_ge_dbp_w123", "gm_ge_taxi_w123"
+];

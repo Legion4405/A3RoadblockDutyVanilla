@@ -1,51 +1,27 @@
 /*
     File: fn_ambientAirFlyover.sqf
-    Description: Spawns random rotary or fixed-wing flyovers at intervals.
-    Refactored for reliability and configurability.
+    Description: Optimized random rotary or fixed-wing flyovers.
+    Uses better group management and efficient cleanup.
 */
 
 if (!isServer) exitWith {};
 
-// === 1. WAIT FOR CONFIG & POOLS ===
-if (isNil "RB_AirFlyoverTimers") then {
-    private _timeout = time + 10;
-    waitUntil { (!isNil "RB_AirFlyoverTimers") || (time > _timeout) };
-};
+// === 1. CONFIGURATION ===
+// Wait for global config to be defined
+waitUntil { !isNil "RB_AirFlyoverTimers" };
 
-while {
-    private _r = missionNamespace getVariable ["RB_Ambient_Rotary_Selected", []];
-    private _f = missionNamespace getVariable ["RB_Ambient_Fixed_Selected", []];
-    !((_r isEqualType []) && (_f isEqualType []) && (count _r + count _f > 0))
-} do {
-    sleep 5;
-};
-
-private _rotary = missionNamespace getVariable ["RB_Ambient_Rotary_Selected", []];
-private _fixed  = missionNamespace getVariable ["RB_Ambient_Fixed_Selected", []];
-
-// Get roadblock position
-private _roadblock = getMarkerPos "RB_Checkpoint";
-if (_roadblock isEqualTo [0,0,0]) exitWith { diag_log "[RB] ERROR: Marker 'RB_Checkpoint' not found for flyovers."; };
-
-// === 2. SETUP TIMERS ===
-private _timers = missionNamespace getVariable ["RB_AirFlyoverTimers", [
-    [900, 1800], [600, 1200], [300, 600], [120, 300]
-]];
+private _timers = missionNamespace getVariable ["RB_AirFlyoverTimers", [[600, 1200], [300, 600], [120, 300], [60, 120]]];
 private _intensity = ["RB_AmbientAirIntensity", 1] call BIS_fnc_getParamValue;
-if (_intensity < 0) then { _intensity = 1; };
-if (_intensity >= count _timers) then { _intensity = (count _timers) - 1; };
+_intensity = (0 max _intensity) min ((count _timers) - 1);
 
 private _range = _timers select _intensity;
 private _minDelay = _range select 0;
 private _maxDelay = _range select 1;
 
-// === 3. HELPER: AGL to ASL ===
-private _fnc_aglToASL = {
-    params ["_xy", "_agl"];
-    [(_xy select 0), (_xy select 1), (getTerrainHeightASL _xy + _agl)]
-};
+private _roadblock = getMarkerPos "RB_Checkpoint";
+if (_roadblock isEqualTo [0,0,0]) exitWith { diag_log "[RB] ERROR: Marker 'RB_Checkpoint' not found for flyovers."; };
 
-// === 4. MAIN LOOP ===
+// === 2. MAIN LOOP ===
 while {true} do {
     private _delay = _minDelay + random (_maxDelay - _minDelay);
     sleep _delay;
@@ -53,92 +29,76 @@ while {true} do {
     if (({isPlayer _x} count allPlayers) == 0) then { continue };
     if (missionNamespace getVariable ["RB_RoadblockClosed", false]) then { continue };
 
-    // Select Pool
+    private _rotary = missionNamespace getVariable ["RB_Ambient_Rotary_Selected", []];
+    private _fixed  = missionNamespace getVariable ["RB_Ambient_Fixed_Selected", []];
+    
     private _canHeli  = (count _rotary > 0);
     private _canPlane = (count _fixed  > 0);
-    private _pool = [];
-    private _isHeli = false;
+    if (!_canHeli && !_canPlane) then { sleep 10; continue; };
 
-    if (_canHeli && _canPlane) then {
-        _isHeli = (random 1 < 0.65);
-        _pool = if (_isHeli) then {_rotary} else {_fixed};
-    } else {
-        if (_canHeli) then { _isHeli = true; _pool = _rotary; };
-        if (_canPlane) then { _isHeli = false; _pool = _fixed; };
-    };
-
-    if (count _pool == 0) then { continue; };
+    // Selection
+    private _isHeli = if (_canHeli && _canPlane) then { random 1 < 0.65 } else { _canHeli };
+    private _pool = if (_isHeli) then { _rotary } else { _fixed };
+    if (count _pool == 0) then { continue };
+    
     private _class = selectRandom _pool;
+    private _count = if (random 1 < 0.4) then { 2 } else { 1 };
 
-    // Decide Count (Single or Pair)
-    private _pairChance = 0.4;
-    private _count = if (random 1 < _pairChance) then {2} else {1};
-
-    // Shared path calculations
-    private _spawnDist = 8000;
-    private _exitDist  = 8000;
+    // Trajectory Math
     private _dir = random 360;
-    private _flybyDir  = _dir + (random 60 - 30);
-    private _flybyDist = 3000 + random 2000;
+    private _spawnDist = 6000; // Reduced slightly for better perf
+    private _exitDist  = 6000;
+    
+    private _spawnPos = _roadblock getPos [_spawnDist, _dir];
+    private _exitPos  = _roadblock getPos [_exitDist, _dir + 180];
+    
+    private _height = if (_isHeli) then { 100 + random 50 } else { 400 + random 200 };
+    _spawnPos set [2, _height];
+    _exitPos set [2, _height];
 
-    private _spawnXY = [(_roadblock select 0) + _spawnDist * cos _dir, (_roadblock select 1) + _spawnDist * sin _dir];
-    private _flybyXY = [(_roadblock select 0) + _flybyDist * cos _flybyDir, (_roadblock select 1) + _flybyDist * sin _flybyDir];
-    private _exitXY  = [(_roadblock select 0) + _exitDist * cos (_dir + 180), (_roadblock select 1) + _exitDist * sin (_dir + 180)];
+    // Single Group for both if pair
+    private _grp = createGroup [civilian, true];
+    _grp setBehaviour "CARELESS";
+    _grp setCombatMode "BLUE";
 
-    private _spawnAGL = if (_isHeli) then { 80 + random 60 } else { 400 + random 300 };
-    private _flybyAGL = if (_isHeli) then { 60 + random 40 } else { 300 + random 200 };
-    private _exitAGL  = _spawnAGL;
-
-    // Formation Offsets
-    private _formationOffset = [25 + random 15, 25 + random 15, 0];
-
-    // Spawn Aircraft
-    for "_i" from 0 to (_count - 1) do {
-        private _offset = if (_i == 0) then { [0,0,0] } else { _formationOffset };
-        private _sPos = [_spawnXY vectorAdd _offset, _spawnAGL] call _fnc_aglToASL;
-        private _fPos = [_flybyXY vectorAdd _offset, _flybyAGL] call _fnc_aglToASL;
-        private _ePos = [_exitXY vectorAdd _offset, _exitAGL] call _fnc_aglToASL;
-
-        private _grp = createGroup [civilian, true];
-        private _veh = createVehicle [_class, ASLToATL _sPos, [], 0, "FLY"];
+    for "_i" from 1 to _count do {
+        private _offset = if (_i == 1) then { [0,0,0] } else { [50, 50, 0] };
+        private _sPos = _spawnPos vectorAdd _offset;
         
-        if (!isNull _veh) then {
-            _veh setPosASL _sPos;
-            _veh setDir (_sPos getDir _fPos);
-            _veh setVelocityModelSpace [80 + random 40, 0, 0];
-            _veh setCaptive true;
-            _veh engineOn true;
-            _veh flyInHeight _flybyAGL;
-
-            private _crewClass = getText (configFile >> "CfgVehicles" >> _class >> "crew");
-            if (_crewClass == "") then { _crewClass = "C_man_pilot_F"; };
-            private _pilot = _grp createUnit [_crewClass, [0,0,0], [], 0, "NONE"];
-            _pilot moveInDriver _veh;
-
-            _grp setBehaviour "CARELESS";
-            _grp setCombatMode "BLUE";
-
-            private _wp1 = _grp addWaypoint [ASLToATL _fPos, 0];
-            _wp1 setWaypointType "MOVE";
-            _wp1 setWaypointSpeed "FULL";
-            
-            private _wp2 = _grp addWaypoint [ASLToATL _ePos, 0];
-            _wp2 setWaypointType "MOVE";
-            _wp2 setWaypointCompletionRadius 500;
-
-            // Monitor and cleanup
-            [_veh, _grp, _pilot, _exitXY, time + 600] spawn {
-                params ["_v", "_g", "_p", "_dest", "_timeout"];
-                waitUntil {
-                    sleep 5;
-                    !alive _v || !alive _p || (_v distance2D _dest < 1500) || (time > _timeout)
-                };
-                if (!isNull _v) then { deleteVehicle _v; };
-                if (!isNull _p) then { deleteVehicle _p; };
-                if (!isNull _g) then { deleteGroup _g; };
+        private _veh = createVehicle [_class, _sPos, [], 0, "FLY"];
+        _veh setPosASL (ATLToASL _sPos);
+        _veh setDir (_sPos getDir _exitPos);
+        _veh setVelocityModelSpace [0, 100, 0]; // Initial kick
+        
+        _veh setCaptive true;
+        _veh engineOn true;
+        _veh flyInHeight _height;
+        
+        // Use engine command for crew spawning (faster/optimized)
+        createVehicleCrew _veh;
+        (crew _veh) joinSilent _grp;
+        
+        // Individual Cleanup Watchdog (more efficient than group-wide in some cases)
+        [_veh, _exitPos] spawn {
+            params ["_v", "_dest"];
+            private _killTime = time + 600;
+            waitUntil {
+                sleep 5;
+                !alive _v || {(_v distance2D _dest) < 1000} || {time > _killTime}
+            };
+            if (!isNull _v) then {
+                private _c = crew _v;
+                deleteVehicle _v;
+                { deleteVehicle _x } forEach _c;
             };
         };
     };
-    
-    diag_log format ["[RB] Ambient Flyover spawned: %1 x %2", _count, _class];
+
+    // Waypoints
+    private _wp = _grp addWaypoint [_exitPos, 0];
+    _wp setWaypointType "MOVE";
+    _wp setWaypointSpeed "FULL";
+    _wp setWaypointCompletionRadius 500;
+
+    diag_log format ["[RB] Ambient Flyover: %1x %2", _count, _class];
 };

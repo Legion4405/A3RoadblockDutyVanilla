@@ -105,36 +105,29 @@ if (_masterStory isNotEqualTo []) then {
     private _isNight = (daytime < 5 || daytime > 20);
     private _isRain  = (rain > 0.2 || overcast > 0.7);
 
+    // Simplified Commercial Check (Optional, mainly for fluff now)
     private _isCommercial = (
         (_vehType find "truck" > -1) || 
         (_vehType find "van" > -1) || 
-        (_vehType find "box" > -1) ||
-        (_vehType find "zamak" > -1) ||
-        (_vehType find "ural" > -1) ||
-        (_vehType find "kamaz" > -1) ||
-        (_vehType find "tempest" > -1) ||
-        (_vehType find "hemtt" > -1)
-    ) && !(_vehType find "pickup" > -1);
-
-    private _isSport = (
-        (_vehType find "sport" > -1) || 
-        (_vehType find "race" > -1)
+        (_vehType find "box" > -1)
     );
 
-    private _validPurposes = +_purposes;
-    if (_isCommercial) then {
-        _validPurposes = ["Delivery", "Commuting to Work", "Returning from Work"];
-    } else {
-        if (_isSport) then { _validPurposes = _validPurposes - ["Delivery"]; };
-    };
+    // Filter Purposes based on Context (for Innocent / Smart Liars)
+    private _validPurposes = +_purposes; // Copy all purposes (Delivery/Medical included for everyone now)
+
+    // Only filter logically impossible things for INNOCENTS
     if (_isNight) then { _validPurposes = _validPurposes - ["Going to the Beach", "Tourism", "Shopping"]; };
     if (_isRain) then { _validPurposes = _validPurposes - ["Going to the Beach", "Tourism"]; };
+    
+    // Safety fallback
     if (_validPurposes isEqualTo []) then { _validPurposes = ["Visiting Family", "Heading Home"]; };
 
     // Selection Logic
     if (_isIllegal) then {
-        if (random 1 < 0.4) then {
+        // Increased chance to Lie about Purpose (Context Mismatch)
+        if (random 1 < 0.7) then {
             private _badPurposes = _purposes - _validPurposes;
+            // If no "bad" purposes exist (e.g. daytime), pick random to potentially mismatch evidence
             _purpose = if (_badPurposes isNotEqualTo []) then { selectRandom _badPurposes } else { selectRandom _purposes };
             _isLying = true;
         } else {
